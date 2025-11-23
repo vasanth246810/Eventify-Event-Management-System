@@ -1,0 +1,69 @@
+# ---------- Node / Frontend ----------
+node_modules/
+build/
+dist/
+
+# dotenv
+.env
+*.env
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# editor directories
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ---------- Python / Backend (Django) ----------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Django
+*.log
+local_settings.py
+db.sqlite3
+/media/
+media/
+staticfiles/
+static/
+
+# Migrations (optional to ignore, but recommended in personal projects)
+# Uncomment if you don't want to push migration files:
+# */migrations/*.py
+# !*/migrations/__init__.py
+
+# ---------- Coverage ----------
+htmlcov/
+.coverage
+.coverage.*
+
+# ---------- Pytest ----------
+.pytest_cache/
+
+# ---------- pip metadata ----------
+pip-wheel-metadata/
+
+# ---------- IDE ----------
+.vscode/
+.idea/
+
+# ---------- Additional ----------
+*.sqlite3
+*.CR2
+
+# React lock files (optional)
+# package-lock.json
+# yarn.lock

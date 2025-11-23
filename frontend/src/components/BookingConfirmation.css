@@ -1,0 +1,271 @@
+.bookconfirm-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color:#000000;
+    border:2px solid #ff2c55;
+    min-height: 100vh;
+    position: relative;
+}
+
+.bookconfirm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 30px 40px 0;
+    margin-bottom: 20px;
+}
+
+.bookconfirm-date {
+    font-size: 14px;
+    color: white;
+}
+
+.bookconfirm-title {
+    font-size: 16px;
+    color: #ff2c55;
+    font-weight: 500;
+}
+
+.bookconfirm-phone {
+    font-size: 13px;
+    color: white;
+}
+
+.bookconfirm-phone::before {
+    content: "📞 ";
+    margin-right: 4px;
+}
+
+.bookconfirm-logo {
+    text-align: center;
+    margin: 20px 0 40px;
+}
+
+.bookconfirm-logo svg {
+    width: 60px;
+    height: 40px;
+}
+
+.bookconfirm-content {
+    padding: 0 40px;
+}
+
+.bookconfirm-thankyou {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 15px 0;
+}
+
+.bookconfirm-check {
+    width: 24px;
+    height: 24px;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.bookconfirm-check::after {
+    content: "✓";
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.bookconfirm-thankyou-text {
+    font-size: 24px;
+    color: #ff2c55;
+    font-weight: 500;
+}
+
+.bookconfirm-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 25px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.bookconfirm-movie-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.bookconfirm-movie-details {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.bookconfirm-movie-details div {
+    margin-bottom: 3px;
+}
+
+.bookconfirm-quantity {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.bookconfirm-seat-icon {
+    width: 20px;
+    height: 16px;
+    margin-right: 10px;
+    opacity: 0.7;
+}
+
+.bookconfirm-seat-info {
+    font-size: 14px;
+    color: white;
+}
+
+.bookconfirm-seat-type {
+    font-weight: 600;
+}
+
+.bookconfirm-qr {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    text-align: center;
+}
+
+.bookconfirm-qr-code {
+    width: 80px;
+    height: 80px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="white"/><rect x="10" y="10" width="15" height="15" fill="black"/><rect x="30" y="10" width="5" height="5" fill="black"/><rect x="40" y="10" width="10" height="5" fill="black"/><rect x="55" y="10" width="5" height="10" fill="black"/><rect x="65" y="10" width="5" height="5" fill="black"/><rect x="75" y="10" width="15" height="15" fill="black"/><rect x="10" y="30" width="5" height="5" fill="black"/><rect x="20" y="30" width="5" height="10" fill="black"/><rect x="30" y="35" width="5" height="5" fill="black"/><rect x="40" y="30" width="5" height="15" fill="black"/><rect x="50" y="30" width="10" height="5" fill="black"/><rect x="65" y="30" width="5" height="10" fill="black"/><rect x="75" y="30" width="5" height="5" fill="black"/><rect x="85" y="30" width="5" height="10" fill="black"/><rect x="10" y="50" width="10" height="5" fill="black"/><rect x="25" y="50" width="15" height="10" fill="black"/><rect x="45" y="50" width="5" height="15" fill="black"/><rect x="55" y="55" width="10" height="5" fill="black"/><rect x="70" y="50" width="5" height="10" fill="black"/><rect x="80" y="50" width="10" height="15" fill="black"/><rect x="10" y="70" width="15" height="5" fill="black"/><rect x="30" y="70" width="5" height="15" fill="black"/><rect x="40" y="75" width="15" height="5" fill="black"/><rect x="60" y="70" width="5" height="10" fill="black"/><rect x="70" y="70" width="10" height="5" fill="black"/><rect x="85" y="70" width="5" height="20" fill="black"/><rect x="10" y="90" width="5" height="5" fill="black"/><rect x="20" y="85" width="20" height="5" fill="black"/><rect x="45" y="85" width="5" height="10" fill="black"/><rect x="55" y="90" width="15" height="5" fill="black"/><rect x="75" y="85" width="5" height="10" fill="black"/></svg>') center/contain no-repeat;
+}
+
+.bookconfirm-id-label {
+    font-size: 11px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 3px;
+}
+
+.bookconfirm-id {
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+}
+
+.bookconfirm-amount-section {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.bookconfirm-amount-icon {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+}
+
+.bookconfirm-amount-label {
+    font-size: 13px;
+    text-transform: uppercase;
+    margin-right: auto;
+}
+
+.bookconfirm-amount {
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+}
+
+.bookconfirm-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.bookconfirm-btn {
+    padding: 12px 20px;
+    border: 1px solid #ff2c55;
+    background: #000000;
+    border-radius: 4px;
+    font-size: 14px;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.bookconfirm-btn:hover {
+    background: #ff2c55;
+}
+
+.bookconfirm-details {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.bookconfirm-section-title {
+    font-size: 13px;
+    color: #ff2c55;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.bookconfirm-section-content {
+    font-size: 14px;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.bookconfirm-promo {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    padding: 15px 0;
+}
+
+.bookconfirm-promo-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #ff6b35, #f7931e);
+    margin-right: 12px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.bookconfirm-promo-text {
+    font-size: 14px;
+    color: white;
+    line-height: 1.4;
+}
+
+.bookconfirm-promo-highlight {
+    color: #ff6b35;
+    font-weight: 600;
+}
+
+.bookconfirm-instant-approval {
+    color: #4CAF50;
+    font-weight: 600;
+    margin-left: 8px;
+}

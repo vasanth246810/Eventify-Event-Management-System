@@ -1,0 +1,153 @@
+.navbar-custom {
+  background-color: #0000;
+  /* position: sticky !important; */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  box-shadow: 0 2px 4px rgba(0,0,0,.1);
+  padding:25px !important;
+}
+
+.navbar-custom .navbar-brand {
+  color: white;
+  font-weight: bold;
+}
+.navbar-brand:hover{
+  color: #ff2c55 !important;
+}
+
+.navbar-nav {
+  gap: 1rem !important;
+  align-items: center !important;
+}
+
+.nav-link {
+  color: #a39c9cff !important;
+  font-weight: bold !important;
+  text-decoration: none !important;
+}
+
+.custom-link {
+  position: relative;
+  text-decoration: none;
+  color: black;
+  animation-delay: 1s;
+  transition: color 0.3s ease-in-out;
+}
+
+.custom-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: black;
+  transition: width 0.3s ease-in-out;
+}
+
+.custom-link:hover::after {
+  width: 100%;
+}
+
+/* Prevent underline in dropdown menu items */
+.dropdown-menu a {
+  text-decoration: none !important;
+}
+
+.dropdown-menu a::after {
+  display: none !important;
+}
+
+.dropdown-menu a:hover::after {
+  display: none !important;
+}
+
+.nav-link.active {
+  color: white !important;
+  font-weight: bold !important;
+  position: relative;
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background:#ff2c55;
+;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 991.98px) {
+  .navbar-nav {
+    text-align: center;
+    margin-top: 1rem;
+  }
+
+  .navbar-nav .nav-item {
+    margin-bottom: 0.5rem;
+  }
+
+  .d-flex {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+}
+
+#blink-no-events {
+  color: #ef4444;
+}
+
+.social-links a {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.social-links a:hover {
+  transform: translateY(-2px);
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  margin-top: auto;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-icon {
+  font-size: 1.2rem;
+  color: #020409ff;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #020409ff;
+}
+.userbtn:hover{
+  background-color: #ff2c55 !important;
+}
+.userbtn{
+  border-color: #ff2c55 !important;
+  color:white !important;
+}
