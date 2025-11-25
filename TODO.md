@@ -1,2 +1,0 @@
-- [x] Update Contact.css: Change backgrounds to black, text to white, buttons/borders to #ff2c55
-- [x] Update Contact.jsx: Modify inline styles for black background, white text, #ff2c55 for button/border
