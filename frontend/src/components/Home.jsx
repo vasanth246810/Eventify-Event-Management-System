@@ -4,20 +4,20 @@ import { useState,useEffect } from 'react';
 import './Home.css'
 
 export default function Home(){
-    const[data,setData]=useState([]);
+    // const[data,setData]=useState([]);
 
-    useEffect(()=>{
-        const fetchdata=async()=>{
-            try {
-                let response=await axios.get("http://localhost:8000/api/home");
-                setData(response.data);
-            } catch (error) {
-                console.error('Error fetching home data:', error);
-                setData({page: 'Error', content: 'Failed to load data'});
-            }
-        };
-        fetchdata();
-    }, [])
+    // useEffect(()=>{
+    //     const fetchdata=async()=>{
+    //         try {
+    //             let response=await axios.get("http://localhost:8000/api/home");
+    //             setData(response.data);
+    //         } catch (error) {
+    //             console.error('Error fetching home data:', error);
+    //             setData({page: 'Error', content: 'Failed to load data'});
+    //         }
+    //     };
+    //     fetchdata();
+    // }, [])
     return(
  <div>
 <section class="home-hero">
@@ -152,39 +152,6 @@ export default function Home(){
                         <h5>Michael Johnson</h5>
                         <p>Marketing Director, InnovateCo</p>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="home-section home-section-alt">
-    <div class="container">
-        <div class="home-section-header">
-            <h2 class="home-section-title" style={{color: '#ff2c55'}}>Recent Events</h2>
-            <p class="home-section-subtitle">Take a look at some of our recently executed successful events.</p>
-        </div>
-
-        <div class="home-events-gallery">
-            <div class="homeevent-card">
-                <div class="home-event-image">🏢</div>
-                <div class="home-event-content">
-                    <h4>Tech Summit 2024</h4>
-                    <p>A 3-day corporate conference for 500+ attendees featuring keynote speakers and networking sessions.</p>
-                </div>
-            </div>
-            <div class="homeevent-card">
-                <div class="home-event-image">💍</div>
-                <div class="home-event-content">
-                    <h4>Garden Wedding</h4>
-                    <p>An elegant outdoor wedding ceremony and reception for 200 guests in a beautiful botanical setting.</p>
-                </div>
-            </div>
-            <div class="homeevent-card">
-                <div class="home-event-image">🎵</div>
-                <div class="home-event-content">
-                    <h4>Music Festival</h4>
-                    <p>A 2-day outdoor music festival featuring multiple stages and artists for 5,000+ music enthusiasts.</p>
                 </div>
             </div>
         </div>

@@ -1,6 +1,19 @@
+/* =========================================
+   GLOBAL SECTION SPACING
+========================================= */
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   HERO SECTION
+========================================= */
 .home-hero {
-    background: #000000;
-    color: #ffffff;
+    background: #000;
+    color: white;
     padding: 8rem 0;
     text-align: center;
     position: relative;
@@ -8,24 +21,19 @@
 }
 
 .home-hero::before {
-    content: '';
+    content: "";
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%), 
-                linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%), 
-                linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.1) 75%), 
-                linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.1) 75%);
+    inset: 0;
+    background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%);
     background-size: 60px 60px;
     opacity: 0.1;
     animation: movePattern 20s linear infinite;
 }
 
 @keyframes movePattern {
-    0% { transform: translateX(0) translateY(0); }
-    100% { transform: translateX(60px) translateY(60px); }
+    0% { transform: translate(0,0); }
+    100% { transform: translate(60px,60px); }
 }
 
 .home-hero-content {
@@ -34,302 +42,268 @@
 }
 
 .home-hero h1 {
-    font-size: 4rem;
+    font-size: clamp(2.8rem, 5vw, 4rem);
     font-weight: 900;
-    margin-bottom: 1.5rem;
     line-height: 1.1;
+    margin-bottom: 1.5rem;
     animation: fadeInUp 1s ease-out;
 }
 
-.home-hero .home-subtitles {
-    font-size: 1.3rem;
-    color: #cccccc;
-    max-width: 600px;
+.home-subtitles {
+    font-size: 1.2rem;
+    color: #ccc;
+    max-width: 650px;
     margin: 0 auto 3rem;
     animation: fadeInUp 1s ease-out 0.2s both;
 }
 
+/* =========================================
+   HERO BUTTONS
+========================================= */
 .home-hero-buttons {
     display: flex;
     justify-content: center;
     gap: 1rem;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
     animation: fadeInUp 1s ease-out 0.4s both;
 }
 
-.homebutton{
-    background: #ff2c55;
-    color: white;
-    padding: 1rem 2rem;
+.homebutton,
+.home-AboutButton {
+    padding: 0.9rem 2rem;
     border-radius: 6px;
     text-decoration: none;
     font-weight: 600;
-    transition: all 0.3s ease;
+    transition: 0.3s;
     border: 2px solid #ff2c55;
+}
+
+.homebutton {
+    background: #ff2c55;
+    color: white;
 }
 
 .home-AboutButton {
     background: transparent;
-    color: #ffffff;
-    padding: 1rem 2rem;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    border: 2px solid #ff2c55;
+    color: white;
 }
 
-.homebutton:hover {
+.homebutton:hover,
+.home-AboutButton:hover {
     transform: translateY(-2px);
 }
 
 .home-AboutButton:hover {
     background: #ff2c55;
-    color: white;
-    transform: translateY(-2px);
 }
 
+/* =========================================
+   HERO STATS
+========================================= */
 .home-stats {
     display: flex;
     justify-content: center;
-    gap: 4rem;
-    animation: fadeInUp 1s ease-out 0.6s both;
-}
-
-.home-stat {
-    text-align: center;
+    flex-wrap: wrap;
+    gap: 3rem;
+    margin-top: 3rem;
 }
 
 .home-number {
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     font-weight: 700;
-    color: #ffffff;
-    display: block;
 }
 
 .home-label {
-    color: #cccccc;
-    margin-top: 0.5rem;
-    font-size: 20px;
-    font-weight: 900;
+    color: #ccc;
+    margin-top: 0.4rem;
+    font-size: 1rem;
+    font-weight: 700;
 }
 
-/* Section Styles */
+/* =========================================
+   GENERAL SECTIONS
+========================================= */
 .home-section {
     padding: 6rem 0;
 }
 
 .home-section-alt {
-    background: #000000;
+    background: #000;
 }
 
 .home-section-header {
     text-align: center;
-    margin-bottom: 4rem;
+    margin-bottom: 3.5rem;
 }
 
 .home-section-title {
-    font-size: 2.5rem;
+    font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 700;
-    color: white;
-    margin-bottom: 1rem;
+    color: #ff2c55;
 }
 
 .home-section-subtitle {
-    font-size: 1.1rem;
-    color: #666666;
-    max-width: 600px;
+    max-width: 650px;
     margin: 0 auto;
+    color: white;
+    font-size: 1.1rem;
 }
 
-/* Services Grid */
+/* =========================================
+   SERVICES GRID
+========================================= */
 .home-services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 2rem;
-    margin-top: 3rem;
 }
 
 .home-service-card {
-    background: #ffffff;
-    padding: 2.5rem 2rem;
+    background: #000;
+    padding: 2rem;
     border-radius: 8px;
-    border: 2px solid #e5e5e5;
+    border: 2px solid #ff2c55;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: 0.3s;
 }
 
 .home-service-card:hover {
-    border-color: #000000;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-    transform: translateY(-8px);
+    transform: translateY(-7px);
 }
 
 .home-service-icon {
-    width: 80px;
-    height: 80px;
-    background: #000000;
-    color: #ffffff;
+    width: 75px;
+    height: 75px;
     border-radius: 50%;
+    background: #000;
+    border: 2px solid #ff2c55;
     display: flex;
-    align-items: center;
     justify-content: center;
-    margin: 0 auto 1.5rem;
+    align-items: center;
     font-size: 2rem;
-    transition: all 0.3s ease;
-}
-
-.home-service-card:hover .home-service-icon {
-    background: #ffffff;
-    color: #000000;
-    border: 2px solid #000000;
+    margin: 0 auto 1.2rem;
+    color: white;
 }
 
 .home-service-card h3 {
+    color: white;
     font-size: 1.3rem;
-    font-weight: 600;
-    color: #000000;
     margin-bottom: 1rem;
 }
 
 .home-service-card p {
-    color: #666666;
+    color: #ccc;
     font-size: 0.95rem;
 }
 
-/* How It Works */
+/* =========================================
+   PROCESS STEPS
+========================================= */
 .home-process-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 2rem;
-    margin-top: 3rem;
 }
 
 .home-process-step {
+    padding: 2rem;
+    border: 2px solid #fff;
+    background: #000;
+    border-radius: 6px;
     text-align: center;
-    position: relative;
-    border: 2px solid white;
-    /* background-color: white; */
 }
 
 .home-step-number {
     width: 60px;
     height: 60px;
-    background: #000000;
-    color: #ffffff;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem;
+    background: #ff2c55;
+    color: white;
     font-size: 1.5rem;
-    font-weight: 700;
+    margin: 0 auto 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
 }
 
 .home-process-step h4 {
     font-size: 1.2rem;
-    font-weight: 600;
-    color: #000000;
     margin-bottom: 1rem;
+    color: white;
 }
 
 .home-process-step p {
-    color: #666666;
+    color: #ccc;
     font-size: 0.95rem;
 }
 
-/* Testimonials */
+/* =========================================
+   TESTIMONIALS
+========================================= */
 .home-testimonials-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 2rem;
-    margin-top: 3rem;
 }
 
 .home-testimonial {
-    background: #ffffff;
-    padding: 2.5rem;
+    padding: 2rem;
+    border: 2px solid #333;
     border-radius: 8px;
-    border: 2px solid #e5e5e5;
+    background: #000;
     position: relative;
 }
 
-.home-testimonial::before {
-    content: '"';
-    position: absolute;
-    top: -10px;
-    left: 20px;
-    font-size: 4rem;
-    color: #000000;
-    font-weight: bold;
-}
-
 .home-testimonial-text {
-    color: #666666;
+    color: #ccc;
     font-style: italic;
-    margin-bottom: 1.5rem;
-    padding-top: 1rem;
-}
-
-.home-testimonial-author {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+    margin-bottom: 1.2rem;
 }
 
 .home-author-avatar {
     width: 50px;
     height: 50px;
-    background: #000000;
-    color: #ffffff;
+    background: #ff2c55;
+    color: white;
     border-radius: 50%;
     display: flex;
-    align-items: center;
     justify-content: center;
-    font-weight: 600;
-}
-
-.home-author-info h5 {
-    color: #000000;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
+    align-items: center;
 }
 
 .home-author-info p {
-    color: #666666;
-    font-size: 0.9rem;
+    color: #ccc;
 }
 
-/* Recent Events Gallery */
+/* =========================================
+   EVENTS GALLERY
+========================================= */
 .home-events-gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 1.5rem;
-    margin-top: 3rem;
 }
 
 .homeevent-card {
-    background: #ffffff;
+    border: 2px solid #ff2c55;
     border-radius: 8px;
+    background: #000;
     overflow: hidden;
-    border: 2px solid #e5e5e5;
-    transition: all 0.3s ease;
+    transition: 0.3s;
 }
 
 .homeevent-card:hover {
-    border-color: white;
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 
 .home-event-image {
-    height: 200px;
-    background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+    height: 180px;
+    background: #222;
     display: flex;
-    align-items: center;
     justify-content: center;
-    color: #666666;
-    font-size: 3rem;
+    align-items: center;
 }
 
 .home-event-content {
@@ -337,92 +311,85 @@
 }
 
 .home-event-content h4 {
-    color: #000000;
-    font-weight: 600;
+    color: white;
     margin-bottom: 0.5rem;
 }
 
 .home-event-content p {
-    color: #666666;
+    color: #ccc;
     font-size: 0.9rem;
 }
 
-/* CTA Section */
+/* =========================================
+   CTA SECTION
+========================================= */
 .homecta {
-    background: #000000;
-    color: white;
-    text-align: center;
     padding: 6rem 0;
+    text-align: center;
+    background: #000;
 }
 
 .homecta h2 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
+    font-size: clamp(2rem, 4vw, 3rem);
     color: #ff2c55;
+    margin-bottom: 1rem;
 }
 
 .homecta p {
     font-size: 1.1rem;
-    margin-bottom: 2rem;
-    /* color: #cccccc; */
+    color: #ccc;
 }
 
-.homecta .btn-primary {
-    background: #000000;
-    color: #ffffff;
-    font-size: 1.1rem;
-    padding: 1rem 2.5rem;
+.btn-primary {
+    display: inline-block;
+    padding: 1rem 2.2rem;
+    background: #ff2c55;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    border: 2px solid #ff2c55;
+    transition: 0.3s;
 }
 
-/* Animations */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.btn-primary:hover {
+    background: transparent;
+    color: white;
 }
 
-/* Responsive */
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+/* MOBILE */
 @media (max-width: 768px) {
-    .container {
-        padding: 0 1rem;
-    }
-
     .home-hero {
-        padding: 4rem 0;
-    }
-
-    .home-hero h1 {
-        font-size: 2.5rem;
+        padding: 5rem 1rem;
     }
 
     .home-hero-buttons {
         flex-direction: column;
-        align-items: center;
     }
 
     .home-stats {
         flex-direction: column;
-        gap: 2rem;
+        gap: 1.5rem;
     }
 
     .home-section {
         padding: 4rem 0;
     }
+}
 
-    .home-section-title {
-        font-size: 2rem;
+/* SMALL PHONES */
+@media (max-width: 480px) {
+    .home-hero h1 {
+        font-size: 2.2rem;
     }
 
-    .home-services-grid,
-    .home-process-grid,
-    .home-testimonials-grid,
-    .home-events-gallery {
-        grid-template-columns: 1fr;
+    .home-service-card,
+    .home-process-step,
+    .home-testimonial {
+        padding: 1.5rem;
     }
 }

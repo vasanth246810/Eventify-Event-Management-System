@@ -25,13 +25,26 @@ class Events(models.Model):
     event_total_seats = models.IntegerField(blank=True, null=True)
     event_price = models.IntegerField(blank=True, null=True)
     event_location = models.CharField(max_length=200, blank=True, null=True)
-    # event_image = models.ImageField(upload_to='event_images/', blank=True, null=True)
+    event_image = models.ImageField(upload_to='event_images/', blank=True, null=True)
     is_sold_out = models.BooleanField(default=False)
+    location_name = models.CharField(max_length=255)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6)
 
     class Meta: 
-        
         managed = False
         db_table = 'eventbookingapp_events'
+
+class Artists(models.Model):
+    artistid = models.AutoField(db_column='ArtistId', primary_key=True)  # Field name made lowercase.
+    artistname = models.CharField(db_column='ArtistName', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    artist_image = models.ImageField(upload_to='artist_images/', blank=True, null=True)
+    description = models.CharField(max_length=255, blank=True, null=True)
+
+
+    class Meta:
+        managed = False
+        db_table = 'Artists'
 
     @property
     def booked_seats(self):
@@ -53,3 +66,13 @@ class Bookingdetails(models.Model):
     class Meta:
         managed = False
         db_table = 'eventbookingapp_bookingdetails'
+
+
+class Eventartist(models.Model):
+    id = models.AutoField(db_column='Id', primary_key=True)  
+    event_id = models.IntegerField()
+    artistid = models.ForeignKey('Artists', models.DO_NOTHING, db_column='ArtistId') 
+
+    class Meta:
+        managed = False
+        db_table = 'EventArtist'

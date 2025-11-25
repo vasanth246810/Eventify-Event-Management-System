@@ -225,7 +225,7 @@ export default function LoginPage({ setUsername }) {
               <label htmlFor="password" className="form-label">
                 Password
               </label>
-              <div style={{ position: "relative" }}>
+              <div style={{ position: "relative"}}>
                 <input
                   type="password"
                   id="password"
@@ -266,9 +266,9 @@ export default function LoginPage({ setUsername }) {
             <div className="divider-line"></div>
           </div>
 
-          <div className="social-buttons">
+          <div className="social-buttons justify-content-center align-items-center">
             {/* Google will render its button here */}
-            <div id="googleSignInDiv" style={{ display: 'flex', justifyContent: 'center' }}></div>
+            <div id="googleSignInDiv" className="d-flex justify-content-center align-items-center"></div>
             
             {/* Fallback message */}
             {!googleLoaded && (

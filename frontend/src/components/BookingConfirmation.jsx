@@ -44,16 +44,15 @@ useEffect(()=>{
 
 
 
-// const eventDate = events_info.event_scheduled_date || "" // your date
 
 const options = {
-  weekday: "short",   // Tue
-  day: "2-digit",     // 12
-  month: "short",     // Apr
-  year: "numeric",    // 2016
-  hour: "numeric",    // 6
-  minute: "2-digit",  // 54
-  hour12: true        // pm
+  weekday: "short",   
+  day: "2-digit",     
+  month: "short",     
+  year: "numeric",    
+  hour: "numeric",   
+  minute: "2-digit",  
+  hour12: true        
 };
 
 const formattedDate = new Date().toLocaleString("en-US", options) || "";
@@ -67,9 +66,9 @@ if (!events_info) return <div>No data available</div>;
 return(
     <div className="bookconfirm-container">
       <div className="bookconfirm-header">
-        <div className="bookconfirm-date">{currentDate}</div>
-        <div className="bookconfirm-title">Booking Confirmation</div>
-        <div className="bookconfirm-phone">022 6144 5050</div>
+        <div className="bookconfirm-date text-light">{currentDate}</div>
+        <div className="bookconfirm-title text-light">Booking Confirmation</div>
+        <div className="bookconfirm-phone text-light">022 6144 5050</div>
       </div>
 
       <div className="bookconfirm-logo">
@@ -90,7 +89,7 @@ return(
 
         <div className="bookconfirm-card">
           <div className="bookconfirm-qr">
-            <QRCodeSVG value={bookingurl} size={150}  style={{marginBottom:"5px"}}/>
+            <QRCodeSVG value={bookingurl} size={150} className="qr-img"  style={{marginBottom:"5px"}}/>
             <div className="bookconfirm-id-label text-light">BOOKING ID</div>
             <div className="bookconfirm-id">{booking_details.booking_id}</div>
           </div>
@@ -115,7 +114,7 @@ return(
             <div className="bookconfirm-seat-info">
               <span className="bookconfirm-seat-type">NORMAL-J2,J3</span>
               <br />
-              <span className="text-light" style={{ color: '#666' }}>AUDI 1</span>
+              <span className="text-light" style={{ color: 'white' }}>AUDI 1</span>
             </div>
           </div>
 

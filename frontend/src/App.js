@@ -13,6 +13,7 @@ import LoginPage from './components/Login';
 import SignUp from './components/SignUp';
 import Logout from './components/Logout';
 import PopupGfg from './components/Popup';
+import ArtistInfo from './components/Artistinfo'
 import { useEffect, useState } from 'react';
 
 function Layout() {
@@ -46,6 +47,7 @@ function Layout() {
         <Route path="/logout" element={<Logout setUsername={setUsername} />} />
         <Route path="*" element={<Navigate to="/home" replace />} />
         <Route path="/popup" element={<PopupGfg />} />
+        <Route path="/artists/:name" element={<ArtistInfo />}/>
       </Routes>
       {!shouldHideNavbar && <Footer />}
     </>

@@ -1,0 +1,17 @@
+ArtistId=models.IntegerField(primary_key=True)
+    ArtistName=models.CharField(max_length=100 blank=True,null=True)
+    Artist_image=models.ImageField(upload_to='artist_images/', blank=True, null=True)
+
+    class Meta:
+        managed=False
+        db_table = 'Artists'
+
+=======
+class Artists(models.Model):
+    ArtistId = models.AutoField(primary_key=True)
+    ArtistName = models.CharField(max_length=100, blank=True, null=True)
+    Artist_image = models.ImageField(upload_to='artist_images/', blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'Artists'

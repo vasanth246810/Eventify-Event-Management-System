@@ -12,7 +12,7 @@ function Navbar({ username }) {
     <nav className="navbar navbar-expand-lg navbar-custom">
       <div className="container-fluid">
         {/* Brand */}
-        <Link className="navbar-brand" to="/home">Eventifyy</Link>
+<Link className="navbar-brand" to="/home">Eventifyy</Link>
 
         {/* Toggler for mobile */}
         <button
@@ -38,7 +38,16 @@ function Navbar({ username }) {
               <NavLink className="nav-link custom-link" to="/about">About Us</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link custom-link" to="/events">Events</NavLink>
+              <NavLink 
+                  to="/events"
+                  className={({ isActive }) =>
+                    isActive || location.pathname.startsWith("/event-list/")
+                      ? "nav-link custom-link active"
+                      : "nav-link custom-link"
+                  }
+                >
+                  Events
+                </NavLink>
             </li>
             <li className="nav-item">
               <NavLink className="nav-link custom-link" to="/contact">Contact Us</NavLink>

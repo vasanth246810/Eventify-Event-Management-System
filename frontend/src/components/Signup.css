@@ -8,7 +8,7 @@
 }
 
 .signup-container {
-  background: #ffffff;
+  background: #000000;
   border-radius: 16px;
   padding: 48px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
@@ -25,7 +25,7 @@
 .form-title {
   font-size: 32px;
   font-weight: 700;
-  color: #1a202c;
+  color: #ff2c55;
   margin-bottom: 8px;
   letter-spacing: -0.025em;
 }
@@ -45,7 +45,7 @@
 .form-label {
   font-size: 14px;
   font-weight: 600;
-  color: #1a202c;
+  color: white;
   letter-spacing: 0.01em;
 }
 
@@ -77,9 +77,9 @@
 
 .submit-button {
   height: 48px;
-  background: #1a202c;
+  background: #000000;
   color: #ffffff;
-  border: none;
+  border: 2px solid #ff2c55;
   border-radius: 8px;
   font-size: 16px;
   font-weight: 600;
@@ -91,7 +91,7 @@
 }
 
 .submit-button:hover {
-  background: #1a202c;
+  background: #ff2c55;
   transform: translateY(-1px);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
@@ -101,7 +101,7 @@
 }
 
 .submit-button:disabled {
-  background: #94a3b8;
+  background: #000000;
   cursor: not-allowed;
   transform: none;
 }
@@ -122,18 +122,18 @@
   text-align: center;
   margin-top: 32px;
   font-size: 14px;
-  color: #64748b;
+  color: white;
 }
 
 .signup-link a {
-  color: #1a202c;
+  color: white;
   text-decoration: none;
   font-weight: 600;
   transition: color 0.2s ease;
 }
 
 .signup-link a:hover {
-  color: #1a202c;
+  color: #ff2c55;
 }
 
 @media (max-width: 640px) {
@@ -145,5 +145,45 @@
   }
   .form-title {
     font-size: 24px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .main-container {
+    padding: 32px 16px;
+  }
+  .signup-container {
+    padding: 40px 24px;
+  }
+  .form-title {
+    font-size: 28px;
+  }
+}
+
+/* Laptop */
+@media (min-width: 769px) and (max-width: 1199px) {
+  .main-container {
+    padding: 40px 32px;
+  }
+  .signup-container {
+    padding: 48px 32px;
+    max-width: 900px;
+  }
+  .form-title {
+    font-size: 30px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1200px) {
+  .main-container {
+    padding: 48px 40px;
+  }
+  .signup-container {
+    max-width: 1000px;
+  }
+  .form-title {
+    font-size: 32px;
   }
 }

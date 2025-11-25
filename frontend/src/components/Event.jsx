@@ -1,25 +1,40 @@
-import React from 'react';
 import axios from 'axios';
 import { useState,useEffect } from 'react';
 import "./Event.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { Link } from 'react-router-dom';
-import eventImage from "./assests/Event.jpg";
 
 export default function Event(){
     const[events,setEvents]=useState([]);
+    const[Artists,setArtists]=useState([]);
     const [activeButtons, setActiveButton] = useState([]);  {/* Changed from null to empty array */}
     const [filterOpen, setFilterOpen] = useState(false);
 
-    useEffect(()=>{
-        const fetchdata=async()=>{
-           axios.get("http://localhost:8000/api/events/")
-           .then(response => setEvents(response.data))
-           .catch(error => console.error(error));
-        };
-        fetchdata();
-    }, []);
+useEffect(() => {
+
+  const fetchEvents = async () => {
+    axios.get("http://localhost:8000/api/events/")
+      .then(response => {
+        setEvents(response.data);
+      })
+      .catch(error => console.error(error));
+  };
+
+  const fetchArtists = async () => {
+    axios.get("http://localhost:8000/api/artists/")
+      .then(response => {
+        // console.log("Artists API:", response.data);
+        setArtists(response.data);
+      })
+      .catch(error => console.error(error));
+  };
+
+  fetchEvents();
+  fetchArtists();
+
+}, []);
+
 
 const handleClick = async (index) => {
   if (index === 0) {
@@ -86,7 +101,7 @@ const handleClick = async (index) => {
                   {/* Blurred Background */}
                   <div className="position-absolute top-0 start-0 w-100 h-100 blurimage">
                     <div  style={{
-                          backgroundImage: `url(${eventImage})`,
+                          backgroundImage: `url(${event.event_image})`,
                           backgroundSize: "cover",
                           backgroundPosition: "center",
                           width: "100%",
@@ -117,7 +132,7 @@ const handleClick = async (index) => {
                       {/* Right: Event Image */}
                       <div className="col-md-6 text-center">
                         <img
-                          src={eventImage}
+                          src={event.event_image}
                           alt={event.event_title}
                           className="img-fluid shadow rounded-4"
                           style={{ width: "334px", height: "445px", objectFit: "cover" }}
@@ -153,43 +168,23 @@ const handleClick = async (index) => {
     <div className="artists-section mb-5">
         <h2 className="text-center mb-4">Featured Artists</h2>
         <div className="row justify-content-center">
-            <div className="col-auto">
-                <div className="artist-circle mx-3">
-                    <img src={eventImage} alt="Artist 1" className="rounded-circle" width="190" height="190"/>
-                    <p className="text-center mt-2 fw-bold">Artist 1</p>
-                </div>
+            {Artists.map((artists)=>(
+               <div className="col-auto" key={artists.artistid}>
+                <Link to={`/artists/${artists.ArtistName}`} style={{textDecoration:"none",color:"inherit"}}>
+                  <div className="artist-circle mx-3">
+                      <img src={artists.Artist_image} alt={artists.ArtistName} className="rounded-circle" width="190" height="190"/>
+                      <p className="text-center mt-2 fw-bold">{artists.ArtistName}</p>
+                  </div>
+                </Link>
             </div>
-            <div className="col-auto">
-                <div className="artist-circle mx-3">
-                    <img src={eventImage} alt="Artist 2" className="rounded-circle" width="190" height="190"/>
-                    <p className="text-center mt-2 fw-bold">Artist 2</p>
-                </div>
-            </div>
-            <div className="col-auto">
-                <div className="artist-circle mx-3">
-                    <img src={eventImage} alt="Artist 3" className="rounded-circle" width="190" height="190"/>
-                    <p className="text-center mt-2 fw-bold">Artist 3</p>
-                </div>
-            </div>
-            <div className="col-auto">
-                <div className="artist-circle mx-3">
-                    <img src={eventImage} alt="Artist 4" className="rounded-circle" width="190" height="190"/>
-                    <p className="text-center mt-2 fw-bold">Artist 4</p>
-                </div>
-            </div>
-            <div className="col-auto">
-                <div className="artist-circle mx-3">
-                    <img src={eventImage} alt="Artist 5" className="rounded-circle" width="190" height="190"/>
-                    <p className="text-center mt-2 fw-bold">Artist 5</p>
-                </div>
-            </div>
+            ))}
         </div>
     </div>
     <div className="events-header">
         <h1 className="events-title">All Events</h1>
         <p className="events-subtitle">Discover amazing experiences happening around you</p>
     </div>
-    <div className='d-flex gap-2' style={{marginLeft:"90px"}}>
+    <div className='d-flex gap-2' >
       {buttonNames.map((name, index) => (
          <button
             className={`FilterButton ${activeButtons.includes(index) ? "active" : ""}`}
@@ -205,15 +200,15 @@ const handleClick = async (index) => {
   <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
     {events.map((event, index) => (
       <div className="col" key={event.event_id}>
-        <div className="card shadow-sm " style={{borderRadius: "16px", width: "100%", maxWidth: "304px", height: "543px", margin: "auto",borderColor:"#ff2c55"}}>
-          <a href={`/event/${event.event_id}`}>
-            <img src={eventImage} className="card-img-top rounded" style={{maxWidth: "302px", height: "420px", objectFit: "cover"}} alt={event.event_title}/>
+        <div className="card shadow-sm " style={{borderRadius: "16px", width: "100%", maxWidth: "304px", margin: "auto",borderColor:"#ff2c55"}}>
+          <a href={`/event-list/${event.event_id}`}>
+            <img src={event.event_image} className="card-img-top rounded" style={{maxWidth: "302px", height: "420px", objectFit: "cover"}} alt={event.event_title}/>
           </a>
 
           <div className="card-body d-flex flex-column justify-content-between">
             <p className="card-text text-light fs-6 fw-medium">{new Date(event.event_scheduled_date).toLocaleString()}</p>
             <h5 className="fw-bolder fs-6 overflow-hidden text-wrap lh-sm my-0 text-light">{event.event_title}</h5>
-            <p className="text-muted fs-6 fw-semibold overflow-hidden text-wrap my-0 text-light">₹{event.event_price}</p>
+            <p className="fs-6 fw-semibold overflow-hidden text-wrap my-0 text-light">₹{event.event_price}</p>
           </div>
         </div>
       </div>

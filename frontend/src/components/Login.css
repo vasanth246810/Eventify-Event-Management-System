@@ -88,7 +88,7 @@
 
 /* Right Content - Sign In Form */
 .signin-container {
-    background: #fff;
+    background: #000000;
     border-radius: 16px;
     padding: 48px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
@@ -110,7 +110,7 @@
 
 .form-subtitle {
     font-size: 16px;
-    color: #666;
+    color: white;
     font-weight: 400;
 }
 
@@ -136,29 +136,37 @@
 .form-input {
     height: 48px;
     padding: 0 16px;
-    border: 1.5px solid #e0e0e0;
+    border: 1.5px solid #ff2c55;
     border-radius: 8px;
     font-size: 16px;
     font-weight: 400;
-    color: #1a1a1a;
-    background: #fff;
+    color: white;
+    background: #000000;
     transition: all 0.2s ease;
     outline: none;
 }
 
+/* Make password input fill full width accounting for toggle button */
+.form-group > div > .form-input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .form-input::placeholder {
-    color: #999;
+    color: white;
 }
 
 .form-input:focus {
-    border-color: #1976d2;
+    border-color: #ff2c55;
     box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
 }
 
 .form-input:hover {
-    border-color: #ccc;
+    border-color: #ff2c55;
 }
-
+.form-input:focus-visible{
+    outline: 2px solid #ff2c55 !important;
+}
 .form-input.error {
     border-color: #f44336;
     box-shadow: 0 0 0 3px rgba(244, 67, 54, 0.1);
@@ -171,7 +179,7 @@
     transform: translateY(-50%);
     background: none;
     border: none;
-    color: #999;
+    color: white;
     cursor: pointer;
     padding: 8px;
     border-radius: 4px;
@@ -179,8 +187,8 @@
 }
 
 .password-toggle:hover {
-    color: #666;
-    background: #f5f5f5;
+    color: #ff2c55;
+    background: #000000;
 }
 
 /* Form Options */
@@ -192,7 +200,7 @@
 }
 
 .forgot-link {
-    color: #1a1a1a;
+    color: white;
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
@@ -200,15 +208,15 @@
 }
 
 .forgot-link:hover {
-    color: #1a1a1a;
+    color: #ff2c55;
 }
 
 /* Submit Button */
 .login-button {
     height: 48px;
-    background: #1a1a1a;
+    background: #000000;
     color: #fff;
-    border: none;
+    border: 2px solid #ff2c55;
     border-radius: 8px;
     font-size: 16px;
     font-weight: 600;
@@ -217,6 +225,9 @@
     margin-top: 8px;
     position: relative;
     overflow: hidden;
+}
+.login-button:hover{
+background-color: #ff2c55;
 }
 
 .submit-button:hover {
@@ -251,7 +262,7 @@
 
 .divider-text {
     font-size: 14px;
-    color: #999;
+    color: white;
     font-weight: 500;
 }
 
@@ -295,11 +306,11 @@
     text-align: center;
     margin-top: 32px;
     font-size: 14px;
-    color: #666;
+    color: white;
 }
 
 .login-link a {
-    color: #1a1a1a;
+    color: white;
     text-decoration: none;
     font-weight: 600;
     transition: color 0.2s ease;
@@ -332,6 +343,95 @@
 
     .feature-grid {
         justify-items: center;
+    }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 24px 16px;
+    }
+
+    .signin-container {
+        padding: 32px 24px;
+    }
+
+    .hero-title {
+        font-size: 36px;
+    }
+
+    .form-title {
+        font-size: 30px;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .social-buttons {
+        flex-direction: column;
+        gap: 16px;
+    }
+}
+
+/* Laptop */
+@media (min-width: 769px) and (max-width: 1199px) {
+    .main-container {
+        padding: 40px 32px;
+        justify-content: center;
+    }
+
+    .content-wrapper {
+        grid-template-columns: 1fr 480px;
+        max-width: 900px;
+        gap: 64px;
+        text-align: initial;
+    }
+
+    .hero-title {
+        font-size: 44px;
+    }
+
+    .form-title {
+        font-size: 34px;
+    }
+
+    .feature-grid {
+        gap: 24px;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .social-buttons {
+        flex-direction: row;
+        gap: 12px;
+    }
+}
+
+/* Desktop and larger */
+@media (min-width: 1200px) {
+    .main-container {
+        padding: 60px 40px;
+    }
+
+    .content-wrapper {
+        max-width: 1000px;
+    }
+
+    .hero-title {
+        font-size: 48px;
+    }
+
+    .form-title {
+        font-size: 36px;
+    }
+
+    .feature-grid {
+        gap: 24px;
+    }
+
+    .social-buttons {
+        gap: 12px;
     }
 }
 

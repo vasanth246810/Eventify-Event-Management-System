@@ -1,307 +1,316 @@
- /* Hero Section */
+/* =======================================================
+   GLOBAL CONTAINER
+======================================================= */
+.container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    box-sizing: border-box;
+}
+
+/* =======================================================
+   HERO SECTION
+======================================================= */
+.about-hero {
+    background: #000;
+    color: white;
+    padding: 8rem 0;
+    text-align: center;
+}
+
+.about-hero h1 {
+    font-size: clamp(2.8rem, 5vw, 3.8rem);
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+    color: #ff2c55;
+    animation: fadeInUp 1s ease-out;
+}
+
+.about-subtitle {
+    font-size: 1.25rem;
+    color: #cccccc;
+    max-width: 650px;
+    margin: 0 auto 3rem;
+    animation: fadeInUp 1s ease-out;
+}
+
+/* HERO STATS */
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3.5rem;
+    margin-top: 3rem;
+}
+
+.stat-number {
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: white;
+}
+
+.stat-label {
+    color: #ccc;
+    font-size: 1rem;
+}
+
+/* =======================================================
+   SECTION BASE STYLES
+======================================================= */
+.about-section {
+    padding: 6rem 0;
+}
+
+.about-section-alt {
+    background: #000;
+}
+
+.about-section-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+}
+
+.about-section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: #ff2c55;
+    font-weight: 700;
+}
+
+.about-section-subtitle {
+    max-width: 650px;
+    margin: 0 auto;
+    color: #ccc;
+    font-size: 1.1rem;
+}
+
+/* =======================================================
+   TWO COLUMN SECTION
+======================================================= */
+.about-two-column {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4rem;
+    align-items: center;
+}
+
+.about-content h3 {
+    font-size: 1.5rem;
+    color: #ff2c55;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.about-content p {
+    color: white;
+    line-height: 1.6;
+    margin-bottom: 1.2rem;
+}
+
+/* =======================================================
+   FEATURES GRID
+======================================================= */
+.about-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.about-feature-card {
+    background: #000;
+    padding: 2rem;
+    border-radius: 8px;
+    border: 2px solid #ff2c55;
+    transition: 0.3s;
+}
+
+.about-feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+}
+
+.about-feature-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 10px;
+    background: #ff2c55;
+    color: white;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.about-feature-card h4 {
+    font-size: 1.25rem;
+    color: white;
+    font-weight: 600;
+}
+
+.about-feature-card p {
+    color: #ccc;
+    font-size: 0.95rem;
+}
+
+/* =======================================================
+   VALUES SECTION
+======================================================= */
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.value-item {
+    border: 2px solid #ff2c55;
+    border-radius: 8px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    background: #000;
+}
+
+.value-icon {
+    width: 60px;
+    height: 60px;
+    background: #ff2c55;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 1.2rem;
+    font-size: 1.7rem;
+}
+
+.value-item h4 {
+    font-size: 1.2rem;
+    color: white;
+    margin-bottom: 0.8rem;
+}
+
+.value-item p {
+    color: #ccc;
+    font-size: 0.95rem;
+}
+
+/* =======================================================
+   TEAM GRID (if you use it later)
+======================================================= */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+}
+
+.team-member {
+    padding: 2rem;
+    border: 2px solid #333;
+    border-radius: 8px;
+    text-align: center;
+    background: #000;
+    transition: 0.3s;
+}
+
+.team-member:hover {
+    transform: translateY(-6px);
+    border-color: #ff2c55;
+}
+
+.team-avatar {
+    width: 75px;
+    height: 75px;
+    background: #ff2c55;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.team-role {
+    color: #ccc;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.team-bio {
+    color: #ccc;
+    font-size: 0.95rem;
+}
+
+/* =======================================================
+   CTA SECTION
+======================================================= */
+.cta {
+    text-align: center;
+    padding: 6rem 0;
+    background: #000;
+    color: white;
+}
+
+.cta h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    color: #ff2c55;
+}
+
+.cta p {
+    max-width: 650px;
+    margin: 1rem auto 2rem;
+    font-size: 1.1rem;
+    color: #ccc;
+}
+
+/* =======================================================
+   ANIMATIONS
+======================================================= */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =======================================================
+   RESPONSIVE MEDIA QUERIES
+======================================================= */
+
+/* TABLETS */
+@media (max-width: 992px) {
+    .about-two-column {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
     .about-hero {
-        background: #000000;
-        color: #ffffff;
-        padding: 8rem 0;
-        text-align: center;
-
-    }
-
-    .about-hero h1 {
-        font-size: 3.5rem;
-        font-weight: 800;
-        margin-bottom: 1.5rem;
-        line-height: 1.1;
-        animation: fadeInUp 1s ease-out;
-        color:#ff2c55;
-
-    }
-
-    .about-subtitle {
-        font-size: 1.25rem;
-        color: #cccccc;
-        max-width: 600px;
-        margin: 0 auto 3rem;
-        animation: fadeInUp 1s ease-out;
-
+        padding: 5rem 1rem;
     }
 
     .hero-stats {
-        display: flex;
-        justify-content: center;
-        gap: 4rem;
-        margin-top: 3rem;
+        flex-direction: column;
+        gap: 1.5rem;
     }
 
-    .stat {
-        text-align: center;
-    }
-
-    .stat-number {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: #ffffff;
-    }
-
-    .stat-label {
-        color: #cccccc;
-        margin-top: 0.5rem;
-    }
-
-    /* Content Sections */
     .about-section {
-        padding: 6rem 0;
+        padding: 4rem 0;
     }
 
-    .about-section-alt {
-        background: #000000;
+    .values-grid {
+        grid-template-columns: repeat(2, 1fr);
     }
+}
 
-    .about-section-header {
-        text-align: center;
-        margin-bottom: 4rem;
-    }
-
-    .about-section-title {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: #ff2c55;
-        margin-bottom: 1rem;
-    }
-
-    .about-section-subtitle {
-        font-size: 1.1rem;
-        color: white;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    .about-two-column {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 6rem;
-        align-items: center;
-    }
-
-    .about-content h3 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: #ff2c55;
-        margin-bottom: 1rem;
-    }
-
-    .about-content p {
-        color: white;
-        margin-bottom: 1.5rem;
+/* SMALL PHONES */
+@media (max-width: 480px) {
+    .values-grid {
+        grid-template-columns: 1fr;
     }
 
     .about-feature-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-        margin-top: 3rem;
+        grid-template-columns: 1fr;
     }
-
-    .about-feature-card {
-        background: #000000;
-        padding: 2rem;
-        border-radius: 8px;
-        border: 2px solid #e5e5e5;
-        transition: all 0.3s ease;
-    }
-
-    .about-feature-card:hover {
-        border-color: #000000;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        transform: translateY(-5px);
-    }
-
-    .about-feature-icon {
-        width: 48px;
-        height: 48px;
-        background: #000000;
-        color: #ffffff;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 1rem;
-        font-size: 1.5rem;
-    }
-
-    .about-feature-card h4 {
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: white;
-        margin-bottom: 0.5rem;
-    }
-
-    .about-feature-card p {
-        color: white;
-        font-size: 0.95rem;
-    }
-
-    /* Team Section */
-    .team-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 2rem;
-        margin-top: 3rem;
-    }
-
-    .team-member {
-        background: #ffffff;
-        padding: 2rem;
-        border-radius: 8px;
-        border: 2px solid #e5e5e5;
-        text-align: center;
-        transition: all 0.3s ease;
-    }
-
-    .team-member:hover {
-        border-color: #000000;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        transform: translateY(-5px);
-    }
-
-    .team-avatar {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background: #000000;
-        color: #ffffff;
-        margin: 0 auto 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        font-weight: 600;
-    }
-
-    .team-member h4 {
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: #000000;
-        margin-bottom: 0.5rem;
-    }
-
-    .team-role {
-        color: white;
-        font-weight: 500;
-        margin-bottom: 1rem;
-        font-style: italic;
-    }
-
-    .team-bio {
-        color: white;
-        font-size: 0.95rem;
-    }
-
-    /* Values Section */
-    .values-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 3rem;
-        margin-top: 3rem;
-    }
-
-    .value-item {
-        text-align: center;
-    }
-
-    .value-icon {
-        width: 64px;
-        height: 64px;
-        background: #000000;
-        color: #ffffff;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 1.5rem;
-        font-size: 1.8rem;
-    }
-
-    .value-item h4 {
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: #000000;
-        margin-bottom: 1rem;
-    }
-
-    .value-item p {
-        color: white;
-        font-size: 0.95rem;
-    }
-
-    /* CTA Section */
-    .cta {
-        background: #000000;
-        color: #ffffff;
-        text-align: center;
-        padding: 6rem 0;
-    }
-
-    .cta h2 {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: 1rem;
-    }
-
-    .cta p {
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-        color: #cccccc;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-        .container {
-            padding: 0 1rem;
-        }
-
-        .hero {
-            padding: 4rem 0;
-        }
-
-        .hero h1 {
-            font-size: 2.5rem;
-        }
-
-        .hero-stats {
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .two-column {
-            grid-template-columns: 1fr;
-            gap: 3rem;
-        }
-
-        .section {
-            padding: 4rem 0;
-        }
-
-        .section-title {
-            font-size: 2rem;
-        }
-
-        .feature-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .team-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .values-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .values-grid {
-            grid-template-columns: 1fr;
-        }
-    }
+}

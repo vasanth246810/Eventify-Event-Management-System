@@ -102,18 +102,18 @@ const handleBooking=async (e)=>{
         <div className="ticket-info">
           <strong>{events.event_title} | {events.event_location}</strong>
           <p className="text-light">Phase 1 | Fanpit</p>
-          <p className="text-light"><span id="ticket-count-text">{seats}</span>tickets</p>
+          <p className="text-light"><span id="ticket-count-text">{seats}</span> tickets</p>
         </div>
-        <div className="ticket-quantity">
-          <button type="button" id="decrease-btn" onClick={decreaseSeats}>-</button>
+          <div className="ticket-quantity">
+          <button type="button" id="decrease-btn" onClick={decreaseSeats} aria-label="Decrease seats">-</button>
           <span id="ticket-count">{seats}</span>
-          <button type="button" id="increase-btn" onClick={increaseSeats}>+</button>
+          <button type="button" id="increase-btn" onClick={increaseSeats} aria-label="Increase seats">+</button>
         </div>
         <div className="price-details">
           <div>₹<span id="ticket-price">{events.event_price}</span></div>
         </div>
       </div>
-        <button type="submit" className=" Addbtn border btn-primary"  onClick={handleAddCart}>ADD TO CART</button>
+      <button type="submit" className=" Addbtn border btn-primary"  onClick={handleAddCart} style={{minWidth:'160px'}}>ADD TO CART</button>
               </>
         ) : (
               <>
@@ -148,14 +148,14 @@ const handleBooking=async (e)=>{
             </div>
             <div>
                 <span className="text-light">Booking Fee</span>
-                <span className="text-light">₹334.18</span>
+                <span className="text-light">₹50</span>
             </div>
             <div className="total">
                 <span className="text-light">Order Total</span>
                 <span className="text-light">₹<span id="order-total">{TotalPrice}</span></span>
             </div>
             </div>
-            <button type="submit" className=" Addbtn btn-primary" onClick={handleBooking}>CONTINUE</button>
+            <button type="submit" className=" Addbtn btn-primary" onClick={handleBooking} style={{minWidth:'160px'}}>CONTINUE</button>
         </form>
        </>
         )}

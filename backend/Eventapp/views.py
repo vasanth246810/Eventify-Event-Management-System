@@ -12,111 +12,186 @@ from django.conf import settings
 from google.oauth2 import id_token
 from google.auth.transport import requests
 # from urllib.parse import urljoin
-from django.db.models import Q
+from django.db.models import Q,F,Value,CharField
+from django.db.models.functions import Concat
 
-def home():
-    return JsonResponse({"page": "Home", "content": "Welcome to Home Page"})
+
 
 def get_csrf_token(request):
     token = get_token(request)
     return JsonResponse({'csrfToken': token})
 
-def about(request):
-    return JsonResponse({"page": "About", "content": "This is the About Page"})
 
 def events(request):
     try:
-        events = list(Events.objects.values())
+        events_list = []
+        for event in Events.objects.all():
+            events_list.append({
+                "event_id": event.event_id,
+                "event_title": event.event_title,
+                "event_scheduled_date": event.event_scheduled_date,
+                "event_description": event.event_description,
+                "event_available_seats": event.event_available_seats,
+                "event_total_seats": event.event_total_seats,
+                "event_price": event.event_price,
+                "event_location": event.event_location,
+                "is_sold_out": event.is_sold_out,
+                "event_image": request.build_absolute_uri(event.event_image.url) if event.event_image else None
+            })
+        return JsonResponse(events_list, safe=False)
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)}, status=400)
-    return JsonResponse(events, safe=False)
-
+    
 def contact(request):
     return JsonResponse({"page": "Contact", "content": "Contact us at support@example.com"})
 
-def EventList(request,id):
-    # id =request.GET.get('event_id')
+def artists(request):
+    artists_qs = Artists.objects.all()
+    artists_list = []
+
+    for artist in artists_qs:
+        artists_list.append({
+            "ArtistId": artist.artistid,
+            "ArtistName": artist.artistname,
+            "Artist_image": request.build_absolute_uri(artist.artist_image.url) if artist.artist_image else None
+        })
+    return JsonResponse(artists_list,safe=False)
+
+def artist_detail(request, artistname):
+    try:
+        artist = Artists.objects.get(artistname__iexact=artistname)
+        Eventids = list(Eventartist.objects.filter(artistid=artist).values_list('event_id', flat=True))
+        events_raw = list(Events.objects.filter(event_id__in=Eventids).values())
+        events = [
+        {**ev, "event_image_url": request.build_absolute_uri('/media/' + ev["event_image"]) if ev.get("event_image") else None}
+        for ev in events_raw]
+        data = {
+            "artistid": artist.artistid,
+            "artistname": artist.artistname,
+            "artist_image": request.build_absolute_uri(artist.artist_image.url) if artist.artist_image else None,
+            "description":artist.description,
+            "events":events ,
+        }
+        return JsonResponse(data)
+    except Exception as e:
+        return JsonResponse({"error": {e}}, status=404)
+
+def EventList(request, id):
     try:
         events = list(Events.objects.filter(event_id=id).values())
+        artist_ids = Eventartist.objects.filter(event_id=id).values_list('artistid', flat=True)
+        artists = list(Artists.objects.filter(artistid__in=artist_ids).values())
         for event in events:
             image_path = event.get('event_image')
             if image_path:
                 event['event_image'] = request.build_absolute_uri('/media/' + image_path)
-            else:
-                event['event_image'] = None
+        for artist in artists:
+            img = artist.get('artist_image')
+            if img:
+                artist['artist_image'] = request.build_absolute_uri('/media/' + img)
+
+        result = {
+            "events": events,
+            "artists": artists
+        }
+        return JsonResponse(result, safe=False)
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)}, status=400)
-    return JsonResponse(events, safe=False)
 
 def BookingTickets(request, id):
     try:
         event = Events.objects.get(event_id=id)
-    except Events.DoesNotExist:
-        return JsonResponse({"error": "Event not found"}, status=404)
-    username = request.session.get('username', '')
-    emailaddress = request.session.get('email', '')
-    seats_str = request.GET.get('seats', '1')
-    try:
-        seats = int(seats_str)
-    except ValueError:
-        seats = 1
-    request.session['selected_seats'] = seats
-    if request.method == 'GET':
-        Addtocart = True
-        Addtocart = not Addtocart if request.GET.get("toggle") == "1" else Addtocart
-        EventId = request.GET.get('events_id', str(id))
-        events_list = [model_to_dict(event)]
-        response = {
-            "events": events_list,
-            "Addtocart": Addtocart,
-            "EventId": EventId,
-            "booking_details": None,
-            "emailaddress": emailaddress,
-            "username": username,
-            "seats": seats
-        }
-        return JsonResponse(response, safe=False)
-    elif request.method == 'POST':
+        username = request.session.get('username', '')
+        emailaddress = request.session.get('email', '')
+        seats_str = request.GET.get('seats', '1')
         try:
-            data = json.loads(request.body)
-        except json.JSONDecodeError:
-            return JsonResponse({"error": "Invalid JSON data"}, status=400)
+            seats = int(seats_str)
+        except ValueError:
+            seats = 1
+        request.session['selected_seats'] = seats
+        if request.method == 'GET':
+            Addtocart = True
+            Addtocart = not Addtocart if request.GET.get("toggle") == "1" else Addtocart
+            EventId = request.GET.get('events_id', str(id))
+            # Convert event instance to dict with event_image as URL or None
+            event_dict = {
+                "event_id": event.event_id,
+                "event_title": event.event_title,
+                "event_scheduled_date": event.event_scheduled_date,
+                "event_description": event.event_description,
+                "event_available_seats": event.event_available_seats,
+                "event_total_seats": event.event_total_seats,
+                "event_price": event.event_price,
+                "event_location": event.event_location,
+                "is_sold_out": event.is_sold_out,
+                "event_image": request.build_absolute_uri(event.event_image.url) if event.event_image else None
+            }
+            events_list = [event_dict]
+            response = {
+                "events": events_list,
+                "Addtocart": Addtocart,
+                "EventId": EventId,
+                "booking_details": None,
+                "emailaddress": emailaddress,
+                "username": username,
+                "seats": seats
+            }
+            return JsonResponse(response, safe=False)
+        elif request.method == 'POST':
+            try:
+                data = json.loads(request.body)
+            except json.JSONDecodeError:
+                return JsonResponse({"error": "Invalid JSON data"}, status=400)
+            form = TicketBookingForm(data)
+            if not form.is_valid():
+                return JsonResponse({"error": "Invalid form data", "details": form.errors}, status=400)
+            requested_seats = form.cleaned_data['seats']
+            if event.event_available_seats < requested_seats:
+                return JsonResponse({"error": "Not enough seats available"}, status=400)
+            total_price = requested_seats * event.event_price
+            booking = form.save(commit=False)
+            booking.event_id = id
+            booking.booking_id = uuid.uuid4().hex[:12].upper()
+            booking.price = total_price
+            booking.save()
+            # Update event seats
+            event.event_available_seats -= requested_seats
+            event.save(update_fields=['event_available_seats'])
 
-        form = TicketBookingForm(data)
-        if not form.is_valid():
-            return JsonResponse({"error": "Invalid form data", "details": form.errors}, status=400)
-        requested_seats = form.cleaned_data['seats']
-        if event.event_available_seats < requested_seats:
-            return JsonResponse({"error": "Not enough seats available"}, status=400)
-        total_price = requested_seats * event.event_price
-        booking = form.save(commit=False)
-        booking.event_id = id
-        booking.booking_id = uuid.uuid4().hex[:12].upper()
-        booking.price = total_price
-        booking.save()
-        # Update event seats
-        event.event_available_seats -= requested_seats
-        event.save(update_fields=['event_available_seats'])
+            # Send booking confirmation email
 
-        # Send booking confirmation email
-        TicketEmail(booking, event)
+            # Get booking details as dict
+            booking_details = Bookingdetails.objects.filter(booking_id=booking.booking_id).values().first()
+            event_dict = {
+                "event_id": event.event_id,
+                "event_title": event.event_title,
+                "event_scheduled_date": event.event_scheduled_date,
+                "event_description": event.event_description,
+                "event_available_seats": event.event_available_seats,
+                "event_total_seats": event.event_total_seats,
+                "event_price": event.event_price,
+                "event_location": event.event_location,
+                "is_sold_out": event.is_sold_out,
+                "event_image": request.build_absolute_uri(event.event_image.url) if event.event_image else None
+            }
+            events_list = [event_dict]
+            TicketEmail(booking, event)
+            response = {
+                "events": events_list,
+                "Addtocart": False,
+                "EventId": str(id),
+                "booking_details": booking_details,
+                "emailaddress": emailaddress,
+                "username": username,
+                "seats": requested_seats,
+                "message": "Booking successful"
+            }
+            return JsonResponse(response, safe=False)
+        else:
+            return JsonResponse({"error": "Method not allowed"}, status=405)
+    except Exception as e:
+        return JsonResponse({"error":{e}}, status=404)
 
-        # Get booking details as dict
-        booking_details = Bookingdetails.objects.filter(booking_id=booking.booking_id).values().first()
-        events_list = [model_to_dict(event)]
-        response = {
-            "events": events_list,
-            "Addtocart": False,
-            "EventId": str(id),
-            "booking_details": booking_details,
-            "emailaddress": emailaddress,
-            "username": username,
-            "seats": requested_seats,
-            "message": "Booking successful"
-        }
-        return JsonResponse(response, safe=False)
-    else:
-        return JsonResponse({"error": "Method not allowed"}, status=405)
 
 def BookedConfrimation(request, id):
     try:
@@ -279,23 +354,29 @@ from django.views.decorators.csrf import csrf_exempt
 def filter_events(request):
     data = json.loads(request.body)
     filters = data.get("filters", [])
-
     qs = Events.objects.all()
-
     date_query = Q()
-
-    # OR logic for dates
     if 1 in filters:   # Today
         date_query |= Q(event_scheduled_date__date=date.today())
-
     if 2 in filters:   # Tomorrow
         date_query |= Q(event_scheduled_date__date=date.today() + timedelta(days=1))
-
     if date_query:
         qs = qs.filter(date_query)
-
-    # AND logic for distance
     if 3 in filters:   # Under 10 KM
         qs = qs.filter(event_distance__lte=10)
+    events_list = []
+    for event in qs:
+        events_list.append({
+            "event_id": event.event_id,
+            "event_title": event.event_title,
+            "event_scheduled_date": event.event_scheduled_date,
+            "event_description": event.event_description,
+            "event_available_seats": event.event_available_seats,
+            "event_total_seats": event.event_total_seats,
+            "event_price": event.event_price,
+            "event_location": event.event_location,
+            "is_sold_out": event.is_sold_out,
+            "event_image": request.build_absolute_uri(event.event_image.url) if event.event_image else None
+        })
 
-    return JsonResponse(list(qs.values()), safe=False)
+    return JsonResponse(events_list, safe=False)

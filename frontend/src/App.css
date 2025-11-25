@@ -1,6 +1,7 @@
-body {
-    font-family: 'Inter', sans-serif;
-    background: #000000;
-    color: #262626;
-    min-height: 100vh;
+
+@font-face {
+  font-family: 'WickHop';
+  src: url('fonts/WickHop.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
 }

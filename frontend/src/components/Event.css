@@ -11,6 +11,226 @@
         background: #000000;
     }
 
+    /* Responsive adjustments */
+    @media (max-width: 1400px) {
+        .Event-container {
+            padding: 30px 12px;
+        }
+        .hero-stats {
+            gap: 32px;
+        }
+        .stat-number-events {
+            font-size: 28px;
+        }
+        .stat-label-events {
+            font-size: 12px;
+        }
+    }
+
+    @media (max-width: 1200px) {
+        .Event-container {
+            padding: 25px 10px;
+        }
+
+        .card,
+        .custom-card,
+        .event-card {
+            width: 90% !important;
+            max-width: 280px;
+            height: auto !important;
+        }
+
+        .event-image {
+            height: 350px;
+        }
+
+        .carousel-item {
+            height: 90vh;
+        }
+
+        .event-title {
+            font-size: 18px;
+        }
+
+        .event-price {
+            font-size: 20px;
+        }
+
+        .hero-subtitle {
+            max-width: 90%;
+            font-size: 18px;
+        }
+
+        .hero-stats {
+            gap: 24px;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .Event-container {
+            padding: 20px 8px;
+        }
+
+        .card,
+        .custom-card,
+        .event-card {
+            width: 100% !important;
+            max-width: 100%;
+            height: auto !important;
+        }
+
+        .hero-section {
+            margin-bottom: 60px;
+            padding: 0 10px;
+        }
+
+        .hero-stats {
+            flex-wrap: wrap;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .stat-number-events {
+            font-size: 24px;
+        }
+
+        .stat-label-events {
+            font-size: 11px;
+        }
+
+        .carousel-item {
+            height: 70vh;
+        }
+
+        .event-image {
+            height: 280px;
+            width: 100%;
+        }
+
+        .event-title {
+            font-size: 16px;
+        }
+
+        .event-price {
+            font-size: 18px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .Event-container {
+            padding: 15px 6px;
+        }
+
+        .hero-section {
+            margin-bottom: 50px;
+        }
+
+        .hero-stats {
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .stat-number-events {
+            font-size: 20px;
+        }
+
+        .stat-label-events {
+            font-size: 10px;
+        }
+
+        .carousel-item {
+            height: 60vh;
+        }
+
+        .event-image {
+            height: 220px;
+            width: 100%;
+        }
+
+        .event-title {
+            font-size: 15px;
+        }
+
+        .event-price {
+            font-size: 16px;
+        }
+
+        .filter-button {
+            padding: 5px 8px;
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .hero-subtitle {
+            font-size: 16px;
+            max-width: 95%;
+        }
+
+        .carousel-item {
+            height: 55vh;
+        }
+
+        .card,
+        .custom-card,
+        .event-card {
+            border-radius: 16px;
+        }
+
+        .event-title {
+            font-size: 14px;
+        }
+
+        .event-price {
+            font-size: 15px;
+        }
+
+        .FilterButton {
+            font-size: 13px;
+            padding: 4px 6px;
+        }
+    }
+
+    /* Override fixed inline width and height on event image using class */
+    .carousel-item .col-md-6.text-center img {
+        width: 100% !important;
+        max-width: 334px;
+        /* height: auto !important; */
+        object-fit: cover;
+        border-radius: 1rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+
+    /* Smaller button in carousel */
+    .carousel-item .btn {
+        width: auto !important;
+        padding: 1rem 2.5rem !important;
+        font-size: 1.2rem !important;
+        border-radius: 1rem !important;
+    }
+
+    /* Wrap and center filter buttons */
+    .d-flex.gap-2 {
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-left: 0 !important;
+        margin-top: 1rem;
+    }
+
+    /* Fix Artist images and text overflow on small devices */
+    .artist-circle img {
+        width: 100% !important;
+        max-width: 190px;
+        /* height: auto !important; */
+    }
+
+    .artist-circle p {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
     .hero-section {
         text-align: center;
         margin-bottom: 80px;
