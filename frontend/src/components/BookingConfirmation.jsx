@@ -1,6 +1,6 @@
 import  { useEffect, useState } from "react";
 import axios from "axios";
-import "./BookingConfirmation.css";
+import "../components/Styles/BookingConfirmation.css";
 import { useParams } from "react-router-dom";
 import {QRCodeSVG }  from "qrcode.react";
 

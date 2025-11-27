@@ -173,6 +173,7 @@
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 15px;
+    max-width: 800px;
 }
 
 .venue-address {
@@ -245,9 +246,6 @@
 
 /* General font size adjustments for better visual hierarchy */
 
-.event-title {
-    font-size: 2rem;
-}
 
 .event-categories {
     font-size: 1rem;

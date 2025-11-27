@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./Signup.css";
+import "../components/Styles/Signup.css";
 import axios from "axios";
 export default function SignUp() {
   const [formData, setFormData] = useState({

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState,useEffect } from 'react';
-import "./Event.css"
+import "../components/Styles/Event.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { Link } from 'react-router-dom';
@@ -167,11 +167,11 @@ const handleClick = async (index) => {
     <div className="events-container">
     <div className="artists-section mb-5">
         <h2 className="text-center mb-4">Featured Artists</h2>
-        <div className="row justify-content-center">
+        <div className="d-flex justify-content-center">
             {Artists.map((artists)=>(
                <div className="col-auto" key={artists.artistid}>
                 <Link to={`/artists/${artists.ArtistName}`} style={{textDecoration:"none",color:"inherit"}}>
-                  <div className="artist-circle mx-3">
+                  <div className="artist-circle me-4">
                       <img src={artists.Artist_image} alt={artists.ArtistName} className="rounded-circle" width="190" height="190"/>
                       <p className="text-center mt-2 fw-bold">{artists.ArtistName}</p>
                   </div>

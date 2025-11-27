@@ -1,7 +1,7 @@
 import axios from "axios";
 import  { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import "./BookingTickets.css";
+import "../components/Styles/BookingTickets.css";
 
 const API_BASE = "http://localhost:8000/api";
 

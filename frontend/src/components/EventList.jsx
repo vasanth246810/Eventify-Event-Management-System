@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import "./EventList.css";
+import "../components/Styles/EventList.css";
 import { useParams, Link } from "react-router-dom";
 import PopupGfg from './Popup';
 
@@ -22,7 +22,6 @@ export default function EventList() {
                 const Artist=response.data.artists || [] ;
                 setEvent(eventData);
                 setArtists(Artist)
-                console.log(eventData)
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching event:", error);
@@ -138,7 +137,7 @@ export default function EventList() {
                 <h2>Venue Information</h2>
                 <div className="venue-content">
                     <div className="venue-address">
-                        Venue Address
+                       {event.location_name}
                     </div>
                     <a href={`https://www.google.com/maps?q=${event.latitude},${event.longitude}` }
                        target="_blank" 

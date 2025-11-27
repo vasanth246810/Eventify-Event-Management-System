@@ -1,23 +1,7 @@
-import axios from 'axios';
-import { useState,useEffect } from 'react';
-import './About.css'; // Assuming you have a CSS file for styling
-
+import '../components/Styles/About.css';
 
 export default function About(){
-    // const[data,setData]=useState([]);
 
-    // useEffect(()=>{
-    //     const fetchdata=async()=>{
-    //         try {
-    //             let response=await axios.get("http://localhost:8000/api/about/");
-    //             setData(response.data);
-    //         } catch (error) {
-    //             console.error('Error fetching about data:', error);
-    //             setData({page: 'Error', content: 'Failed to load data'});
-    //         }
-    //     };
-    //     fetchdata();
-    // }, [])
     return(
  <div>
  <section id="about" class="about-hero">

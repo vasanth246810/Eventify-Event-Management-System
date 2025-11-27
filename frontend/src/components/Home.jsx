@@ -1,23 +1,8 @@
 
-import axios from 'axios';
-import { useState,useEffect } from 'react';
-import './Home.css'
+import '../components/Styles/Home.css'
+// ./src/components/Home.jsx 4:0-27
 
 export default function Home(){
-    // const[data,setData]=useState([]);
-
-    // useEffect(()=>{
-    //     const fetchdata=async()=>{
-    //         try {
-    //             let response=await axios.get("http://localhost:8000/api/home");
-    //             setData(response.data);
-    //         } catch (error) {
-    //             console.error('Error fetching home data:', error);
-    //             setData({page: 'Error', content: 'Failed to load data'});
-    //         }
-    //     };
-    //     fetchdata();
-    // }, [])
     return(
  <div>
 <section class="home-hero">
@@ -129,7 +114,7 @@ export default function Home(){
                 <div class="home-testimonial-author">
                     <div class="home-author-avatar">SM</div>
                     <div class="home-author-info">
-                        <h5>Sarah Mitchell</h5>
+                        <h5 className='text-light'>Sarah Mitchell</h5>
                         <p>CEO, TechCorp Solutions</p>
                     </div>
                 </div>

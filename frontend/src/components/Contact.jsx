@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
-import "./Contact.css";
+import "../components/Styles/Contact.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Contact(){
@@ -72,13 +72,13 @@ export default function Contact(){
     return(
       <div>
       <section className="contact-hero">
-    <div className="container">
+    <div className="container" >
         <h1>Get In Touch</h1>
         <p className="contact-subtitle">Ready to create an unforgettable event? We're here to help bring your vision to life. Contact us today for a free consultation.</p>
     </div>
 </section>
 <section className="section section-alt">
-    <div className="container">
+    <div className="container" style={{maxWidth:"1200px"}}>
         <div className="main-content">
             <div className="contact-form">
                 <h2 style={{color: "#ffffff", marginBottom: "2rem", fontSize: "2rem"}}>Send Us a Message</h2>

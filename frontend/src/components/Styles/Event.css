@@ -287,13 +287,13 @@
     .empty-title {
         font-size: 24px;
         font-weight: 700;
-        color: #171717;
+        color: #ff2c55;
         margin-bottom: 16px;
     }
 
     .empty-subtitle {
         font-size: 16px;
-        color: #525252;
+        color: white;
         max-width: 400px;
         margin: 0 auto;
     }
@@ -483,17 +483,6 @@
         box-shadow: var(--shadow-lg);
     }
 
-    .empty-title {
-        font-size: 24px;
-        font-weight: 700;
-        color: #171717;
-        margin-bottom: 16px;
-    }
-
-    .empty-subtitle {
-        font-size: 16px;
-        color: #525252;
-    }
 
     /* Responsive Design */
     @media (max-width: 1200px) {
