@@ -3,9 +3,10 @@ node_modules/
 build/
 dist/
 
-# dotenv
 .env
 *.env
+.env.local
+.env.production
 
 # logs
 npm-debug.log*
