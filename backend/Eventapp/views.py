@@ -1,6 +1,6 @@
 from django.utils import timezone
 from datetime import *
-import json,redis
+import json
 import uuid
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
