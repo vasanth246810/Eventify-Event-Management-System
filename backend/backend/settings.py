@@ -28,8 +28,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    os.getenv("RAILWAY_PUBLIC_DOMAIN"),
+    ".railway.app"
+]
 
 # Application definition
 
@@ -147,6 +151,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://*.railway.app",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -154,6 +159,7 @@ CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://*.railway.app",
 ]
 
 MEDIA_URL = '/media/'
