@@ -153,14 +153,11 @@ def BookingTickets(request, id):
             booking.event_id = id
             booking.booking_id = uuid.uuid4().hex[:12].upper()
             booking.price = total_price
+            booking.booking_date=datetime.now().strftime("%a, %b %d, %Y, %#I:%M %p")
             booking.save()
             # Update event seats
             event.event_available_seats -= requested_seats
             event.save(update_fields=['event_available_seats'])
-
-            # Send booking confirmation email
-
-            # Get booking details as dict
             booking_details = Bookingdetails.objects.filter(booking_id=booking.booking_id).values().first()
             event_dict = {
                 "event_id": event.event_id,
@@ -207,7 +204,8 @@ def BookedConfrimation(request, id):
                 "booking_id": booking.booking_id,
                 "email": booking.email,
                 "seats": booking.seats,
-                "price": booking.price
+                "price": booking.price,
+                "booking_date": booking.booking_date
             }
         }
         return JsonResponse(response)
@@ -304,14 +302,12 @@ def google_login(request):
             except ValueError as e:
                 return JsonResponse({"success": False, "error": "Invalid ID token"}, status=400)
 
-            # Check if user exists with this google_id
             user = UserProfile.objects.filter(google_id=google_id).first()
             if not user:
-                # Check if user exists with this email
                 user = UserProfile.objects.filter(email=email).first()
                 if user:
-                    # Link Google account to existing user
                     user.google_id = google_id
+                    user.profile_image=idinfo.get("picture")
                     user.save()
                 else:
                     return JsonResponse({"success": False, "error": "user does not exist"}, status=400)
@@ -328,6 +324,7 @@ def google_login(request):
                     "username": user.username,
                     "email": user.email,
                     "is_admin": user.is_admin,
+                    "profile": user.profile_image,
                 },
                 "next": next_url,
             })
@@ -380,3 +377,37 @@ def filter_events(request):
         })
 
     return JsonResponse(events_list, safe=False)
+
+
+def Profile(request):
+    try:
+        username = request.session.get('username', '')
+        emailaddress = request.session.get('email', '')
+        userDetails = UserProfile.objects.filter(email=emailaddress).first()
+        user_data = model_to_dict(userDetails)
+        bookings=Bookingdetails.objects.filter(email=emailaddress)
+        events=Events.objects.filter(event_id__in=list(bookings.values_list('event_id',flat=True)))
+        events_dict = {event.event_id: event for event in events}
+        booking_list = []
+        for booking in bookings:
+            event = events_dict.get(booking.event_id)
+            if event:
+                booking_list.append({
+                    "event_id": event.event_id,
+                    "event_title": event.event_title,
+                    "event_scheduled_date": event.event_scheduled_date,
+                    "event_description": event.event_description,
+                    "event_available_seats": event.event_available_seats,
+                    "event_total_seats": event.event_total_seats,
+                    "event_price": event.event_price,
+                    "event_location": event.event_location,
+                    "event_image": request.build_absolute_uri(event.event_image.url) if event.event_image else None,
+                    "booking_id": booking.booking_id,
+                    "email": booking.email,
+                    "seats": booking.seats,
+                    "price": booking.price
+
+                })
+    except Exception as e:
+        return JsonResponse({"error": {e}}, status=404)
+    return JsonResponse({ 'bookings': booking_list,'user': user_data}, safe=False)

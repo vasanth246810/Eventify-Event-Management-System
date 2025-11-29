@@ -51,7 +51,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',  
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'allauth.account.middleware.AccountMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -82,14 +82,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASENAME = 'eventbookingdb'
+DATABASENAME = 'railway'
 DATABASEUSER = 'root'
 DATABASEPASSWORD = os.getenv("DB_PASSWORD")
-DATABASEHOST = 'localhost'
+DATABASEHOST = 'mysql-production-0b7f.up.railway.app'
 DATABASEPORT = '3306'
 
 DATABASES = {

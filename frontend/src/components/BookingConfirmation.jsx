@@ -15,7 +15,8 @@ const[booking_details,setBookingDetails]=useState({
     booking_id: '',
     email: '',
     seats: '',
-    price: ''
+    price: '',
+    booking_date:''
 });
 function getDate(){
   const today = new Date();
@@ -133,7 +134,7 @@ return(
 
         <div className="bookconfirm-details">
           <div className="bookconfirm-section-title">BOOKING DATE & TIME</div>
-          <div className="bookconfirm-section-content">{formattedDate}</div>
+          <div className="bookconfirm-section-content">{booking_details.booking_date}</div>
 
           <div className="bookconfirm-section-title">PAYMENT METHOD</div>
           <div className="bookconfirm-section-content">Credit Card/Debit Card</div>

@@ -106,6 +106,8 @@ export default function LoginPage({ setUsername }) {
         setUsername(username);
         sessionStorage.setItem('emailaddress', res.data.user.email);
         sessionStorage.setItem('username', username);
+        sessionStorage.setItem('profile', res.data.user.profile);
+
         
         const nextParam = searchParams.get('next');
         const redirectTo = nextParam || location.state?.from?.pathname || "/";

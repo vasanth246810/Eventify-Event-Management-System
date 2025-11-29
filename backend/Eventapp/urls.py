@@ -16,5 +16,6 @@ urlpatterns = [
     path("google_login/", views.google_login),
     path("get_user/", views.get_user),
     path('events/filter/', views.filter_events),
+    path('profile/', views.Profile),
     # path("BookedConfrimation/<int:id>", views.BookedConfrimation),
 ]

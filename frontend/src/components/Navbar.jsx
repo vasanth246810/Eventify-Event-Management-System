@@ -3,10 +3,12 @@ import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
 import '../components/Styles/Navbar.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import { useState } from 'react';
 
 function Navbar({ username }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const [profile, setProfile] = useState(sessionStorage.getItem('profile') || '');
 
   return (
     <nav className="navbar navbar-expand-lg navbar-custom">
@@ -38,7 +40,7 @@ function Navbar({ username }) {
               <NavLink className="nav-link custom-link" to="/about">About Us</NavLink>
             </li>
             <li className="nav-item">
-              <NavLink 
+              <NavLink
                   to="/events"
                   className={({ isActive }) =>
                     isActive || location.pathname.startsWith("/event-list/")
@@ -65,7 +67,7 @@ function Navbar({ username }) {
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  <i className="fas fa-user-circle me-2"></i>
+                  <img src={profile} className='rounded me-2' alt="profile" height="16" width="16" />
                   <span>{username}</span>
                 </button>
                 <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">

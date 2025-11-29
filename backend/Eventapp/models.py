@@ -9,7 +9,9 @@ class UserProfile(models.Model):
     email= models.EmailField(max_length=254, blank=True)
     password = models.CharField(max_length=128) 
     is_admin = models.BooleanField(default=False)
-    google_id = models.CharField(max_length=255, unique=True, null=True, blank=True)  # Added google_id field
+    google_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
+    profile_image = models.URLField(blank=True, null=True)
+  # Added google_id field
 
     def __str__(self):
         return self.username
@@ -62,6 +64,7 @@ class Bookingdetails(models.Model):
     event_id = models.IntegerField(db_column='Event_id', blank=True, null=True)
     booking_id = models.CharField(db_column='Booking_Id',max_length=100, blank=True, null=True,unique=True)  # Field name made lowercase.
     price = models.IntegerField(blank=True, null=True)
+    booking_date = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
         managed = False
