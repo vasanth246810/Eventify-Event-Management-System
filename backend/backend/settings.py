@@ -97,12 +97,12 @@ DATABASEPORT = '3306'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': DATABASENAME,
-        'USER': DATABASEUSER,
-        'PASSWORD': DATABASEPASSWORD,
-        'HOST': DATABASEHOST,
-        'PORT': DATABASEPORT,
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": os.getenv("MYSQLDATABASE"),
+        "USER": os.getenv("MYSQLUSER"),
+        "PASSWORD": os.getenv("MYSQLPASSWORD"),
+        "HOST": os.getenv("MYSQLHOST"),
+        "PORT": os.getenv("MYSQLPORT", "3306"),
     }
 }
 

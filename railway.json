@@ -1,9 +1,9 @@
 {
-  "$schema": "https://railway.app/railway.schema.json",
   "build": {
-    "command": "pip install -r requirements.txt"
+    "builder": "NIXPACKS"
   },
   "deploy": {
-    "command": "python backend/manage.py migrate && python backend/manage.py collectstatic --noinput && gunicorn backend.wsgi --chdir backend --bind 0.0.0.0:$PORT"
+    "startCommand": "gunicorn backend.wsgi --chdir backend --bind 0.0.0.0:$PORT",
+    "preDeploy": "pip install -r requirements.txt && python backend/manage.py migrate && python backend/manage.py collectstatic --noinput"
   }
 }
