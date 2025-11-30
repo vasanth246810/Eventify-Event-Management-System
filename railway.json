@@ -4,7 +4,7 @@
     "buildCommand": "pip install -r requirements.txt"
   },
   "deploy": {
-    "workdir": "backend",
+    "workdir": ".",
     "startCommand": "gunicorn backend.wsgi --bind 0.0.0.0:$PORT",
     "preDeploy": "python manage.py migrate && python manage.py collectstatic --noinput"
   }
