@@ -8,7 +8,7 @@ export default function ArtistInfo() {
 
 
   useEffect(() => {
-    axios.get(`http://localhost:8000/api/artists/${name}`)
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/artists/${name}`)
       .then(response => setArtist(response.data))
       .catch(error => console.error(error));
   }, [name]);

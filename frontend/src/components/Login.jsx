@@ -83,14 +83,14 @@ export default function LoginPage({ setUsername }) {
     const id_token = response.credential;
     try {
       const csrfResponse = await axios.get(
-        "http://localhost:8000/api/get-csrf-token/", 
+        `${process.env.REACT_APP_API_BASE_URL}/api/get-csrf-token/`, 
         { withCredentials: true }
       );
       const csrfToken = csrfResponse.data.csrfToken;
       const lastVisited = sessionStorage.getItem("lastVisited") || "/";
       
       const res = await axios.post(
-        "http://localhost:8000/api/google_login/",
+        `${process.env.REACT_APP_API_BASE_URL}/api/google_login/`,
         { id_token, next: lastVisited },
         {
           headers: {
@@ -146,14 +146,14 @@ export default function LoginPage({ setUsername }) {
     if (valid) {
       try {
         const csrfResponse = await axios.get(
-          "http://localhost:8000/api/get-csrf-token/", 
+          `${process.env.REACT_APP_API_BASE_URL}/api/get-csrf-token/`, 
           { withCredentials: true }
         );
         const csrfToken = csrfResponse.data.csrfToken;
         const lastVisited = sessionStorage.getItem("lastVisited") || "/";
         
         const response = await axios.post(
-          "http://localhost:8000/api/Login/",
+            `${process.env.REACT_APP_API_BASE_URL}/api/Login/`,
           { email, password, next: lastVisited },
           {
             headers: {

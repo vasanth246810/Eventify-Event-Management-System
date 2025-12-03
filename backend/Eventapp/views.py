@@ -40,6 +40,7 @@ def events(request):
             })
         return JsonResponse(events_list, safe=False)
     except Exception as e:
+        print(e)
         return JsonResponse({"success": False, "error": str(e)}, status=400)
     
 def contact(request):

@@ -18,7 +18,7 @@ export default function Contact(){
     useEffect(() => {
         const fetchdata = async () => {
             try {
-                let response = await axios.get("http://localhost:8000/api/contact/");
+                let response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/contact/`);
                 setData(response.data);
             } catch (error) {
                 console.error('Error fetching contact data:', error);

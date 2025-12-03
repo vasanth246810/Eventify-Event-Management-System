@@ -17,7 +17,7 @@ export default function EventList() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/api/event-list/${id}`);
+                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/event-list/${id}`);
                 const eventData = response.data.events?.length > 0 ? response.data.events[0] : null;
                 const Artist=response.data.artists || [] ;
                 setEvent(eventData);

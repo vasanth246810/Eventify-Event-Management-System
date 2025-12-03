@@ -3,7 +3,6 @@ import  { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../components/Styles/BookingTickets.css";
 
-const API_BASE = "http://localhost:8000/api";
 
 export default function BookingTickets(){
 const[events,setEvents]=useState(null);
@@ -17,7 +16,7 @@ const navigate = useNavigate();
 useEffect(()=>{
     const fetchdata=async()=>{
         try{
-        const response=await axios.get(`${API_BASE}/BookingTickets/${id}`, { withCredentials: true });
+        const response=await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/BookingTickets/${id}`, { withCredentials: true });
         setEvents(response.data.events[0]);
         setAddtocart(response.data.Addtocart);
         setSeats(response.data.seats || 1);
@@ -46,7 +45,7 @@ const TotalPrice=(seats * events.event_price + 334.18).toFixed(2);
 
 const handleAddCart=async ()=>{
     try{
-    const toggle=await axios.get(`${API_BASE}/BookingTickets/${id}`,{
+    const toggle=await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/BookingTickets/${id}`,{
         params:{
             toggle:1,
             seats:seats,
@@ -70,10 +69,10 @@ catch(error){
 const handleBooking=async (e)=>{
     e.preventDefault();
     try{
-        const csrfResponse = await axios.get(`${API_BASE}/get-csrf-token/`, { withCredentials: true });
+        const csrfResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/get-csrf-token/`, { withCredentials: true });
         const csrfToken = csrfResponse.data.csrfToken;
         const response = await axios.post(
-            `${API_BASE}/BookingTickets/${id}`,
+            `${process.env.REACT_APP_API_BASE_URL}/api/BookingTickets/${id}`,
             {
                 username: username,
                 email: emailaddress,

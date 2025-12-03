@@ -29,7 +29,7 @@ function getDate(){
 useEffect(()=>{
     const fetchdata=async()=>{
         try{
-        const response=await axios.get(`http://localhost:8000/api/BookedConfrimation/${id}`);
+        const response=await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/BookedConfrimation/${id}`);
         setEvents(response.data);
         setBookingDetails(response.data.booking_details);
         setLoading(false);

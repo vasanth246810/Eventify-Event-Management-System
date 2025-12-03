@@ -324,7 +324,7 @@ body {
   background: none;
   border: none;
   border-bottom: 3px solid transparent;
-  color: #6b7280;
+  color: white;
   font-weight: 500;
   cursor: pointer;
 }
@@ -409,7 +409,7 @@ body {
 }
 
 .empty-state p {
-  color: #6b7280;
+  color:white;
 }
 
 .bookings-list{

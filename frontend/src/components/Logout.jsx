@@ -9,11 +9,11 @@ const Logout = ({ setUsername }) => {
   useEffect(() => {
     const handleLogout = async () => {
       try {
-        const csrfResponse = await axios.get("http://localhost:8000/api/get-csrf-token/", { withCredentials: true });
+        const csrfResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/get-csrf-token/`, { withCredentials: true });
         const csrfToken = csrfResponse.data.csrfToken;
 
         await axios.post(
-          "http://localhost:8000/api/Logout/",
+          `${process.env.REACT_APP_API_BASE_URL}/api/Logout/`,
           {},
           {
             headers: {

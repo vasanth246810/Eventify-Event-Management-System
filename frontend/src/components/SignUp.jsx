@@ -63,12 +63,12 @@ export default function SignUp() {
 
       try {
         // Fetch CSRF token
-        const csrfResponse = await axios.get("http://localhost:8000/api/get-csrf-token/", { withCredentials: true });
+        const csrfResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/get-csrf-token/`, { withCredentials: true });
         const csrfToken = csrfResponse.data.csrfToken;
 
         // Submit form with CSRF token
         const response = await axios.post(
-          "http://localhost:8000/api/SignUp/",
+          `${process.env.REACT_APP_API_BASE_URL}/api/SignUp/`,
           formData,
           {
             headers: {

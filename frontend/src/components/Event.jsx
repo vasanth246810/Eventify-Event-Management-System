@@ -14,7 +14,7 @@ export default function Event(){
 useEffect(() => {
 
   const fetchEvents = async () => {
-    axios.get("http://localhost:8000/api/events/")
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/events/`)
       .then(response => {
         setEvents(response.data);
       })
@@ -22,7 +22,7 @@ useEffect(() => {
   };
 
   const fetchArtists = async () => {
-    axios.get("http://localhost:8000/api/artists/")
+    axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/artists/`)
       .then(response => {
         // console.log("Artists API:", response.data);
         setArtists(response.data);
@@ -52,7 +52,7 @@ const handleClick = async (index) => {
   setActiveButton(updated);
 
   try {
-    const response = await axios.post("http://localhost:8000/api/events/filter/", {
+    const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/events/filter/`, {
       filters: updated,
     });
     setEvents(response.data);
@@ -155,7 +155,7 @@ const handleClick = async (index) => {
         </div>
       ) : (
         // Empty State
-        <div className="empty-state mt-5 text-center p-5 bg-white rounded-3 shadow">
+        <div className="empty-state-events mt-5 text-center p-5 rounded-3 shadow">
           <h2 className="empty-title">No Events Available</h2>
           <p className="empty-subtitle">
             We're preparing amazing experiences for you. Check back soon to discover incredible events.
@@ -216,7 +216,7 @@ const handleClick = async (index) => {
   </div>
 </div>
    ):( 
-        <div className="empty-state">
+        <div className="empty-state-events mt-5 text-center p-5 rounded-3 shadow">
             <h2 className="empty-title">No Events Available</h2>
             <p className="empty-subtitle">
                 We're preparing amazing experiences for you. Check back soon to discover incredible events.
