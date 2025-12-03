@@ -37,7 +37,6 @@ ENV/
 local_settings.py
 db.sqlite3
 /media/
-media/
 staticfiles/
 static/
 
