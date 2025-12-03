@@ -29,12 +29,11 @@ class Events(models.Model):
     event_location = models.CharField(max_length=200, blank=True, null=True)
     event_image = models.ImageField(upload_to='event_images/', blank=True, null=True)
     is_sold_out = models.BooleanField(default=False)
-    location_name = models.CharField(max_length=255)
-    latitude = models.DecimalField(max_digits=9, decimal_places=6)
-    longitude = models.DecimalField(max_digits=9, decimal_places=6)
+    location_name = models.CharField(max_length=255,null=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6,null=True)
 
     class Meta: 
-        managed = False
         db_table = 'eventbookingapp_events'
 
 class Artists(models.Model):
@@ -45,7 +44,6 @@ class Artists(models.Model):
 
 
     class Meta:
-        managed = False
         db_table = 'Artists'
 
     @property
@@ -67,7 +65,6 @@ class Bookingdetails(models.Model):
     booking_date = models.CharField(max_length=50, blank=True, null=True)
 
     class Meta:
-        managed = False
         db_table = 'eventbookingapp_bookingdetails'
 
 
@@ -77,5 +74,4 @@ class Eventartist(models.Model):
     artistid = models.ForeignKey('Artists', models.DO_NOTHING, db_column='ArtistId') 
 
     class Meta:
-        managed = False
         db_table = 'EventArtist'
