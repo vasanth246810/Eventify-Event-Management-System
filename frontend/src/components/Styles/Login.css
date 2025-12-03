@@ -290,7 +290,7 @@ background-color: #ff2c55;
 }
 
 .social-button:hover {
-    border-color: #ccc;
+    border-color: white;
     background: #f5f5f5;
     transform: translateY(-1px);
 }

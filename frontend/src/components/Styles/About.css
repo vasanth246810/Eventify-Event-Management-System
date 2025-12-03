@@ -51,7 +51,7 @@
 }
 
 .stat-label {
-    color: #ccc;
+    color: white;
     font-size: 1rem;
 }
 
@@ -80,7 +80,7 @@
 .about-section-subtitle {
     max-width: 650px;
     margin: 0 auto;
-    color: #ccc;
+    color: white;
     font-size: 1.1rem;
 }
 
@@ -149,7 +149,7 @@
 }
 
 .about-feature-card p {
-    color: #ccc;
+    color: white;
     font-size: 0.95rem;
 }
 
@@ -191,7 +191,7 @@
 }
 
 .value-item p {
-    color: #ccc;
+    color: white;
     font-size: 0.95rem;
 }
 
@@ -231,13 +231,13 @@
 }
 
 .team-role {
-    color: #ccc;
+    color: white;
     font-style: italic;
     margin-bottom: 1rem;
 }
 
 .team-bio {
-    color: #ccc;
+    color: white;
     font-size: 0.95rem;
 }
 
@@ -261,7 +261,7 @@
     max-width: 650px;
     margin: 1rem auto 2rem;
     font-size: 1.1rem;
-    color: #ccc;
+    color: white;
 }
 
 /* =======================================================

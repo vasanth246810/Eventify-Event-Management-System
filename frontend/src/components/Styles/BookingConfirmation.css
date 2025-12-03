@@ -101,7 +101,7 @@
 }
 
 .bookconfirm-movie-details {
-    color: #ccc;
+    color: white;
     font-size: 15px;
     line-height: 1.4;
     margin-top: 10px;
@@ -172,7 +172,7 @@
 }
 
 .bookconfirm-amount-label {
-    color: #ccc;
+    color: white;
     font-size: 13px;
     margin-right: auto;
 }

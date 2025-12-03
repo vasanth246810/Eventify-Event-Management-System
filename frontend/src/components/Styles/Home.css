@@ -51,7 +51,7 @@
 
 .home-subtitles {
     font-size: 1.2rem;
-    color: #ccc;
+    color: white;
     max-width: 650px;
     margin: 0 auto 3rem;
     animation: fadeInUp 1s ease-out 0.2s both;
@@ -115,7 +115,7 @@
 }
 
 .home-label {
-    color: #ccc;
+    color: white;
     margin-top: 0.4rem;
     font-size: 1rem;
     font-weight: 700;
@@ -193,7 +193,7 @@
 }
 
 .home-service-card p {
-    color: #ccc;
+    color: white;
     font-size: 0.95rem;
 }
 
@@ -235,7 +235,7 @@
 }
 
 .home-process-step p {
-    color: #ccc;
+    color: white;
     font-size: 0.95rem;
 }
 
@@ -257,7 +257,7 @@
 }
 
 .home-testimonial-text {
-    color: #ccc;
+    color: white;
     font-style: italic;
     margin-bottom: 1.2rem;
 }
@@ -274,7 +274,7 @@
 }
 
 .home-author-info p {
-    color: #ccc;
+    color: white;
 }
 
 /* =========================================
@@ -316,7 +316,7 @@
 }
 
 .home-event-content p {
-    color: #ccc;
+    color: white;
     font-size: 0.9rem;
 }
 
@@ -337,7 +337,7 @@
 
 .homecta p {
     font-size: 1.1rem;
-    color: #ccc;
+    color: white;
 }
 
 .btn-primary {
