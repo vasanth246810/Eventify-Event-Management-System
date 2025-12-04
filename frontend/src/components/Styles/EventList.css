@@ -193,6 +193,13 @@
 
 /* Tablets and below */
 @media (max-width: 900px) {
+    .event-detail-container {
+        flex-direction: column;
+        margin: 20px;
+    }
+    .event-image, .event-info {
+        max-width: 100%;
+    }
     .venue-content {
         flex-direction: column;
         align-items: flex-start;
@@ -243,66 +250,6 @@
     }
 }
 
-/* General font size adjustments for better visual hierarchy */
-
-
-.event-categories {
-    font-size: 1rem;
-}
-
-.event-meta {
-    font-size: 1rem;
-}
-
-.eventist-price {
-    font-size: 1.25rem;
-}
-
-.about-event h2,
-.artist-section h2,
-.venue-section h2,
-.terms-section h2 {
-    font-size: 2rem;
-}
-
-.about-event p,
-.terms-content {
-    font-size: 1rem;
-}
-
-.artist-name {
-    font-size: 1.125rem;
-}
-
-.artist-role {
-    font-size: 1rem;
-}
-  .venue-details {
-    flex: 1;
-  }
-  .venue-name {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 10px;
-  }
-  .venue-address {
-    font-size: 16px;
-    color: white;
-    margin-bottom: 15px;
-  }
-  .venue-features {
-    list-style: none;
-    padding: 0;
-  }
-  .venue-features li {
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .venue-features i {
-    color: #3498db;
-  }
   .terms-section {
     max-width: 1200px;
     margin: 40px auto;
