@@ -26,6 +26,7 @@ useEffect(() => {
       .then(response => {
         // console.log("Artists API:", response.data);
         setArtists(response.data);
+        console.log("Artists State:", response.data);
       })
       .catch(error => console.error(error));
   };

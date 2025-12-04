@@ -77,7 +77,7 @@ export default function EventList() {
                             Starts from ₹{event.event_price || 'Free'}
                         </div>
                         {user ?(
-                        <a href={`/BookingTickets/${event.event_id}`} className="btn-book" style={{backgroundColor: "#000", color: "#fff"}}>
+                        <a href={`/BookingTickets/${event.event_id}`} className="btn-book" style={{backgroundColor: "#000", color: "#fff",textTransform:"uppercase"}}>
                             Book Tickets
                         </a>
                         ):(
@@ -102,8 +102,7 @@ export default function EventList() {
                 <h2>About the Event</h2>
                 <p className="text-light">{event.event_description || 'No description available.'}</p>
             </div>
-
-            <div className="artist-section">
+                {Artists?(            <div className="artist-section">
                 <h2>Performing Artists</h2>
                 <div className="artist-grid">
 
@@ -121,17 +120,11 @@ export default function EventList() {
                      </Link>
                      ))}
                    
-                    {/* <div className="artist-item">
-                        <div className="artist-photo">
-                            <img src={eventImage} alt="Artist 2"/>
-                        </div>
-                        <div className="artist-info">
-                            <div className="artist-name">Jane Smith</div>
-                            <div className="artist-role">Guitarist</div>
-                        </div>
-                    </div> */}
                 </div>
             </div>
+            ):(
+                <></>
+            )}
 
             <div className="venue-section">
                 <h2>Venue Information</h2>

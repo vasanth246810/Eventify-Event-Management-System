@@ -1,3 +1,7 @@
+import sys
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
+
 from django.utils import timezone
 from datetime import *
 import json
@@ -47,16 +51,19 @@ def contact(request):
     return JsonResponse({"page": "Contact", "content": "Contact us at support@example.com"})
 
 def artists(request):
-    artists_qs = Artists.objects.all()
-    artists_list = []
+    try:
+        artists_qs = Artists.objects.all()
+        artists_list = []
 
-    for artist in artists_qs:
-        artists_list.append({
-            "ArtistId": artist.artistid,
-            "ArtistName": artist.artistname,
-            "Artist_image": artist.image_url,
-        })
-    return JsonResponse(artists_list,safe=False)
+        for artist in artists_qs:
+            artists_list.append({
+                "ArtistId": artist.artistid,
+                "ArtistName": artist.artistname,
+                "Artist_image": artist.image_url,
+            })
+        return JsonResponse(artists_list,safe=False)
+    except Exception as e:
+        return JsonResponse({"error": {e}}, status=404)
 
 def artist_detail(request, artistname):
     try:
@@ -88,23 +95,37 @@ def artist_detail(request, artistname):
 
 def EventList(request, id):
     try:
-        events = list(Events.objects.filter(event_id=id).values())
+        events_queryset = Events.objects.filter(event_id=id)
         artist_ids = Eventartist.objects.filter(event_id=id).values_list('artistid', flat=True)
-        artists = list(Artists.objects.filter(artistid__in=artist_ids).values())
-        # for event in events:
-        #     image_path = event.get('event_image')
-        #     if image_path:
-        #         event['event_image'] = request.build_absolute_uri('/media/' + image_path)
-        # for artist in artists:
-        #     img = artist.get('artist_image')
-        #     if img:
-        #         artist['artist_image'] = request.build_absolute_uri('/media/' + img)
+        artists_queryset = Artists.objects.filter(artistid__in=artist_ids)
 
-        result = {
-            "events": events,
-            "artists": artists
-        }
-        return JsonResponse(result, safe=False)
+        events = [
+            {
+                "event_id": ev.event_id,
+                "event_title": ev.event_title,
+                "event_description": ev.event_description,
+                "event_scheduled_date": ev.event_scheduled_date,
+                "event_location": ev.event_location,
+                "event_price": ev.event_price,
+                "event_image": ev.image_url,  
+                "location_name": ev.location_name,
+                "latitude": ev.latitude,
+                "longitude": ev.longitude,
+            }
+            for ev in events_queryset
+        ]
+
+        artists = [
+            {
+                "artistid": ar.artistid,
+                "artistname": ar.artistname,
+                "artist_image": ar.image_url,  
+                "description": ar.description,
+            }
+            for ar in artists_queryset
+        ]
+        return JsonResponse({"events": events, "artists": artists}, safe=False)
+
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)}, status=400)
 
@@ -123,7 +144,6 @@ def BookingTickets(request, id):
             Addtocart = True
             Addtocart = not Addtocart if request.GET.get("toggle") == "1" else Addtocart
             EventId = request.GET.get('events_id', str(id))
-            # Convert event instance to dict with event_image as URL or None
             event_dict = {
                 "event_id": event.event_id,
                 "event_title": event.event_title,
@@ -160,12 +180,12 @@ def BookingTickets(request, id):
                 return JsonResponse({"error": "Not enough seats available"}, status=400)
             total_price = requested_seats * event.event_price
             booking = form.save(commit=False)
+            booking.user = UserProfile.objects.get(username=username)
             booking.event_id = id
             booking.booking_id = uuid.uuid4().hex[:12].upper()
             booking.price = total_price
             booking.booking_date=datetime.now().strftime("%a, %b %d, %Y, %#I:%M %p")
             booking.save()
-            # Update event seats
             event.event_available_seats -= requested_seats
             event.save(update_fields=['event_available_seats'])
             booking_details = Bookingdetails.objects.filter(booking_id=booking.booking_id).values().first()

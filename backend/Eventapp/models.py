@@ -70,12 +70,12 @@ class Artists(models.Model):
     
         
 class Bookingdetails(models.Model):
-    user_id = models.ForeignKey(UserProfile, on_delete=models.CASCADE, db_column='User_id', primary_key=True)  # Changed to ForeignKey
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, db_column="User_id",primary_key=True)
     username = models.CharField(db_column='UserName', max_length=100, blank=True, null=True)  # Field name made lowercase.
     email = models.CharField(db_column='Email', max_length=100, blank=True, null=True)  # Field name made lowercase.
     seats = models.IntegerField(db_column='Seats', blank=True, null=True)
     event_id = models.IntegerField(db_column='Event_id', blank=True, null=True)
-    booking_id = models.CharField(db_column='Booking_Id',max_length=100, blank=True, null=True,unique=True)  # Field name made lowercase.
+    booking_id = models.CharField(db_column='Booking_Id',max_length=100, blank=True)  # Field name made lowercase.
     price = models.IntegerField(blank=True, null=True)
     booking_date = models.CharField(max_length=50, blank=True, null=True)
 
