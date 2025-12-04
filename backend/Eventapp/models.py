@@ -1,5 +1,5 @@
 from django.utils import timezone
-from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 from django.db import models
 
 # Create your models here.
@@ -35,6 +35,13 @@ class Events(models.Model):
 
     class Meta: 
         db_table = 'eventbookingapp_events'
+
+    @property
+    def image_url(self):
+        if not self.event_image:
+            return None
+        
+        return f"{settings.BASE_URL}/static/{self.event_image}"
 
 class Artists(models.Model):
     artistid = models.AutoField(db_column='ArtistId', primary_key=True)  # Field name made lowercase.

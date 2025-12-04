@@ -36,7 +36,7 @@ def events(request):
                 "event_price": event.event_price,
                 "event_location": event.event_location,
                 "is_sold_out": event.is_sold_out,
-                "event_image": request.build_absolute_uri(event.event_image.url) if event.event_image else None
+                "event_image":event.image_url
             })
         return JsonResponse(events_list, safe=False)
     except Exception as e:
@@ -125,7 +125,7 @@ def BookingTickets(request, id):
                 "event_price": event.event_price,
                 "event_location": event.event_location,
                 "is_sold_out": event.is_sold_out,
-                "event_image": request.build_absolute_uri(event.event_image.url) if event.event_image else None
+                "event_image":event.image_url
             }
             events_list = [event_dict]
             response = {
@@ -170,7 +170,7 @@ def BookingTickets(request, id):
                 "event_price": event.event_price,
                 "event_location": event.event_location,
                 "is_sold_out": event.is_sold_out,
-                "event_image": request.build_absolute_uri(event.event_image.url) if event.event_image else None
+                "event_image":event.image_url
             }
             events_list = [event_dict]
             TicketEmail(booking, event)
@@ -374,7 +374,7 @@ def filter_events(request):
             "event_price": event.event_price,
             "event_location": event.event_location,
             "is_sold_out": event.is_sold_out,
-            "event_image": request.build_absolute_uri(event.event_image.url) if event.event_image else None
+            "event_image":event.image_url
         })
 
     return JsonResponse(events_list, safe=False)
@@ -402,7 +402,7 @@ def Profile(request):
                     "event_total_seats": event.event_total_seats,
                     "event_price": event.event_price,
                     "event_location": event.event_location,
-                    "event_image": request.build_absolute_uri(event.event_image.url) if event.event_image else None,
+                    "event_image":event.image_url,
                     "booking_id": booking.booking_id,
                     "email": booking.email,
                     "seats": booking.seats,

@@ -140,6 +140,9 @@ USE_I18N = True
 
 USE_TZ = True
 
+BASE_URL = os.getenv("BASE_URL", "http://localhost:8000")
+
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
@@ -178,8 +181,10 @@ if railway_domain:
     CSRF_TRUSTED_ORIGINS.append(f"https://{railway_domain}")
 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = f"{os.getenv('MEDIA_BASE_URL', '')}/media/"
+
 
 
 DEFAULT_FROM_EMAIL= 'vasanths2468@gmail.com'
