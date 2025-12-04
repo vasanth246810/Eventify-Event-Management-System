@@ -1,386 +1,221 @@
-    body {
-        font-family: 'Inter', sans-serif;
-        background: #000000;
-        color: #262626;
-        min-height: 100vh;
-    }
+/* ===========================================================
+   BASE GLOBAL
+=========================================================== */
 
-    .Event-container {
-        max-width: 98% !important;
-        padding: 40px 8px;
-        background: #000000;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 1400px) {
-        .Event-container {
-            padding: 30px 12px;
-        }
-        .hero-stats {
-            gap: 32px;
-        }
-        .stat-number-events {
-            font-size: 28px;
-        }
-        .stat-label-events {
-            font-size: 12px;
-        }
-    }
-
-    @media (max-width: 1200px) {
-        .Event-container {
-            padding: 25px 10px;
-        }
-
-        .card,
-        .custom-card,
-        .event-card {
-            width: 90% !important;
-            max-width: 280px;
-            height: auto !important;
-        }
-
-        .event-image {
-            height: 350px;
-        }
-
-        .carousel-item {
-            height: 90vh;
-        }
-
-        .event-title {
-            font-size: 18px;
-        }
-
-        .event-price {
-            font-size: 20px;
-        }
-
-        .hero-subtitle {
-            max-width: 90%;
-            font-size: 18px;
-        }
-
-        .hero-stats {
-            gap: 24px;
-        }
-    }
-
-    @media (max-width: 900px) {
-        .Event-container {
-            padding: 20px 8px;
-        }
-
-        .card,
-        .custom-card,
-        .event-card {
-            width: 100% !important;
-            max-width: 100%;
-            height: auto !important;
-        }
-
-        .hero-section {
-            margin-bottom: 60px;
-            padding: 0 10px;
-        }
-
-        .hero-stats {
-            flex-wrap: wrap;
-            gap: 16px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-
-        .stat-number-events {
-            font-size: 24px;
-        }
-
-        .stat-label-events {
-            font-size: 11px;
-        }
-
-        .carousel-item {
-            height: 70vh;
-        }
-
-        .event-image {
-            height: 280px;
-            width: 100%;
-        }
-
-        .event-title {
-            font-size: 16px;
-        }
-
-        .event-price {
-            font-size: 18px;
-        }
-    }
-
-    @media (max-width: 600px) {
-        .Event-container {
-            padding: 15px 6px;
-        }
-
-        .hero-section {
-            margin-bottom: 50px;
-        }
-
-        .hero-stats {
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .stat-number-events {
-            font-size: 20px;
-        }
-
-        .stat-label-events {
-            font-size: 10px;
-        }
-
-        .carousel-item {
-            height: 60vh;
-        }
-
-        .event-image {
-            height: 220px;
-            width: 100%;
-        }
-
-        .event-title {
-            font-size: 15px;
-        }
-
-        .event-price {
-            font-size: 16px;
-        }
-
-        .filter-button {
-            padding: 5px 8px;
-            font-size: 14px;
-        }
-    }
-
-    @media (max-width: 400px) {
-        .hero-subtitle {
-            font-size: 16px;
-            max-width: 95%;
-        }
-
-        .carousel-item {
-            height: 55vh;
-        }
-
-        .card,
-        .custom-card,
-        .event-card {
-            border-radius: 16px;
-        }
-
-        .event-title {
-            font-size: 14px;
-        }
-
-        .event-price {
-            font-size: 15px;
-        }
-
-        .FilterButton {
-            font-size: 13px;
-            padding: 4px 6px;
-        }
-    }
-
-    /* Override fixed inline width and height on event image using class */
-    .carousel-item .col-md-6.text-center img {
-        width: 100% !important;
-        max-width: 334px;
-        /* height: auto !important; */
-        object-fit: cover;
-        border-radius: 1rem;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    }
-
-    /* Smaller button in carousel */
-    .carousel-item .btn {
-        width: auto !important;
-        padding: 1rem 2.5rem !important;
-        font-size: 1.2rem !important;
-        border-radius: 1rem !important;
-    }
-
-    /* Wrap and center filter buttons */
-    .d-flex.gap-2 {
-        flex-wrap: wrap;
-        justify-content: center;
-        margin-left: 0 !important;
-        margin-top: 1rem;
-    }
-
-    /* Fix Artist images and text overflow on small devices */
-    .artist-circle img {
-        width: 100% !important;
-        max-width: 190px;
-        /* height: auto !important; */
-    }
-
-    .artist-circle p {
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        overflow: hidden;
-    }
-
-    .hero-section {
-        text-align: center;
-        margin-bottom: 80px;
-    }
-
-    .Eventhero-title {
-        font-size: clamp(40px, 5vw, 64px);
-        font-weight: 700;
-        color: #ff2c55;
-        margin-bottom: 24px;
-        padding-bottom: 10px;
-    }
-
-    .hero-subtitle {
-        font-size: 20px;
-        color: #cccccc;
-        margin: 0 auto 40px;
-        max-width: 600px;
-    }
-
-    .hero-stats {
-        display: flex;
-        justify-content: center;
-        gap: 48px;
-        margin-top: 40px;
-    }
-
-    .stat-item {
-        text-align: center;
-    }
-
-    .stat-number-events {
-        font-size: 32px;
-        font-weight: 800;
-        color: #ffffff;
-    }
-
-    .stat-label-events {
-        font-size: 14px;
-        color: #cccccc;
-        font-weight: 500;
-        text-transform: uppercase;
-    }
-
-    .empty-state-events {
-        text-align: center;
-        padding: 80px 40px;
-        border-radius: var(--radius-3xl);
-        box-shadow: var(--shadow-lg);
-        border: 1px solid #e5e5e5;
-    }
-
-    .empty-title {
-        font-size: 24px;
-        font-weight: 700;
-        color: #ff2c55;
-        margin-bottom: 16px;
-    }
-
-    .empty-subtitle {
-        font-size: 16px;
-        color: white;
-        max-width: 400px;
-        margin: 0 auto;
-    }
-
-    .card {
-        background: var(--white);
-        border-radius: 32px;
-        box-shadow: var(--shadow-lg);
-        border: 1px solid #e5e5e5;
-        transition: all 0.3s;
-        position: relative;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        width: 296px;
-        height: 543px;
-    }
-
-    .custom-card {
-        width: 296px;
-        height: 543px;
-        overflow: hidden;
-    }
-
-    .custom-card img {
-        object-fit: cover;
-    }
-
-    #cardScrollContainer::-webkit-scrollbar {
-        display: none;
-    }
-
-    .carousel-item {
-        width: 100vw;
-        height: 100vh;
-    }
-
-    /* Remove underline from all links and their children */
-    .carousel-item a,
-    .carousel-item a:hover,
-    .carousel-item a:focus,
-    .carousel-item a:active,
-    .carousel-item a:visited {
-        text-decoration: none !important;
-        border-bottom: none !important;
-    }
-
-    .carousel-item a * {
-        text-decoration: none !important;
-        border-bottom: none !important;
-    }
-
-    .event-banner {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background-size: cover;
-        background-position: center;
-        filter: blur(15px);
-        transform: scale(1.1);
-        z-index: 1;
-        opacity: 0.8;
-    }
-
-    .event-content {
-        z-index: 2;
-        backdrop-filter: brightness(90%);
-        padding: 2rem;
-    }
-
-    .blurimage {
-    background-size: cover; 
-    background-position: center; 
-    filter: blur(30px); 
-    z-index: 0;
-    mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0) 100%);
-    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0) 100%);
+body {
+    font-family: 'Inter', sans-serif;
+    background: #000000;
+    color: #fff;
+    min-height: 100vh;
 }
 
-    .events-container {
-        margin: 0 auto;
-        padding: 40px 20px;
-        background: #000000;
-        color: #ffffff;
+.Event-container {
+    max-width: 98%;
+    padding: 40px 12px;
+    margin: auto;
+}
+
+/* ===========================================================
+   HERO SECTION
+=========================================================== */
+
+.hero-section {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.Eventhero-title {
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 700;
+    color: #ff2c55;
+}
+
+.hero-subtitle {
+    font-size: 20px;
+    max-width: 600px;
+    margin: 0 auto 40px;
+    color: #ccc;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.stat-number-events {
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.stat-label-events {
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+
+/* ===========================================================
+   CAROUSEL SECTION
+=========================================================== */
+
+.carousel-item {
+    width: 100%;
+    height: auto;
+    min-height: 60vh;
+}
+
+.carousel-item img {
+    width: 100%;
+    max-width: 334px;
+    object-fit: cover;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.carousel-item .btn {
+    padding: 1rem 2.5rem !important;
+    font-size: 1.2rem !important;
+    border-radius: 1rem !important;
+    background: #ff2c55;
+    border: 2px solid #ff2c55;
+}
+
+/* Remove underline from links */
+.carousel-item a,
+.carousel-item a * {
+    text-decoration: none !important;
+}
+
+
+/* ===========================================================
+   EVENT CARDS
+=========================================================== */
+
+.card, 
+.event-card {
+    width: 304px;
+    height: auto;
+    border: 2px solid #ff2c55;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: .3s;
+    background: #111;
+}
+
+.card:hover, 
+.event-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 0 18px #ff2c55;
+}
+
+.card img, 
+.event-image {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+}
+
+
+/* ===========================================================
+   ARTIST LIST
+=========================================================== */
+
+.artist-circle img {
+    width: clamp(90px, 20vw, 190px);
+    height: clamp(90px, 20vw, 190px);
+    object-fit: cover;
+}
+
+
+/* ===========================================================
+   FILTER BUTTONS
+=========================================================== */
+
+.FilterButton {
+    border-radius: 8px;
+    padding: 6px 12px;
+    border: 1px solid #ff2c55;
+    background: #000;
+    color: #fff;
+}
+
+.FilterButton.active {
+    background: #ff2c55;
+}
+
+/* ===========================================================
+   EMPTY STATE
+=========================================================== */
+
+.empty-state-events {
+    text-align: center;
+    padding: 60px;
+    border-radius: 16px;
+    border: 1px solid #444;
+}
+
+
+/* ===========================================================
+   RESPONSIVE BREAKPOINTS
+=========================================================== */
+
+/* --- 1200px (Large tablet / small laptop) --- */
+@media (max-width: 1200px) {
+    .Event-container { padding: 30px 12px; }
+    .hero-stats { gap: 32px; }
+}
+
+/* --- 900px (Tablet/Mid-size phones) --- */
+@media (max-width: 900px) {
+    .card, .event-card {
+        width: 48%;
+        margin: auto;
     }
 
-    .events-header {
+    .carousel-item { min-height: 50vh; }
+}
+
+/* --- 600px (Mobile) — **Your Layout: 2 PER ROW** --- */
+@media (max-width: 600px) {
+    .row > .col {
+        width: 50% !important;
+        padding: 4px;
+    }
+
+    .hero-subtitle { font-size: 16px; }
+    .stat-number-events { font-size: 20px; }
+}
+
+/* --- 400px (small screens / Samsung S24 fix) --- */
+@media (max-width: 400px) {
+    .row > .col {
+        width: 100% !important;
+    }
+
+    .card img, .event-image { height: 260px !important; }
+    .hero-subtitle { font-size: 14px; }
+    .FilterButton { padding: 4px 8px; font-size: 12px; }
+}
+
+/* ===========================================================
+   BLUR IMAGE (CAROUSEL BACKGROUND)
+=========================================================== */
+.blurimage {
+    background-size: cover;
+    background-position: center;
+    filter: blur(30px);
+    z-index: 0;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+    position: absolute;
+    inset: 0;
+    transform: scale(1.1);
+}
+
+   .events-header {
         text-align: center;
-        margin-bottom: 60px;
     }
 
     .events-title {
@@ -390,125 +225,10 @@
         margin-bottom: 16px;
     }
 
-    .events-subtitle {
-        font-size: 20px;
-        color: #cccccc;
-    }
+.swiper-pagination-bullet-active {
+    background: #ff2c55 !important;
+}
+.swiper-button-prev, .swiper-button-next{
+    color: #ff2c55;
+}
 
-    .event-card {
-        width: 304px !important; 
-        height: 545px !important; 
-        background: var(--white);
-        border-radius: var(--radius-3xl);
-        box-shadow: var(--shadow-lg);
-        border: 1px solid #e5e5e5;
-        transition: all 0.3s ease;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        position: relative;
-    }
-
-    .event-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
-    }
-
-    .event-image {
-        width: 100%;
-        height: 420px;
-        object-fit: cover;
-    }
-
-    .event-content {
-        padding: 24px;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .event-badge {
-        position: absolute;
-        top: 12px;
-        right: 12px;
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: uppercase;
-    }
-
-    .badge-available {
-        background: var(--success-green);
-        color: white;
-    }
-
-    .badge-few-left {
-        background: #f59e0b;
-        color: white;
-    }
-
-    .badge-sold-out {
-        background: var(--error-red);
-        color: white;
-    }
-
-    .event-title {
-        font-size: 20px;
-        font-weight: 700;
-        color: #171717;
-        margin-bottom: 8px;
-        line-height: 1.3;
-    }
-
-    .event-date {
-        font-size: 14px;
-        color: #737373;
-        margin-bottom: 12px;
-    }
-
-    .event-price {
-        font-size: 24px;
-        font-weight: 700;
-        color: var(--primary-blue);
-        margin-top: auto;
-    }
-
-    .empty-state-events {
-        text-align: center;
-        padding: 80px 40px;
-        border-radius: var(--radius-3xl);
-        box-shadow: var(--shadow-lg);
-    }
-
-
-    /* Responsive Design */
-    @media (max-width: 1200px) {
-        .events-grid {
-            grid-template-columns: repeat(3, 1fr);
-        }
-    }
-
-    @media (max-width: 900px) {
-        .events-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (max-width: 600px) {
-        .events-grid {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    .FilterButton{
-        border-radius: 8px;
-        padding:6px 10px;
-        background-color: #000000;
-        color: white;
-        border-color: #ff2c55;
-    }
-
-    .FilterButton.active{
-        background-color: #ff2c55;
-    }
