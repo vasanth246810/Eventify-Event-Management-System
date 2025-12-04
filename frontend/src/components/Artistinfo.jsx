@@ -6,7 +6,6 @@ export default function ArtistInfo() {
   const { name } = useParams();                   // get name from URL
   const [artist, setArtist] = useState(null);
 
-
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/artists/${name}`)
       .then(response => setArtist(response.data))
@@ -51,7 +50,7 @@ export default function ArtistInfo() {
                 <div className="col" key={event.event_id}>
                   <div className="card shadow-sm " style={{borderRadius: "16px", width: "100%", maxWidth: "304px", height: "543px", margin: "auto",borderColor:"#ff2c55"}}>
                     <a href={`/event-list/${event.event_id}`}>
-                      <img src={event.event_image_url} className="card-img-top rounded" style={{maxWidth: "302px", height: "420px", objectFit: "cover"}} alt={event.event_title}/>
+                      <img src={event.event_image} className="card-img-top rounded" style={{maxWidth: "302px", height: "420px", objectFit: "cover"}} alt={event.event_title}/>
                     </a>
 
                     <div className="card-body d-flex flex-column justify-content-between">
