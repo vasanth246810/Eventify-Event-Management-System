@@ -54,6 +54,14 @@ class Artists(models.Model):
         db_table = 'Artists'
 
     @property
+    def image_url(self):
+        if not self.artist_image:
+            return None
+        
+        return f"{settings.BASE_URL}/static/{self.artist_image}"
+
+
+    @property
     def booked_seats(self):
         return Bookingdetails.objects.filter(event_id=self.event_id).aggregate(
             total=models.Sum('seats')

@@ -54,22 +54,31 @@ def artists(request):
         artists_list.append({
             "ArtistId": artist.artistid,
             "ArtistName": artist.artistname,
-            "Artist_image": request.build_absolute_uri(artist.artist_image.url) if artist.artist_image else None
+            "Artist_image": artist.image_url,
         })
     return JsonResponse(artists_list,safe=False)
 
 def artist_detail(request, artistname):
     try:
         artist = Artists.objects.get(artistname__iexact=artistname)
-        Eventids = list(Eventartist.objects.filter(artistid=artist).values_list('event_id', flat=True))
-        events_raw = list(Events.objects.filter(event_id__in=Eventids).values())
+        event_ids = list(Eventartist.objects.filter(artistid=artist).values_list('event_id', flat=True))
+        events_queryset = Events.objects.filter(event_id__in=event_ids)
         events = [
-        {**ev, "event_image_url": request.build_absolute_uri('/media/' + ev["event_image"]) if ev.get("event_image") else None}
-        for ev in events_raw]
+            {
+                "event_id": ev.event_id,
+                "event_title": ev.event_title,
+                "event_description": ev.event_description,
+                "event_scheduled_date": ev.event_scheduled_date,
+                "event_location": ev.event_location,
+                "event_price": ev.event_price,
+                "event_image": ev.image_url,  
+            }
+            for ev in events_queryset
+        ]
         data = {
             "artistid": artist.artistid,
             "artistname": artist.artistname,
-            "artist_image": request.build_absolute_uri(artist.artist_image.url) if artist.artist_image else None,
+            "artist_image": artist.image_url,
             "description":artist.description,
             "events":events ,
         }
@@ -82,14 +91,14 @@ def EventList(request, id):
         events = list(Events.objects.filter(event_id=id).values())
         artist_ids = Eventartist.objects.filter(event_id=id).values_list('artistid', flat=True)
         artists = list(Artists.objects.filter(artistid__in=artist_ids).values())
-        for event in events:
-            image_path = event.get('event_image')
-            if image_path:
-                event['event_image'] = request.build_absolute_uri('/media/' + image_path)
-        for artist in artists:
-            img = artist.get('artist_image')
-            if img:
-                artist['artist_image'] = request.build_absolute_uri('/media/' + img)
+        # for event in events:
+        #     image_path = event.get('event_image')
+        #     if image_path:
+        #         event['event_image'] = request.build_absolute_uri('/media/' + image_path)
+        # for artist in artists:
+        #     img = artist.get('artist_image')
+        #     if img:
+        #         artist['artist_image'] = request.build_absolute_uri('/media/' + img)
 
         result = {
             "events": events,
