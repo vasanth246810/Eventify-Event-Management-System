@@ -37,7 +37,7 @@ ENV/
 local_settings.py
 db.sqlite3
 /media/
-staticfiles/
+# staticfiles/
 
 # Migrations (optional to ignore, but recommended in personal projects)
 # Uncomment if you don't want to push migration files:
