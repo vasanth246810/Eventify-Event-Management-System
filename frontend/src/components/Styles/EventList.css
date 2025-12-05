@@ -1,7 +1,7 @@
   .event-detail-container {
     max-width: 1200px;
-    margin: 40px auto;
-    padding: 20px;
+    /* margin: 40px auto; */
+    /* padding: 20px; */
     display: flex;
     gap: 40px;
     font-family: 'Arial', sans-serif;
@@ -21,7 +21,7 @@
   }
   .event-info {
     flex: 1;
-    max-width: 384px;
+    width: clamp(300px, 30%, 500px);
     height: 290px;
     border-radius: 16px;
     padding: 20px;
@@ -209,6 +209,16 @@
         width: 100%;
         white-space: normal;
     }
+    .event-info{
+      display: none;
+    }
+    .event-infotab{
+      display: block !important;
+      border: none !important;
+    }
+    .event-whole{
+      margin: 30px 60px;
+    }
 }
 
 /* Laptops */
@@ -233,7 +243,7 @@
     .event-detail-container {
         max-width: 1200px;
         flex-direction: row;
-        margin: 40px auto;
+        /* margin: 40px auto; */
         gap: 40px;
     }
     .event-image {
@@ -284,3 +294,31 @@
       flex-direction: column;
     }
   }
+
+    .event-infotab {
+    height: 290px;
+    border-radius: 16px;
+    padding: 20px;
+    background-color: #000000;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border: 2px solid #ff2c55;
+  }
+
+.event-list-container {
+  margin: 40px auto;
+  width: clamp(900px, 90vw, 1500px);  /* auto scales to near 1512px */
+  display: flex;
+  gap: 20px;  }
+
+
+  .event-whole {
+  flex: 2; /* takes more width automatically */
+  width: clamp(600px, 60%, 1000px);
+}
+
+.event-infotab{
+      display: none;
+    }
