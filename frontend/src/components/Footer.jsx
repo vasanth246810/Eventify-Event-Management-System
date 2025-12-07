@@ -1,56 +1,133 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import '../components/Styles/Footer.css';
+import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import "../components/Styles/Footer.css";
 
 const Footer = () => {
+  const footerLinks = {
+    explore: [
+      { label: 'Browse Events', href: '/events' },
+      { label: 'Artists', href: '/artists' },
+      { label: 'My Bookings', href: '/profile' }
+    ],
+    company: [
+      { label: 'Home', href: '/home' },
+      { label: 'About Us', href: '/about' },
+      { label: 'Events', href: 'events' },
+      { label: 'Contact', href: '/contact' }
+    ],
+    account: [
+      { label: 'Login', href: '/login' },
+      { label: 'Sign Up', href: '/signup' },
+      { label: 'Profile', href: '/profile' }
+    ]
+  };
+
+  const socialLinks = [
+    { icon: Facebook, href: '#', label: 'Facebook' },
+    { icon: Twitter, href: '#', label: 'Twitter' },
+    { icon: Instagram, href: '#', label: 'Instagram' },
+    { icon: Linkedin, href: '#', label: 'LinkedIn' }
+  ];
+
   return (
-    <footer className="footer mt-auto py-4 text-white" id="contact">
-        <div className="container">
-            <div className="row">
-                <div className="col-md-4">
-                    <h5>Eventifyy</h5>
-                    <p>Your premier destination for discovering and booking amazing events. Experience unforgettable moments with us.</p>
-                </div>
-                <div className="col-md-2">
-                    <h6>Quick Links</h6>
-                    <ul className="list-unstyled">
-                        <li><Link to="/home" className="text-light text-decoration-none">Home</Link></li>
-                        <li><Link to="/events" className="text-light text-decoration-none">Events</Link></li>
-                        <li><Link to="/about" className="text-light text-decoration-none">About Us</Link></li>
-                        <li><Link to="/contact" className="text-light text-decoration-none">Contact</Link></li>
-                    </ul>
-                </div>
-                <div className="col-md-3">
-                    <h6>Contact Info</h6>
-                    <ul className="list-unstyled">
-                        <li><i className="bi bi-envelope"></i> support@eventifyy.com</li>
-                        <li><i className="bi bi-telephone"></i> +91 98765 43210</li>
-                        <li><i className="bi bi-geo-alt"></i> 123 Event Street, Mumbai, India</li>
-                    </ul>
-                </div>
-                <div className="col-md-3">
-                    <h6>Follow Us</h6>
-                    <div className="social-links">
-                        <a href="#" className="text-light me-3"><i className="bi bi-facebook"></i></a>
-                        <a href="#" className="text-light me-3"><i className="bi bi-twitter"></i></a>
-                        <a href="#" className="text-light me-3"><i className="bi bi-instagram"></i></a>
-                        <a href="#" className="text-light"><i className="bi bi-linkedin"></i></a>
-                    </div>
-                </div>
+    <footer className="footer-eventify">
+      <div className="container py-5">
+        <div className="row g-4 mb-4">
+          
+          {/* Brand Column */}
+          <div className="col-12 col-md-6 col-lg-4">
+            <h2 className="footer-brand-logo">Eventify</h2>
+            <p className="footer-description">
+              Discover and book amazing events. Experience unforgettable moments with Eventify.
+            </p>
+            
+            {/* Social Links */}
+            <div className="d-flex">
+              {socialLinks.map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    aria-label={social.label}
+                    className="social-link"
+                  >
+                    <Icon size={18} />
+                  </a>
+                );
+              })}
             </div>
-            <hr className="my-3" />
-            <div className="row">
-                <div className="col-md-6">
-                    <p className="mb-0">&copy; 2024 Eventifyy. All rights reserved.</p>
-                </div>
-                <div className="col-md-6 text-md-end">
-                    <a href="#" className="text-light text-decoration-none me-3">Privacy Policy</a>
-                    <a href="#" className="text-light text-decoration-none">Terms of Service</a>
-                </div>
-            </div>
+          </div>
+
+          {/* Explore Column */}
+          <div className="col-6 col-md-6 col-lg-2">
+            <h3 className="footer-column-title">Explore</h3>
+            <ul className="list-unstyled">
+              {footerLinks.explore.map((link) => (
+                <li key={link.label} className="mb-2">
+                  <a href={link.href} className="footer-link">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Company Column */}
+          <div className="col-6 col-md-6 col-lg-3">
+            <h3 className="footer-column-title">Company</h3>
+            <ul className="list-unstyled">
+              {footerLinks.company.map((link) => (
+                <li key={link.label} className="mb-2">
+                  <a href={link.href} className="footer-link">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Account Column */}
+          <div className="col-6 col-md-6 col-lg-3">
+            <h3 className="footer-column-title">Account</h3>
+            <ul className="list-unstyled">
+              {footerLinks.account.map((link) => (
+                <li key={link.label} className="mb-2">
+                  <a href={link.href} className="footer-link">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
+
+        {/* Footer Bottom */}
+        <div className="footer-bottom">
+          <div className="row align-items-center">
+            <div className="col-12 col-md-6 mb-3 mb-md-0">
+              <p className="footer-copyright mb-0">
+                © 2025 <span className="copyright-highlight">Eventify</span>. All rights reserved.
+              </p>
+            </div>
+            <div className="col-12 col-md-6">
+              <ul className="list-inline mb-0 text-md-end">
+                <li className="list-inline-item me-3">
+                  <a href="/privacy" className="footer-bottom-link">
+                    Privacy Policy
+                  </a>
+                </li>
+                <li className="list-inline-item">
+                  <a href="/terms" className="footer-bottom-link">
+                    Terms of Service
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </footer>
-      );
+  );
 };
 
 export default Footer;

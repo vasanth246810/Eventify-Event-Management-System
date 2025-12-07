@@ -79,7 +79,7 @@ export default function Contact(){
 </section>
 <section className="section section-alt">
     <div className="container" style={{maxWidth:"1200px"}}>
-        <div className="main-content">
+        <div className="contact-content">
             <div className="contact-form">
                 <h2 style={{color: "#ffffff", marginBottom: "2rem", fontSize: "2rem"}}>Send Us a Message</h2>
                 <form onSubmit={handleSubmit}>

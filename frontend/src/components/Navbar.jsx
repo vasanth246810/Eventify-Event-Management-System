@@ -57,7 +57,7 @@ function Navbar({ username }) {
           </ul>
 
           {/* Right dropdown */}
-          <div className="d-flex">
+          <div className="">
             {username ? (
               <div className="dropdown">
                 <button
@@ -74,6 +74,11 @@ function Navbar({ username }) {
                   <li>
                     <button className=" dropdown-item text-danger" onClick={() => navigate('/logout', { state: { from: location } })}>
                       <i className="fas fa-sign-out-alt me-2"></i> Logout
+                    </button>
+                  </li>
+                  <li>
+                    <button className=" dropdown-item text-danger" onClick={() => navigate('/profile', { state: { from: location } })}>
+                      <i className="fas fa-sign-out-alt me-2"></i> Profile
                     </button>
                   </li>
                 </ul>

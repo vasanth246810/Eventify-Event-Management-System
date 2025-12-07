@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState,useEffect } from 'react';
+import { useState,useEffect,useRef  } from 'react';
 import "../components/Styles/Event.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -12,10 +12,13 @@ import "swiper/css/pagination";
 
 export default function Event(){
     const[events,setEvents]=useState([]);
+    const[filterevents,setFilterEvents]=useState([]);
     const[Artists,setArtists]=useState([]);
     const [activeButtons, setActiveButton] = useState([]);  
     const [filterOpen, setFilterOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    const [sortBy, setSortBy] = useState('');
+    const dropdownRef = useRef(null); 
 
 
 useEffect(() => {
@@ -26,13 +29,21 @@ useEffect(() => {
         setEvents(response.data);
       })
       .catch(error => console.error(error));
+
+       try {
+    const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/events/filter/`, {
+      filters:[] ,
+    });
+    setFilterEvents(response.data);
+  } catch (error) {
+    console.log(error);
+  }
   };
 
   const fetchArtists = async () => {
     axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/artists/`)
       .then(response => {
         setArtists(response.data);
-        console.log("Artists State:", response.data);
       })
       .catch(error => console.error(error));
   };
@@ -47,7 +58,22 @@ useEffect(() => {
 
 }, []);
 
+    useEffect(() => {
+      const handleClickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+          setFilterOpen(false);
+          setActiveButton((prev) => prev.filter((i) => i !== 0));
+        }
+      };
 
+      if (filterOpen) {
+        document.addEventListener('mousedown', handleClickOutside);
+      }
+
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    }, [filterOpen]);
 const handleClick = async (index) => {
   if (index === 0) {
     setFilterOpen(!filterOpen);
@@ -63,16 +89,33 @@ const handleClick = async (index) => {
 
   setActiveButton(updated);
 
+  applyFilters(updated, sortBy);
+};
+const handleSortChange = (value) => {
+    setSortBy(value);
+    applyFilters(activeButtons, value);
+    console.log('Selected sort:', value);
+  }
+
+const applyFilters = async (filters, sortValue) => {
   try {
-    const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/events/filter/`, {
-      filters: updated,
-    });
-    setEvents(response.data);
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_BASE_URL}/api/events/filter/`,
+      {
+        filters,       
+        sort_by: sortValue 
+      }
+    );
+
+    setFilterEvents(response.data);
   } catch (error) {
     console.log(error);
   }
 };
 
+
+
+  const Filters = ["Price: Low to High", "Price: High to Low", "Date"];
   const buttonNames = ["Filter", "Today", "Tommorow", "10KM"];
 
     return(
@@ -102,69 +145,6 @@ const handleClick = async (index) => {
       </div>
       {/* Events Carousel */}
       {events.length > 0 ? (
-        // <div id="eventCarousel" className="carousel slide" data-bs-ride="carousel">
-        //   <div className="carousel-inner">
-        //     {events.map((event, index) => (
-        //       <div key={event.id} className={`carousel-item ${index === 0 ? "active" : ""}`}>
-        //         <div
-        //           className="position-relative d-flex align-items-center justify-content-center"
-        //           style={{ minHeight: "100vh", cursor: "pointer" }}
-        //         >
-        //           {/* Blurred Background */}
-        //           <div className="position-absolute top-0 start-0 w-100 h-100 blurimage">
-        //             <div  style={{
-        //                   backgroundImage: `url(${event.event_image})`,
-        //                   backgroundSize: "cover",
-        //                   backgroundPosition: "center",
-        //                   width: "100%",
-        //                   height: "100%",
-        //                 }}></div>
-        //           </div>
-
-        //           {/* Foreground */}
-        //           <div className="position-relative text-white" style={{ maxWidth: "1140px", width: "100%", margin: "auto", padding: "0 1.5rem" }}>
-        //             <div className="row align-items-center">
-        //               {/* Left: Event Details */}
-        //               <div className="col-md-6">
-        //                 <p className="mb-2 fs-5 fw-semibold ">
-        //                   {new Date(event.event_scheduled_date).toLocaleString()}
-        //                 </p>
-        //                 <h2 className="lh-sm fs-2 fw-bold ">{event.event_title}</h2>
-        //                 <h4 className="fs-5 fw-bold ">₹{event.event_price}</h4>
-        //                 <Link to={`/event-list/${event.event_id}`}>
-        //                 <button
-        //                   className="btn fs-5 mt-3 p-3 px-5 text-white"
-        //                   style={{ width: "200px", height: "64px", borderRadius: "16px", background: "#ff2c55", border: "2px solid #ff2c55" }}
-        //                 >
-        //                   Book Now
-        //                 </button>
-        //                 </Link>
-        //               </div>
-
-        //               {/* Right: Event Image */}
-        //               <div className="col-md-6 text-center">
-        //                 <img
-        //                   src={event.event_image}
-        //                   alt={event.event_title}
-        //                   className="img-fluid shadow rounded-4"
-        //                   style={{ width: "334px", height: "445px", objectFit: "cover" }}
-        //                 />
-        //               </div>
-        //             </div>
-        //           </div>
-        //         </div>
-        //       </div>
-        //     ))}
-        //   </div>
-
-        //   {/* Carousel Controls */}
-        //   <button className="carousel-control-prev" type="button" data-bs-target="#eventCarousel" data-bs-slide="prev">
-        //     <span className="carousel-control-prev-icon px-2" aria-hidden="true"></span>
-        //   </button>
-        //   <button className="carousel-control-next" type="button" data-bs-target="#eventCarousel" data-bs-slide="next">
-        //     <span className="carousel-control-next-icon px-2" aria-hidden="true"></span>
-        //   </button>
-        // </div>
         <>
           {/* DESKTOP VIEW (≥ 840px) */}
     {!isMobile && (
@@ -285,21 +265,80 @@ const handleClick = async (index) => {
         <h1 className="events-title">All Events</h1>
         <p className="events-subtitle">Discover amazing experiences happening around you</p>
     </div>
-    <div className='d-flex gap-2 align-items-center justify-content-center' >
-      {buttonNames.map((name, index) => (
-         <button
-            className={`FilterButton ${activeButtons.includes(index) ? "active" : ""}`}
-            onClick={() => handleClick(index)}
-          >
-            {name}
-          </button>
-      ))}
-    </div>
+          <div className='d-flex gap-2 align-items-center justify-content-center mb-4'>
+            {buttonNames.map((name, index) => (
+              <div 
+                key={index} 
+                style={{position: 'relative'}}
+                ref={index === 0 ? dropdownRef : null}
+              >
+                <button
+                  className={`FilterButton ${activeButtons.includes(index) ? "active" : ""}`}
+                  onClick={() => handleClick(index)}
+                >
+                  {name}
+                </button>
+
+                {/* Dropdown for Filter button */}
+                {index === 0 && filterOpen && (
+                  <div 
+                    style={{
+                      position: 'absolute',
+                      left: 0,
+                      marginTop: '8px',
+                      width: '250px',
+                      backgroundColor: '#000000',
+                      color:"white",
+                      borderRadius: '8px',
+                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                      border: '2px solid #ff2c55',
+                      zIndex: 1000
+                    }}
+                  >
+                    <div style={{padding: '16px'}}>
+                      
+                      {/* Sort Options */}
+                      <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
+                        {Filters.map((option, idx) => (
+                          <label
+                            key={idx}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '12px',
+                              cursor: 'pointer',
+                              padding: '8px',
+                              borderRadius: '4px',
+                              transition: 'background-color 0.2s'
+                            }}
+                            // onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f9fafb'}
+                            // onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ff2c55'}
+                          >
+                            <input
+                              type="radio"
+                              name="sortBy"
+                              value={option}
+                              checked={sortBy === option}
+                              onChange={(e) => handleSortChange(e.target.value)}
+                              style={{width: '16px', height: '16px', accentColor: '#ff2c55'}}
+                            />
+                            <span style={{fontSize: '14px'}}>
+                              {option}
+                            </span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>  
+            ))}
+          </div>
 
 {events.length > 0 ? (
  <div className="container py-4">
   <div className="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-    {events.map((event, index) => (
+    {filterevents.map((event, index) => (
       <div className="col" key={event.event_id}>
         <div className="card shadow-sm " style={{borderRadius: "16px", width: "100%", maxWidth: "304px", margin: "auto",borderColor:"#ff2c55"}}>
           <a href={`/event-list/${event.event_id}`}>

@@ -35,22 +35,24 @@ function Layout() {
   return (
     <>
       {!shouldHideNavbar && <Navbar username={username} />}
-      <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/events" element={<Event />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/event-list/:id" element={<EventList />} />
-        <Route path="/BookingTickets/:id" element={<BookingTickets />} />
-        <Route path="/BookedConfrimation/:id" element={<BookingConfirmation />} />
-        <Route path="/Login" element={<LoginPage setUsername={setUsername} />} />
-        <Route path="/SignUp" element={<SignUp />} />
-        <Route path="/logout" element={<Logout setUsername={setUsername} />} />
-        <Route path="*" element={<Navigate to="/home" replace />} />
-        <Route path="/popup" element={<PopupGfg />} />
-        <Route path="/artists/:name" element={<ArtistInfo />}/>
-        <Route path="/profile" element={<AccountProfile />}/>
-      </Routes>
+      <div className="main-content">
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/events" element={<Event />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/event-list/:id" element={<EventList />} />
+          <Route path="/BookingTickets/:id" element={<BookingTickets />} />
+          <Route path="/BookedConfrimation/:id" element={<BookingConfirmation />} />
+          <Route path="/Login" element={<LoginPage setUsername={setUsername} />} />
+          <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/logout" element={<Logout setUsername={setUsername} />} />
+          <Route path="*" element={<Navigate to="/home" replace />} />
+          <Route path="/popup" element={<PopupGfg />} />
+          <Route path="/artists/:name" element={<ArtistInfo />}/>
+          <Route path="/profile" element={<AccountProfile />}/>
+        </Routes>
+      </div>
       {!shouldHideNavbar && <Footer />}
     </>
   );
@@ -58,9 +60,11 @@ function Layout() {
 
 function App() {
   return (
-    <Router>
-      <Layout />
-    </Router>
+    <div className="App">
+      <Router>
+        <Layout />
+      </Router>
+    </div>
   );
 }
 

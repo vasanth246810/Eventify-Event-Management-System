@@ -1,11 +1,9 @@
-import sys
-import os
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
-
+# import sys
+# import os
+# sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 from django.utils import timezone
 from datetime import *
-import json
-import uuid
+import json,uuid
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from Eventapp.models import *
@@ -15,16 +13,13 @@ from django.middleware.csrf import get_token
 from django.conf import settings
 from google.oauth2 import id_token
 from google.auth.transport import requests
-# from urllib.parse import urljoin
-from django.db.models import Q,F,Value,CharField
-from django.db.models.functions import Concat
+from django.db.models import Q
 
 
 
 def get_csrf_token(request):
     token = get_token(request)
     return JsonResponse({'csrfToken': token})
-
 
 def events(request):
     try:
@@ -44,7 +39,6 @@ def events(request):
             })
         return JsonResponse(events_list, safe=False)
     except Exception as e:
-        print(e)
         return JsonResponse({"success": False, "error": str(e)}, status=400)
     
 def contact(request):
@@ -379,35 +373,38 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def filter_events(request):
-    data = json.loads(request.body)
-    filters = data.get("filters", [])
-    qs = Events.objects.all()
-    date_query = Q()
-    if 1 in filters:   # Today
-        date_query |= Q(event_scheduled_date__date=date.today())
-    if 2 in filters:   # Tomorrow
-        date_query |= Q(event_scheduled_date__date=date.today() + timedelta(days=1))
-    if date_query:
-        qs = qs.filter(date_query)
-    if 3 in filters:   # Under 10 KM
-        qs = qs.filter(event_distance__lte=10)
-    events_list = []
-    for event in qs:
-        events_list.append({
-            "event_id": event.event_id,
-            "event_title": event.event_title,
-            "event_scheduled_date": event.event_scheduled_date,
-            "event_description": event.event_description,
-            "event_available_seats": event.event_available_seats,
-            "event_total_seats": event.event_total_seats,
-            "event_price": event.event_price,
-            "event_location": event.event_location,
-            "is_sold_out": event.is_sold_out,
-            "event_image":event.image_url
-        })
+    try:
+        data = json.loads(request.body)
+        filters = data.get("filters", [])
+        sort_by= data.get("sort_by", "")
+        qs = Events.objects.all()
+        date_query = Q()
+        if 1 in filters:   
+            date_query |= Q(event_scheduled_date__date=date.today())
+        if 2 in filters:   
+            date_query |= Q(event_scheduled_date__date=date.today() + timedelta(days=1))
+        if date_query:
+            qs = qs.filter(date_query)
+        if 3 in filters:   
+            qs = qs.filter(event_distance__lte=10)
+        events_list = []
+        for event in qs:
+            events_list.append({
+                "event_id": event.event_id,
+                "event_title": event.event_title,
+                "event_scheduled_date": event.event_scheduled_date,
+                "event_description": event.event_description,
+                "event_available_seats": event.event_available_seats,
+                "event_total_seats": event.event_total_seats,
+                "event_price": event.event_price,
+                "event_location": event.event_location,
+                "is_sold_out": event.is_sold_out,
+                "event_image":event.image_url
+            })
 
-    return JsonResponse(events_list, safe=False)
-
+        return JsonResponse(events_list, safe=False)
+    except Exception as e:
+            return JsonResponse({"error": {e}}, status=404)
 
 def Profile(request):
     try:

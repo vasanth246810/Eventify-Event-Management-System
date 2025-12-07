@@ -274,7 +274,7 @@ export default function LoginPage({ setUsername }) {
             
             {/* Fallback message */}
             {!googleLoaded && (
-              <div style={{ textAlign: 'center', color: '#666' }}>
+              <div style={{ textAlign: 'center', color: 'white' }}>
                 Loading Google Sign-In...
               </div>
             )}
