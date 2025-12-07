@@ -46,14 +46,6 @@
     letter-spacing: -0.025em;
 }
 
-.hero-subtitle {
-    font-size: 20px;
-    color: #666;
-    line-height: 1.5;
-    margin-bottom: 40px;
-    font-weight: 400;
-}
-
 .feature-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -82,7 +74,7 @@
 
 .feature-text {
     font-size: 15px;
-    color: #666;
+    color: white;
     font-weight: 500;
 }
 
@@ -284,7 +276,7 @@ background-color: #ff2c55;
     gap: 8px;
     font-size: 14px;
     font-weight: 600;
-    color: #666;
+    color: white;
     cursor: pointer;
     transition: all 0.2s ease;
 }

@@ -1,31 +1,130 @@
-.footer {
-  background-color: #0b0b0b;
-  color: #fff;
-  padding: 20px 0;
-  text-align: center;
-  position: relative;
-  bottom: 0;
-  width: 100%;
-  z-index: 1000;
+/* Footer Container */
+.footer-eventify {
+  background: #000000;
+  color: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 44, 85, 0.1);
+  margin: 2rem 1rem;
 }
 
-.footer-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+/* Brand Section */
+.footer-brand-logo {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #ff2c55 0%, #ff6b85 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -1px;
 }
 
-.footer-links {
-  margin-top: 10px;
+.footer-description {
+  color: #999999;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
 }
 
-.footer-links a {
-  color: #fff;
+/* Social Links */
+.social-link {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: rgba(255, 44, 85, 0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
-  margin: 0 15px;
-  font-size: 14px;
+  color: #ff2c55;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 44, 85, 0.15);
+  margin-right: 0.75rem;
 }
 
-.footer-links a:hover {
-  text-decoration: underline;
+.social-link:hover {
+  background: #ff2c55;
+  color: #000000;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(255, 44, 85, 0.3);
+}
+
+/* Footer Columns */
+.footer-column-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: #ffffff;
+}
+
+.footer-link {
+  color: #999999;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.footer-link:hover {
+  color: #ff2c55;
+  transform: translateX(3px);
+  text-decoration: none;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1.5rem;
+  margin-top: 2rem;
+}
+
+.footer-copyright {
+  color: #666666;
+  font-size: 0.8125rem;
+}
+
+.copyright-highlight {
+  color: #ff2c55;
+  font-weight: 600;
+}
+
+.footer-bottom-link {
+  color: #999999;
+  text-decoration: none;
+  font-size: 0.8125rem;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom-link:hover {
+  color: #ff2c55;
+  text-decoration: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer-eventify {
+    border-radius: 12px;
+    margin: 1rem 0.5rem;
+  }
+  
+  .footer-brand-logo {
+    font-size: 1.75rem;
+  }
+  
+  .footer-description {
+    font-size: 0.8125rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-eventify {
+    border-radius: 8px;
+    margin: 0.5rem;
+  }
+  
+  .social-link {
+    width: 36px;
+    height: 36px;
+    margin-right: 0.5rem;
+  }
 }
