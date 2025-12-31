@@ -1,6 +1,3 @@
-# import sys
-# import os
-# sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '..'))
 from django.utils import timezone
 from datetime import *
 import json,uuid
@@ -14,8 +11,8 @@ from django.conf import settings
 from google.oauth2 import id_token
 from google.auth.transport import requests
 from django.db.models import Q
-
-
+from Eventapp.serializers import EventSerializer,ArtistSerializer,BookingdetailsSerializer
+from rest_framework.decorators import api_view
 
 def get_csrf_token(request):
     token = get_token(request)
@@ -23,23 +20,16 @@ def get_csrf_token(request):
 
 def events(request):
     try:
-        events_list = []
-        for event in Events.objects.all():
-            events_list.append({
-                "event_id": event.event_id,
-                "event_title": event.event_title,
-                "event_scheduled_date": event.event_scheduled_date,
-                "event_description": event.event_description,
-                "event_available_seats": event.event_available_seats,
-                "event_total_seats": event.event_total_seats,
-                "event_price": event.event_price,
-                "event_location": event.event_location,
-                "is_sold_out": event.is_sold_out,
-                "event_image":event.image_url
-            })
-        return JsonResponse(events_list, safe=False)
+        Events_list = Events.objects.all()
+        serializer=EventSerializer(Events_list,many=True)
+        data = serializer.data 
+        for i, event in enumerate(Events_list):
+            data[i]["event_image"] = event.image_url
+        return JsonResponse(data, safe=False)
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)}, status=400)
+
+
     
 def contact(request):
     return JsonResponse({"page": "Contact", "content": "Contact us at support@example.com"})
@@ -47,14 +37,10 @@ def contact(request):
 def artists(request):
     try:
         artists_qs = Artists.objects.all()
-        artists_list = []
-
-        for artist in artists_qs:
-            artists_list.append({
-                "ArtistId": artist.artistid,
-                "ArtistName": artist.artistname,
-                "Artist_image": artist.image_url,
-            })
+        serializer = ArtistSerializer(artists_qs, many=True)
+        artists_list = serializer.data
+        for i, artist in enumerate(artists_qs):
+            artists_list[i]["artist_image"] = artist.image_url
         return JsonResponse(artists_list,safe=False)
     except Exception as e:
         return JsonResponse({"error": {e}}, status=404)
@@ -64,24 +50,16 @@ def artist_detail(request, artistname):
         artist = Artists.objects.get(artistname__iexact=artistname)
         event_ids = list(Eventartist.objects.filter(artistid=artist).values_list('event_id', flat=True))
         events_queryset = Events.objects.filter(event_id__in=event_ids)
-        events = [
-            {
-                "event_id": ev.event_id,
-                "event_title": ev.event_title,
-                "event_description": ev.event_description,
-                "event_scheduled_date": ev.event_scheduled_date,
-                "event_location": ev.event_location,
-                "event_price": ev.event_price,
-                "event_image": ev.image_url,  
-            }
-            for ev in events_queryset
-        ]
+        eventSerializer=EventSerializer(events_queryset,many=True)
+        Eventdata = eventSerializer.data 
+        for i, event in enumerate(events_queryset):
+            Eventdata[i]["event_image"] = event.image_url
+        artistSerializer = ArtistSerializer(artist)
+        artistsData = artistSerializer.data
+        artistsData["artist_image"] = artist.image_url
         data = {
-            "artistid": artist.artistid,
-            "artistname": artist.artistname,
-            "artist_image": artist.image_url,
-            "description":artist.description,
-            "events":events ,
+            "artist": artistsData,
+            "events":Eventdata ,
         }
         return JsonResponse(data)
     except Exception as e:
@@ -92,34 +70,18 @@ def EventList(request, id):
         events_queryset = Events.objects.filter(event_id=id)
         artist_ids = Eventartist.objects.filter(event_id=id).values_list('artistid', flat=True)
         artists_queryset = Artists.objects.filter(artistid__in=artist_ids)
-
-        events = [
-            {
-                "event_id": ev.event_id,
-                "event_title": ev.event_title,
-                "event_description": ev.event_description,
-                "event_scheduled_date": ev.event_scheduled_date,
-                "event_location": ev.event_location,
-                "event_price": ev.event_price,
-                "event_image": ev.image_url,  
-                "location_name": ev.location_name,
-                "latitude": ev.latitude,
-                "longitude": ev.longitude,
-            }
-            for ev in events_queryset
-        ]
-
-        artists = [
-            {
-                "artistid": ar.artistid,
-                "artistname": ar.artistname,
-                "artist_image": ar.image_url,  
-                "description": ar.description,
-            }
-            for ar in artists_queryset
-        ]
-        return JsonResponse({"events": events, "artists": artists}, safe=False)
-
+        eventSerializer=EventSerializer(events_queryset,many=True)
+        Eventdata = eventSerializer.data 
+        for i, event in enumerate(events_queryset):
+            Eventdata[i]["event_image"] = event.image_url
+        artistSerializer = ArtistSerializer(artists_queryset, many=True)
+        artistsData = artistSerializer.data
+        for i, artist in enumerate(artists_queryset):
+            artistsData[i]["artist_image"] = artist.image_url
+        data={
+            "events": Eventdata,
+            "artists": artistsData}
+        return JsonResponse(data, safe=False)
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)}, status=400)
 
@@ -138,21 +100,11 @@ def BookingTickets(request, id):
             Addtocart = True
             Addtocart = not Addtocart if request.GET.get("toggle") == "1" else Addtocart
             EventId = request.GET.get('events_id', str(id))
-            event_dict = {
-                "event_id": event.event_id,
-                "event_title": event.event_title,
-                "event_scheduled_date": event.event_scheduled_date,
-                "event_description": event.event_description,
-                "event_available_seats": event.event_available_seats,
-                "event_total_seats": event.event_total_seats,
-                "event_price": event.event_price,
-                "event_location": event.event_location,
-                "is_sold_out": event.is_sold_out,
-                "event_image":event.image_url
-            }
-            events_list = [event_dict]
+            eventSerializer=EventSerializer(event)
+            Eventdata = eventSerializer.data 
+            Eventdata["event_image"] = event.image_url
             response = {
-                "events": events_list,
+                "events": Eventdata,
                 "Addtocart": Addtocart,
                 "EventId": EventId,
                 "booking_details": None,
@@ -183,22 +135,12 @@ def BookingTickets(request, id):
             event.event_available_seats -= requested_seats
             event.save(update_fields=['event_available_seats'])
             booking_details = Bookingdetails.objects.filter(booking_id=booking.booking_id).values().first()
-            event_dict = {
-                "event_id": event.event_id,
-                "event_title": event.event_title,
-                "event_scheduled_date": event.event_scheduled_date,
-                "event_description": event.event_description,
-                "event_available_seats": event.event_available_seats,
-                "event_total_seats": event.event_total_seats,
-                "event_price": event.event_price,
-                "event_location": event.event_location,
-                "is_sold_out": event.is_sold_out,
-                "event_image":event.image_url
-            }
-            events_list = [event_dict]
+            eventSerializer=EventSerializer(event)
+            Eventdata = eventSerializer.data 
+            Eventdata["event_image"] = event.image_url
             TicketEmail(booking, event)
             response = {
-                "events": events_list,
+                "events": Eventdata,
                 "Addtocart": False,
                 "EventId": str(id),
                 "booking_details": booking_details,
@@ -218,25 +160,17 @@ def BookedConfrimation(request, id):
     try:
         booking = Bookingdetails.objects.get(booking_id=id)
         event = Events.objects.get(event_id=booking.event_id)
+        eventSerializer=EventSerializer(event)
+        Eventdata = eventSerializer.data 
+        bookingSerializer=BookingdetailsSerializer(booking)
+        booking_data = bookingSerializer.data
         response = {
-            "event_title": event.event_title,
-            "event_scheduled_date": event.event_scheduled_date,
-            "event_location": event.event_location,
-            "event_description": event.event_description,
-            "event_price": event.event_price,
-            "booking_details": {
-                "booking_id": booking.booking_id,
-                "email": booking.email,
-                "seats": booking.seats,
-                "price": booking.price,
-                "booking_date": booking.booking_date
+            "event": Eventdata,
+            "booking_details": booking_data
             }
-        }
         return JsonResponse(response)
-    except Bookingdetails.DoesNotExist:
-        return JsonResponse({"error": "Booking not found"}, status=404)
-    except Events.DoesNotExist:
-        return JsonResponse({"error": "Event not found"}, status=404)
+    except Exception as e:
+        return JsonResponse({"error": {e}}, status=404)
 
 
 def Login(request):
@@ -318,11 +252,9 @@ def google_login(request):
                 return JsonResponse({"success": False, "error": "ID token is required"}, status=400)
             try:
                 idinfo = id_token.verify_oauth2_token(id_token_value, requests.Request(), settings.GOOGLE_CLIENT_ID)
-            # try:
-            #     idinfo = id_token.verify_oauth2_token(id_token_value, google_requests.Request(), settings.GOOGLE_CLIENT_ID)
                 google_id = idinfo['sub']
                 email = idinfo.get('email')
-                name = idinfo.get('name', email.split('@')[0])  # Use name or email prefix as username
+                name = idinfo.get('name', email.split('@')[0]) 
             except ValueError as e:
                 return JsonResponse({"success": False, "error": "Invalid ID token"}, status=400)
 
@@ -334,9 +266,12 @@ def google_login(request):
                     user.profile_image=idinfo.get("picture")
                     user.save()
                 else:
-                    return JsonResponse({"success": False, "error": "user does not exist"}, status=400)
-
-            # Set session
+                    user=UserProfile.objects.create(
+                        username=name,      
+                        email=email,
+                        google_id=google_id,
+                        profile_image=idinfo.get("picture")
+                    )
             request.session['login_timestamp'] = timezone.now().strftime("%Y-%m-%d %H:%M")
             request.session['username'] = user.username
             request.session['email'] = user.email
@@ -387,54 +322,22 @@ def filter_events(request):
             qs = qs.filter(date_query)
         if 3 in filters:   
             qs = qs.filter(event_distance__lte=10)
-        events_list = []
-        for event in qs:
-            events_list.append({
-                "event_id": event.event_id,
-                "event_title": event.event_title,
-                "event_scheduled_date": event.event_scheduled_date,
-                "event_description": event.event_description,
-                "event_available_seats": event.event_available_seats,
-                "event_total_seats": event.event_total_seats,
-                "event_price": event.event_price,
-                "event_location": event.event_location,
-                "is_sold_out": event.is_sold_out,
-                "event_image":event.image_url
-            })
-
-        return JsonResponse(events_list, safe=False)
+        serializer=EventSerializer(qs,many=True)
+        data = serializer.data 
+        for i, event in enumerate(qs):
+            data[i]["event_image"] = event.image_url
+        return JsonResponse(data, safe=False)
     except Exception as e:
             return JsonResponse({"error": {e}}, status=404)
 
 def Profile(request):
     try:
-        username = request.session.get('username', '')
         emailaddress = request.session.get('email', '')
         userDetails = UserProfile.objects.filter(email=emailaddress).first()
         user_data = model_to_dict(userDetails)
         bookings=Bookingdetails.objects.filter(email=emailaddress)
-        events=Events.objects.filter(event_id__in=list(bookings.values_list('event_id',flat=True)))
-        events_dict = {event.event_id: event for event in events}
-        booking_list = []
-        for booking in bookings:
-            event = events_dict.get(booking.event_id)
-            if event:
-                booking_list.append({
-                    "event_id": event.event_id,
-                    "event_title": event.event_title,
-                    "event_scheduled_date": event.event_scheduled_date,
-                    "event_description": event.event_description,
-                    "event_available_seats": event.event_available_seats,
-                    "event_total_seats": event.event_total_seats,
-                    "event_price": event.event_price,
-                    "event_location": event.event_location,
-                    "event_image":event.image_url,
-                    "booking_id": booking.booking_id,
-                    "email": booking.email,
-                    "seats": booking.seats,
-                    "price": booking.price
-
-                })
+        bookingSerializer=BookingdetailsSerializer(bookings,many=True)
+        booking_list = bookingSerializer.data
     except Exception as e:
         return JsonResponse({"error": {e}}, status=404)
     return JsonResponse({ 'bookings': booking_list,'user': user_data}, safe=False)

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { User, FileText, Monitor, Film, CreditCard, Gift, LogOut, X, Edit2, Check } from 'lucide-react';
+import { User, FileText, Film } from 'lucide-react';
 import "../components/Styles/Profile.css"
 
 export default function AccountProfile() {
@@ -394,12 +394,11 @@ const [bookings,setBookings]=useState([])
                 <div className="bookings-list">
                   {bookings.map(booking => (
                     <div key={booking.booking_id} className="booking-card">
-                      {/* <img src={booking.poster} alt={booking.movieName} /> */}
                       <div className="booking-details">
-                        <h4>{booking.event_title}</h4>
+                        <h4>{booking.event.event_title}</h4>
                         <div className='d-flex gap-1'>
-                        <p>{booking.event_location}</p>
-                        <p>{booking.event_scheduled_date} | {booking.time}</p>
+                        <p>{booking.event.event_location}</p>
+                        <p>{booking.event.event_scheduled_date} | {booking.time}</p>
                         <p>Seats: {booking.seats}</p>
                         </div>
                       </div>
@@ -407,7 +406,6 @@ const [bookings,setBookings]=useState([])
                             <p className="amount">₹{booking.price}</p>
                             <a href={`/BookedConfrimation/${booking.booking_id}`} className="btn-view">View Details</a>
                         </div>
-                     
                     </div>
                   ))}
                 </div>

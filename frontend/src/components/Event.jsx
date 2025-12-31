@@ -251,10 +251,10 @@ const applyFilters = async (filters, sortValue) => {
         <div className="d-flex justify-content-center">
             {Artists.map((artists)=>(
                <div className="col-auto" key={artists.artistid}>
-                <Link to={`/artists/${artists.ArtistName}`} style={{textDecoration:"none",color:"inherit"}}>
+                <Link to={`/artists/${artists.artistname}`} style={{textDecoration:"none",color:"inherit"}}>
                   <div className="artist-circle me-4">
-                      <img src={artists.Artist_image} alt={artists.ArtistName} className="rounded-circle" width="190" height="190"/>
-                      <p className="text-center mt-2 fw-bold">{artists.ArtistName}</p>
+                      <img src={artists.artist_image} alt={artists.artistname} className="rounded-circle" width="190" height="190"/>
+                      <p className="text-center mt-2 fw-bold">{artists.artistname}</p>
                   </div>
                 </Link>
             </div>

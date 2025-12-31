@@ -128,7 +128,7 @@ return(
 
         <div className="bookconfirm-buttons">
           <button className="bookconfirm-btn">INVITE FRIENDS</button>
-          <button className="bookconfirm-btn">PRINT BOOKING INFO</button>
+          <button className="bookconfirm-btn" onClick={()=>window.print()}>PRINT BOOKING INFO</button>
           <button className="bookconfirm-btn">DOWNLOAD E-TICKET</button>
         </div>
 

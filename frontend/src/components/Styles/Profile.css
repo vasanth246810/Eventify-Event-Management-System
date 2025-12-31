@@ -417,3 +417,8 @@ body {
   flex-direction: column;
   gap:20px;
 }
+
+.footer-eventify {
+  margin: 0;
+  border-radius: 0;
+}

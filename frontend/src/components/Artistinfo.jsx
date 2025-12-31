@@ -24,7 +24,7 @@ export default function ArtistInfo() {
         <div style={{ flex: "0 0 350px" }}>
           <div
             style={{
-              backgroundImage: `url(${artist.artist_image})`,
+              backgroundImage: `url(${artist.artist.artist_image})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               width: "520px",
@@ -36,8 +36,8 @@ export default function ArtistInfo() {
 
         {/* Text block */}
         <div style={{ width: "652px", height: "768px", overflowY: "visible" }}>
-          <h1 style={{color:"#ff2c55"}}>{artist.artistname}</h1>
-          <p className="text-light" style={{whiteSpace: "pre-line"}}>{artist.description || "Description not available."}</p>
+          <h1 style={{color:"#ff2c55"}}>{artist.artist.artistname}</h1>
+          <p className="text-light" style={{whiteSpace: "pre-line"}}>{artist.artist.description || "Description not available."}</p>
         </div>
       </div>
 
@@ -53,7 +53,7 @@ export default function ArtistInfo() {
                       <img src={event.event_image} className="card-img-top rounded" style={{maxWidth: "302px", height: "420px", objectFit: "cover"}} alt={event.event_title}/>
                     </a>
 
-                    <div className="card-body d-flex flex-column justify-content-between">
+                    <div className="card-body d-flex flex-column justify-content-between" style={{backgroundColor:"#000000"}}>
                       <p className="card-text text-light fs-6 fw-medium">{new Date(event.event_scheduled_date).toLocaleString()}</p>
                       <h5 className="fw-bolder fs-6 overflow-hidden text-wrap lh-sm my-0 text-light">{event.event_title}</h5>
                       <p className="fs-6 fw-semibold overflow-hidden text-wrap my-0 text-light">₹{event.event_price}</p>

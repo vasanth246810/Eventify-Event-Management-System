@@ -24,6 +24,7 @@ export default function EventList() {
                 const eventData = response.data.events?.length > 0 ? response.data.events[0] : null;
                 const Artist=response.data.artists || [] ;
                 setEvent(eventData);
+                console.log("Fetched event data:", eventData);
                 setArtists(Artist)
                 setLoading(false);
             } catch (error) {

@@ -17,10 +17,9 @@ useEffect(()=>{
     const fetchdata=async()=>{
         try{
         const response=await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/BookingTickets/${id}`, { withCredentials: true });
-        setEvents(response.data.events[0]);
+        setEvents(response.data.events);
         setAddtocart(response.data.Addtocart);
         setSeats(response.data.seats || 1);
-
         }
         catch(error){
            console.error(error.response ? error.response.data : error.message);
@@ -54,7 +53,7 @@ const handleAddCart=async ()=>{
         withCredentials: true,
     }
 );
-    setEvents(toggle.data.events[0]);
+    setEvents(toggle.data.events);
     setAddtocart(toggle.data.Addtocart);
     // setSeats(toggle.data.seats || 1);
 
