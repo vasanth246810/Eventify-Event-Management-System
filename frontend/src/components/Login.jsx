@@ -84,7 +84,7 @@ export default function LoginPage({ setUsername }) {
     try {
       const csrfResponse = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL}/api/get-csrf-token/`, 
-        { withCredentials: true }
+        { withCredentials: 'include' }
       );
       const csrfToken = csrfResponse.data.csrfToken;
       const lastVisited = sessionStorage.getItem("lastVisited") || "/";
@@ -97,7 +97,7 @@ export default function LoginPage({ setUsername }) {
             'X-CSRFToken': csrfToken,
             'Content-Type': 'application/json',
           },
-          withCredentials: true,
+          withCredentials: 'include',
         }
       );
       
@@ -147,7 +147,7 @@ export default function LoginPage({ setUsername }) {
       try {
         const csrfResponse = await axios.get(
           `${process.env.REACT_APP_API_BASE_URL}/api/get-csrf-token/`, 
-          { withCredentials: true }
+          { withCredentials: 'include' }
         );
         const csrfToken = csrfResponse.data.csrfToken;
         const lastVisited = sessionStorage.getItem("lastVisited") || "/";
@@ -160,7 +160,7 @@ export default function LoginPage({ setUsername }) {
               'X-CSRFToken': csrfToken,
               'Content-Type': 'application/json',
             },
-            withCredentials: true,
+            withCredentials: 'include',
           }
         );
         

@@ -16,7 +16,7 @@ const navigate = useNavigate();
 useEffect(()=>{
     const fetchdata=async()=>{
         try{
-        const response=await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/BookingTickets/${id}`, { withCredentials: true });
+        const response=await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/BookingTickets/${id}`, { withCredentials: 'include' });
         setEvents(response.data.events);
         setAddtocart(response.data.Addtocart);
         setSeats(response.data.seats || 1);
@@ -50,7 +50,7 @@ const handleAddCart=async ()=>{
             seats:seats,
 
         },
-        withCredentials: true,
+        withCredentials: 'include',
     }
 );
     setEvents(toggle.data.events);
@@ -68,7 +68,7 @@ catch(error){
 const handleBooking=async (e)=>{
     e.preventDefault();
     try{
-        const csrfResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/get-csrf-token/`, { withCredentials: true });
+        const csrfResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/get-csrf-token/`, { withCredentials: 'include' });
         const csrfToken = csrfResponse.data.csrfToken;
         const response = await axios.post(
             `${process.env.REACT_APP_API_BASE_URL}/api/BookingTickets/${id}`,
@@ -82,7 +82,7 @@ const handleBooking=async (e)=>{
                     'X-CSRFToken': csrfToken,
                     'Content-Type': 'application/json',
                 },
-                withCredentials: true,
+                withCredentials: 'include',
             }
         );
         if (response.data && response.data.booking_details && response.data.booking_details.booking_id) {

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Events,Artists,Bookingdetails
+from .models import Events,Artists,Bookingdetails,UserProfile
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -17,7 +17,8 @@ class EventSerializer(serializers.ModelSerializer):
             "event_image",
             "location_name",
             "latitude",
-            "longitude"]
+            "longitude",
+            "event_category"]
         
 
 class ArtistSerializer(serializers.ModelSerializer):
@@ -39,3 +40,9 @@ class BookingdetailsSerializer(serializers.ModelSerializer):
         if not event:
             return None
         return EventSerializer(event).data
+
+class UserDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=UserProfile
+        fields="__all__"
+        

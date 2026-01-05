@@ -4,6 +4,7 @@ from django.db import models
 
 # Create your models here.
 class UserProfile(models.Model):
+    id = models.BigAutoField(primary_key=True)
     username = models.CharField(max_length=150, unique=True)  
     created_on= models.DateTimeField(default=timezone.now, blank=True)
     email= models.EmailField(max_length=254, blank=True)
@@ -11,7 +12,7 @@ class UserProfile(models.Model):
     is_admin = models.BooleanField(default=False)
     google_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
     profile_image = models.URLField(blank=True, null=True)
-  # Added google_id field
+    userrole = models.CharField(max_length=25, blank=True, null=True, default='Standard User')
 
     def __str__(self):
         return self.username
@@ -32,6 +33,7 @@ class Events(models.Model):
     location_name = models.CharField(max_length=255,null=True)
     latitude = models.DecimalField(max_digits=9, decimal_places=6, null=True)
     longitude = models.DecimalField(max_digits=9, decimal_places=6,null=True)
+    event_category = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta: 
         db_table = 'eventbookingapp_events'
@@ -40,8 +42,7 @@ class Events(models.Model):
     def image_url(self):
         if not self.event_image:
             return None
-        
-        return f"{settings.BASE_URL}/static/{self.event_image}"
+        return f"{settings.BASE_URL}{settings.MEDIA_URL}{self.event_image}"
 
 class Artists(models.Model):
     artistid = models.AutoField(db_column='ArtistId', primary_key=True)  # Field name made lowercase.

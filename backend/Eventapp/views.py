@@ -11,8 +11,11 @@ from django.conf import settings
 from google.oauth2 import id_token
 from google.auth.transport import requests
 from django.db.models import Q
-from Eventapp.serializers import EventSerializer,ArtistSerializer,BookingdetailsSerializer
-from rest_framework.decorators import api_view
+from Eventapp.serializers import *
+from geopy.geocoders import Nominatim
+from django.db.models import Count
+from django.db.models.functions import TruncMonth
+from dateutil.relativedelta import relativedelta
 
 def get_csrf_token(request):
     token = get_token(request)
@@ -29,8 +32,6 @@ def events(request):
     except Exception as e:
         return JsonResponse({"success": False, "error": str(e)}, status=400)
 
-
-    
 def contact(request):
     return JsonResponse({"page": "Contact", "content": "Contact us at support@example.com"})
 
@@ -186,6 +187,8 @@ def Login(request):
                 request.session['username'] = user.username
                 request.session['email'] = Email
                 request.session['is_admin'] = user.is_admin
+                request.session['user_id'] = user.id
+                request.session.save()
                 return JsonResponse({
                     "success": True,
                     "user": {
@@ -213,6 +216,7 @@ def SignUp(request):
                 request.session['user_id'] = UserForm.id
                 request.session['username'] = UserForm.username
                 request.session['signup_timestamp'] = timezone.now().strftime("%Y-%m-%d %H:%M:%S")
+                request.session.save()
                 return JsonResponse({
                 "success": True,
                 "user": {
@@ -257,7 +261,6 @@ def google_login(request):
                 name = idinfo.get('name', email.split('@')[0]) 
             except ValueError as e:
                 return JsonResponse({"success": False, "error": "Invalid ID token"}, status=400)
-
             user = UserProfile.objects.filter(google_id=google_id).first()
             if not user:
                 user = UserProfile.objects.filter(email=email).first()
@@ -276,6 +279,8 @@ def google_login(request):
             request.session['username'] = user.username
             request.session['email'] = user.email
             request.session['is_admin'] = user.is_admin
+            request.session['user_id'] = user.id
+            request.session.save()
 
             return JsonResponse({
                 "success": True,
@@ -341,3 +346,152 @@ def Profile(request):
     except Exception as e:
         return JsonResponse({"error": {e}}, status=404)
     return JsonResponse({ 'bookings': booking_list,'user': user_data}, safe=False)
+
+
+def BookingDetails(request):
+    try:
+       bookings=Bookingdetails.objects.all()
+       bookingSerializer=BookingdetailsSerializer(bookings,many=True)
+       return JsonResponse(bookingSerializer.data,safe=False)
+    except Exception as e:
+      return JsonResponse({"error":{e}},status=404)
+    
+def UsersDetails(request,user_id=None):
+    try:
+        if request.method=="GET":
+            users=UserProfile.objects.all()
+            UserSerializer=UserDetailsSerializer(users,many=True)
+            return JsonResponse(UserSerializer.data,safe=False)
+        elif request.method=="POST":
+            if user_id:
+                user = UserProfile.objects.get(id=user_id)
+                form = UserDetailsForm(request.POST, instance=user)
+            else:
+                form = UserDetailsForm(request.POST)
+            if form.is_valid():
+                user=form.save(commit=False)
+                is_admin=True if form.cleaned_data['userrole']=='Superadmin' else False
+                user.password = Hashpassword(form.cleaned_data['password'])
+                user.is_admin = is_admin
+                user.save()
+                message = "User updated successfully" if user_id else "User created successfully"
+                return JsonResponse({"message": message}, status=201)
+            else:
+                return JsonResponse({"errors": form.errors}, status=400)
+    except Exception as e:
+        return JsonResponse({"error":{e}},status=404)
+    
+
+
+
+def admin_analytics(request):
+    try:
+        events_category_qs = (Events.objects.values('event_category').annotate(value=Count('event_id')))
+        categories = [
+            {
+                "name": item["event_category"] or "Uncategorized",
+                "value": item["value"]
+            }
+            for item in events_category_qs
+        ]
+        monthly_revenue = {}
+        for b in Bookingdetails.objects.all():
+            if not b.booking_date:
+                continue
+            date_obj = datetime.strptime(b.booking_date, "%a, %b %d, %Y, %I:%M %p")
+            key = date_obj.strftime("%Y-%m")
+            monthly_revenue.setdefault(key, 0)
+            monthly_revenue[key] += b.price or 0
+        last_six = sorted(monthly_revenue.items(), reverse=True)[:6]
+        last_six = list(reversed(last_six))
+        revenue = [
+            {
+                "month": datetime.strptime(k, "%Y-%m").strftime("%b %Y"),
+                "revenue": v
+            }
+            for k, v in last_six
+        ]
+        today = timezone.now()
+        start_date = today - relativedelta(months=5)
+        qs = (
+            UserProfile.objects
+            .filter(created_on__gte=start_date)
+            .annotate(month=TruncMonth('created_on'))
+            .values('month')
+            .annotate(users=Count('id'))
+            .order_by('month')
+        )
+        months = [(start_date + relativedelta(months=i)).strftime("%b") for i in range(6)]
+        counts = {m["month"].strftime("%b"): m["users"] for m in qs}
+        users = [{"month": m, "users": counts.get(m, 0)} for m in months]        
+        data = {
+            "categories": categories,
+            "revenue": revenue,
+            "users": users
+        }
+        return JsonResponse(data, safe=False)
+    except Exception as e:
+        return JsonResponse({"Error":{e}})
+    
+def long_lat(event_location):
+    value=""
+    geolocator = Nominatim(user_agent="event_app_geocoder")
+    location = geolocator.geocode(event_location)
+    if location:
+        return (location.latitude, location.longitude)
+    return value    
+        
+
+def CreateEvent(request,event_id=None):
+    try:
+        if not event_id:
+            form = EventForm(request.POST, request.FILES)
+        elif event_id:
+            events=Events.objects.get(event_id=event_id)
+            if not events:
+                return JsonResponse({"error": "Event not found"}, status=404)
+            form = EventForm(request.POST, request.FILES,instance=events)
+        else:
+            return JsonResponse({"error": "Invalid request method"}, status=405)
+        if form.is_valid():
+            event=form.save(commit=False)
+            event_location = form.cleaned_data.get("event_location", "")
+            event.location_name = event_location
+            event.event_available_seats = form.cleaned_data['event_total_seats']
+            lat_lon = long_lat(event_location)
+            if lat_lon:
+                event.latitude = lat_lon[0]
+                event.longitude = lat_lon[1]
+            event.save()
+            message = "Event updated successfully" if event_id else "Event created successfully"
+            return JsonResponse({"message": message})        
+        return JsonResponse({"errors": form.errors}, status=400)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+    
+def DeleteEvent(request,event_id):
+    try:
+        event = Events.objects.get(event_id=event_id)
+        if not event:
+            return JsonResponse({"error": "Event not found"}, status=404)
+        event.delete()
+        return JsonResponse({"message": "Event deleted successfully"})
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+def whoami(request):
+    try:
+        user = request.session.get('user_id')
+        if not user:
+            return JsonResponse({"is_authenticated": False,"is_admin": None,"user": None})
+        else:
+            user = UserProfile.objects.get(id=user)
+        return JsonResponse({"is_authenticated": True,"is_admin": user.is_admin,
+                            "user": {
+                                "id": user.id,
+                                "username": user.username,
+                                "email": user.email,
+                            }})
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+

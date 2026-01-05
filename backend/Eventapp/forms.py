@@ -27,4 +27,10 @@ class TicketBookingForm(forms.ModelForm):
 class EventForm(forms.ModelForm):
     class Meta:
         model = Events
-        fields = ('event_title', 'event_scheduled_date','event_description','event_total_seats','event_price')
+        fields = ('event_title', 'event_scheduled_date','event_description','event_total_seats','event_price','event_location','event_category','event_image')
+
+
+class UserDetailsForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('username', 'email', 'userrole', 'password')

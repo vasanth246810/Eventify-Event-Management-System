@@ -38,7 +38,7 @@ const [bookings,setBookings]=useState([])
   useEffect(()=>{
     const fetchdata=async()=>{
       try{
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/profile/`, { withCredentials: true });
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/profile/`, { withCredentials: 'include' });
         setUserDeatils(response.data.user);
         setBookings(response.data.bookings);
         console.log(response.data.bookings)

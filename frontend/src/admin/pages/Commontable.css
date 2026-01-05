@@ -1,0 +1,156 @@
+/* Table Section */
+.table-section {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.table-header {
+  padding: 24px 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.table-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.table-pagination {
+  color: #9fa3c7;
+  font-size: 14px;
+}
+
+.table-pagination .current {
+  color: #ff2c55;
+  font-weight: 500;
+}
+
+/* Table */
+.common-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.common-table th {
+  padding: 16px 28px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ff2c55;
+  text-transform: capitalize;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.common-table th:first-child {
+  padding-left: 28px;
+  width: 50px;
+}
+
+.th-content {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.column-icon {
+  width: 14px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.column-icon svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}
+
+.sort-icon {
+  width: 14px;
+  height: 14px;
+  margin-left: 4px;
+  opacity: 0.6;
+}
+
+.common-table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+/* .common-table tbody tr:hover {
+  background: #ff2c55
+} */
+
+.common-table td {
+  padding: 18px 28px;
+  font-size: 14px;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.common-table td:first-child {
+  padding-left: 28px;
+}
+
+/* Checkbox */
+.checkbox-column {
+  width: 50px;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.checkbox:hover {
+  border-color: #ff2c55
+}
+
+.checkbox.checked {
+  background: #ff2c55;
+  border-color: #ff2c55;
+}
+
+.checkbox.checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Actions Cell */
+.actions-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.actions-column {
+  width: 120px;
+}
+
+/* Utility Classes for Custom Renders */
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+

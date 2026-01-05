@@ -63,7 +63,7 @@ export default function SignUp() {
 
       try {
         // Fetch CSRF token
-        const csrfResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/get-csrf-token/`, { withCredentials: true });
+        const csrfResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/get-csrf-token/`, { withCredentials: 'include' });
         const csrfToken = csrfResponse.data.csrfToken;
 
         // Submit form with CSRF token
@@ -75,7 +75,7 @@ export default function SignUp() {
               'X-CSRFToken': csrfToken,
               'Content-Type': 'application/json',
             },
-            withCredentials: true,
+            withCredentials: 'include',
           }
         );
         console.log(response.data);

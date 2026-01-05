@@ -9,7 +9,7 @@ const Logout = ({ setUsername }) => {
   useEffect(() => {
     const handleLogout = async () => {
       try {
-        const csrfResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/get-csrf-token/`, { withCredentials: true });
+        const csrfResponse = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/get-csrf-token/`, { withCredentials: 'include' });
         const csrfToken = csrfResponse.data.csrfToken;
 
         await axios.post(
@@ -20,7 +20,7 @@ const Logout = ({ setUsername }) => {
               'X-CSRFToken': csrfToken,
               'Content-Type': 'application/json',
             },
-            withCredentials: true,
+            withCredentials: 'include',
           }
         );
       } catch (error) {

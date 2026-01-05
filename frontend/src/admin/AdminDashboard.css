@@ -1,0 +1,29 @@
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;      /* Chrome, Edge, Safari */
+}
+
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+}
+.react-datepicker-wrapper{
+  width: 100%;
+}
+.react-datepicker-wrapper input,
+.react-datepicker__input-container input {
+  width: 100%;
+  padding: 12px 16px;
+  background: #0a0b0d;
+  border: 1px solid #252830;
+  border-radius: 8px;
+  color: #e8eaed;
+  font-size: 14px;
+  outline: none;
+}
+
+.admintable{
+    background: #141619;
+    border: 1px solid #252830 ;
+    border-radius: 12px;
+    overflow: hidden
+
+}
