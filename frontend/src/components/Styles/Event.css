@@ -123,8 +123,8 @@ body {
 =========================================================== */
 
 .artist-circle img {
-    width: clamp(90px, 20vw, 190px);
-    height: clamp(90px, 20vw, 190px);
+    width: clamp(90px, 20vw, 180px);
+    height: clamp(90px, 20vw, 180px);
     object-fit: cover;
 }
 
