@@ -95,6 +95,11 @@ export default function SignUp() {
     }
   };
 
+  const togglePassword = () => {
+    const input = document.getElementById("password");
+    input.type = input.type === "password" ? "text" : "password";
+  };
+
 
 
   return (
@@ -146,6 +151,7 @@ export default function SignUp() {
             <label htmlFor="password" className="form-label">
               Password
             </label>
+            <div style={{position:"relative"}}>
             <input
               type="password"
               id="password"
@@ -157,6 +163,15 @@ export default function SignUp() {
               onBlur={handleBlur}
               autoComplete="new-password"
             />
+               <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={togglePassword}
+                  aria-label="Toggle password visibility"
+                >
+                  👁
+                </button>
+            </div>
             {errors.password && (
               <div className="form-error">{errors.password}</div>
             )}

@@ -198,6 +198,10 @@ const handleSubmit=async ()=>{
     console.error("Error creating user:", error);
   }
 }
+const togglePassword = () => {
+    const input = document.getElementById("password");
+    input.type = input.type === "password" ? "text" : "password";
+  };
   if (!show) return null;
 
   return (
@@ -214,7 +218,17 @@ const handleSubmit=async ()=>{
           <input type="email" placeholder="user@example.com" style={formInputStyle} value={userdata.email} onChange={e=>setUserData({...userdata,email:e.target.value})} />
         </FormGroup>
         <FormGroup label="Password">
-          <input type="password" placeholder="Enter password" style={formInputStyle} value={userdata.password} onChange={e=>setUserData({...userdata,password:e.target.value})} />
+          <div style={{position:"relative"}}>
+          <input type="password" id="password" placeholder="Enter password" style={formInputStyle} value={userdata.password} onChange={e=>setUserData({...userdata,password:e.target.value})} />
+          <button
+            type="button"
+            className="password-toggle"
+            onClick={togglePassword}
+            aria-label="Toggle password visibility"
+          >
+            👁
+          </button>
+          </div>
         </FormGroup>
         <FormGroup label="Role">
           <select style={formInputStyle} value={userdata.userrole} onChange={e=>setUserData({...userdata,userrole:e.target.value})}>

@@ -1,60 +1,61 @@
 # Event Booking Management System
 
-A full-stack web application for event management and ticket booking built with React and Django. This system allows users to browse events, book tickets, and manage their bookings, while providing administrators with tools to manage events and users.
+A comprehensive full-stack web application for event management and ticket booking, featuring user authentication, event discovery, booking management, and administrative controls.
 
-##  Features
+## Features
 
 ### User Features
-- **User Authentication**: Secure login and registration system
-- **Event Discovery**: Browse and search available events
-- **Event Details**: View comprehensive event information including date, location, price, and available seats
-- **Ticket Booking**: Book tickets for events with real-time seat availability
-- **Booking Management**: View and manage personal bookings
-- **Booking Confirmation**: Email confirmation system for successful bookings
-- **Contact System**: Contact form with email integration
+- **Secure Authentication**: User registration and login with email/password and Google OAuth integration
+- **Event Discovery**: Browse available events with detailed information including date, location, pricing, and seat availability
+- **Ticket Booking**: Real-time seat selection and booking with instant confirmation
+- **Booking Management**: View personal booking history and manage reservations
+- **Email Notifications**: Automated email confirmations for successful bookings
+- **Profile Management**: User profile access and booking history tracking
 
 ### Admin Features
-- **Event Management**: Create, update, and manage events
-- **User Management**: Admin panel for user administration
-- **Booking Oversight**: Monitor and manage all bookings
-- **Database Management**: Direct database access through Django admin
+- **Event Management**: Create, update, and delete events with image uploads and location mapping
+- **User Administration**: Manage user accounts and permissions
+- **Booking Oversight**: Monitor all bookings and user activities
+- **Analytics Dashboard**: View revenue analytics, user growth, and event category statistics
+- **Database Management**: Direct access to Django admin interface
 
-## 🛠️ Tech Stack
+## Tech Stack
+
+### Backend
+- **Django 5.2.7** - High-level Python web framework
+- **Django REST Framework 3.14.0** - Powerful API toolkit for building Web APIs
+- **MySQL** - Relational database management system
+- **Google OAuth2** - Social authentication integration
+- **Email Integration** - SMTP email sending via Gmail
+- **Geocoding** - Location services using Nominatim
+- **CORS Support** - Cross-origin resource sharing configuration
 
 ### Frontend
 - **React 19.1.1** - Modern JavaScript library for building user interfaces
-- **React Router** - Client-side routing for single-page applications
-- **Bootstrap 5.3.8** - CSS framework for responsive design
-- **Axios** - HTTP client for API communication
-- **EmailJS** - Email sending capabilities
-- **Font Awesome** - Icon library
+- **React Router DOM 7.8.1** - Declarative routing for React applications
+- **Bootstrap 5.3.8** - Responsive CSS framework
+- **Axios 1.11.0** - HTTP client for API requests
+- **EmailJS 4.4.1** - Client-side email sending service
+- **Material-UI 7.3.6** - React components implementing Google's Material Design
+- **Chart.js 4.5.1** - Simple yet flexible JavaScript charting library
+- **ApexCharts 5.3.6** - Modern charting library
+- **React DatePicker 9.1.0** - Date picker component
+- **QRCode.react 4.2.0** - QR code generation
+- **Swiper 12.0.3** - Modern mobile touch slider
 
-### Backend
-- **Django 5.2.5** - Python web framework
-- **Django REST Framework** - API development toolkit
-- **MySQL** - Relational database management system
-- **Django CORS Headers** - Cross-origin resource sharing support
+## Prerequisites
 
-### Development Tools
-- **React Scripts** - Build and development tools for React
-- **SQLite** - Development database (can be switched to MySQL for production)
+- **Python 3.8+** with pip package manager
+- **Node.js 14+** with npm package manager
+- **MySQL Server** for database
+- **Git** for version control
 
-##  Prerequisites
+## Installation & Setup
 
-Before running this application, make sure you have the following installed:
-
-- **Node.js** (v14 or higher)
-- **npm** or **yarn**
-- **Python** (v3.8 or higher)
-- **pip** (Python package manager)
-- **MySQL** (for production database)
-
-##  Installation
-
-### 1. Clone the Repository
+### 1. Clone Repository
 ```bash
 git clone <repository-url>
-cd event-booking-system
+cd cleaned-repo
 ```
 
 ### 2. Backend Setup (Django)
@@ -63,142 +64,238 @@ cd event-booking-system
 ```bash
 cd backend
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+# On Windows: venv\Scripts\activate
+# On macOS/Linux: source venv/bin/activate
 ```
 
-#### Install Python Dependencies
+#### Install Dependencies
 ```bash
-pip install -r requirements.txt
+pip install -r ../requirements.txt
+```
+
+#### Environment Configuration
+Create a `.env` file in the backend directory:
+```env
+SECRET_KEY=your-django-secret-key
+DEBUG=True
+MYSQLDATABASE=your_database_name
+MYSQLUSER=your_mysql_username
+MYSQLPASSWORD=your_mysql_password
+MYSQLHOST=localhost
+MYSQLPORT=3306
+EMAIL_HOST_PASSWORD=your_gmail_app_password
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+RAILWAY_PUBLIC_DOMAIN=your_railway_domain (if deploying)
+BASE_URL=http://localhost:8000
 ```
 
 #### Database Setup
+1. Create a MySQL database
+2. Run migrations:
 ```bash
-# If using MySQL (recommended for production)
-# Create a MySQL database with name as you like
-
-# Run migrations
 python manage.py migrate
+```
 
-# Create superuser (optional)
+#### Create Superuser (Optional)
+```bash
 python manage.py createsuperuser
 ```
 
-#### Run the Backend Server
+#### Start Development Server
 ```bash
 python manage.py runserver
 ```
-
-The Django development server will start at `http://localhost:8000`
+Server runs at: `http://localhost:8000`
 
 ### 3. Frontend Setup (React)
 
-#### Install Node Dependencies
+#### Install Dependencies
 ```bash
 cd ../frontend
 npm install
 ```
 
-#### Start the Development Server
+#### Start Development Server
 ```bash
 npm start
 ```
+Server runs at: `http://localhost:3000`
 
-The React development server will start at `http://localhost:3000`
-
-##  Project Structure
+## Project Structure
 
 ```
-event-booking-system/
-├── backend/                    # Django backend
-│   ├── Eventapp/              # Main Django app
-│   │   ├── models.py          # Database models
-│   │   ├── views.py           # API views and logic
-│   │   ├── urls.py            # URL routing
-│   │   ├── forms.py           # Django forms
-│   │   ├── admin.py           # Admin configuration
-│   │   └── Email.py           # Email functionality
-│   ├── backend/               # Django project settings
-│   ├── manage.py              # Django management script
-│   └── db.sqlite3             # Development database
-├── frontend/                  # React frontend
-│   ├── public/                # Static assets
+cleaned-repo/
+├── backend/                          # Django backend application
+│   ├── backend/                      # Django project settings
+│   │   ├── settings.py              # Main configuration
+│   │   ├── urls.py                  # URL routing
+│   │   └── wsgi.py                  # WSGI configuration
+│   ├── Eventapp/                     # Main Django app
+│   │   ├── models.py                # Database models
+│   │   ├── views.py                 # API views and business logic
+│   │   ├── urls.py                  # App URL patterns
+│   │   ├── forms.py                 # Django forms
+│   │   ├── serializers.py           # DRF serializers
+│   │   ├── admin.py                 # Admin interface
+│   │   ├── Email.py                 # Email functionality
+│   │   └── migrations/              # Database migrations
+│   ├── media/                       # User uploaded files
+│   ├── static/                      # Static files
+│   └── manage.py                    # Django management script
+├── frontend/                         # React frontend application
+│   ├── public/                      # Static assets
 │   ├── src/
-│   │   ├── components/        # React components
-│   │   │   ├── Home.jsx       # Home page
-│   │   │   ├── Event.jsx      # Event listing
-│   │   │   ├── EventList.jsx  # Individual event details
-│   │   │   ├── BookingTickets.jsx # Ticket booking
-│   │   │   ├── Login.jsx      # User login
-│   │   │   ├── SignUp.jsx     # User registration
-│   │   │   └── ...            # Other components
-│   │   ├── App.js             # Main React app
-│   │   └── index.js           # React entry point
-│   └── package.json           # Node dependencies
-└── README.md                  # This file
+│   │   ├── components/              # React components
+│   │   │   ├── Home.jsx            # Landing page
+│   │   │   ├── Event.jsx           # Event listing
+│   │   │   ├── EventList.jsx       # Individual event details
+│   │   │   ├── BookingTickets.jsx  # Ticket booking interface
+│   │   │   ├── Login.jsx           # User login
+│   │   │   ├── SignUp.jsx          # User registration
+│   │   │   ├── Profile.jsx         # User profile
+│   │   │   └── ...                 # Other components
+│   │   ├── admin/                  # Admin panel components
+│   │   │   ├── AdminLayout.jsx     # Admin layout
+│   │   │   ├── pages/              # Admin pages
+│   │   │   │   ├── Events.jsx      # Event management
+│   │   │   │   ├── Users.jsx       # User management
+│   │   │   │   ├── Booking.jsx     # Booking management
+│   │   │   │   └── Commontable.js  # Reusable table component
+│   │   ├── hooks/                  # Custom React hooks
+│   │   ├── routes/                 # Route definitions
+│   │   ├── App.js                  # Main React app
+│   │   └── index.js                # React entry point
+│   └── package.json                # Node dependencies
+├── requirements.txt                 # Python dependencies
+└── README.md                        # This file
 ```
 
-##  API Endpoints
+## API Endpoints
 
 ### Authentication
 - `POST /api/login/` - User login
 - `POST /api/signup/` - User registration
 - `POST /api/logout/` - User logout
+- `POST /api/auth/google/callback/` - Google OAuth callback
+- `GET /api/whoami/` - Get current user info
 
 ### Events
-- `GET /api/events/` - Get all events
-- `GET /api/events/{id}/` - Get specific event details
-- `POST /api/events/` - Create new event (Admin only)
-- `PUT /api/events/{id}/` - Update event (Admin only)
-- `DELETE /api/events/{id}/` - Delete event (Admin only)
+- `GET /api/events/` - List all events
+- `GET /api/events/{id}/` - Get event details
+- `POST /api/events/` - Create event (Admin)
+- `PUT /api/events/{id}/` - Update event (Admin)
+- `DELETE /api/events/{id}/` - Delete event (Admin)
+- `GET /api/artists/` - List all artists
+- `GET /api/artists/{name}/` - Get artist details with events
 
 ### Bookings
-- `GET /api/bookings/` - Get user bookings
-- `POST /api/bookings/` - Create new booking
-- `DELETE /api/bookings/{id}/` - Cancel booking
+- `GET /api/profile/` - Get user bookings and profile
+- `POST /api/BookingTickets/{id}/` - Book tickets for event
+- `GET /api/BookedConfrimation/{id}/` - Get booking confirmation
+- `GET /api/BookingDetails/` - Get all bookings (Admin)
+
+### Admin
+- `GET /api/UsersDetails/` - List all users (Admin)
+- `POST /api/UsersDetails/` - Create user (Admin)
+- `POST /api/UsersDetails/{id}/` - Update user (Admin)
+- `GET /api/admin_analytics/` - Get analytics data (Admin)
+
+### Utilities
+- `GET /api/contact/` - Contact information
+- `POST /api/filter_events/` - Filter events
+- `GET /api/get_csrf_token/` - Get CSRF token
+
+## Database Models
+
+### UserProfile
+- User authentication and profile information
+- Supports both regular and Google OAuth users
+- Admin role management
+
+### Events
+- Event details including title, description, date, location
+- Seat management (total/available)
+- Image uploads and geocoding
+- Category classification
+
+### Artists
+- Artist information and images
+- Associated with events through EventArtist model
+
+### Bookingdetails
+- Ticket booking records
+- Links users to events with seat counts and pricing
+- Unique booking IDs for tracking
+
+### EventArtist
+- Many-to-many relationship between events and artists
 
 ## Usage
 
 ### For Users
-1. **Register/Login**: Create an account or sign in to existing account
-2. **Browse Events**: Navigate to the Events section to see available events
-3. **View Details**: Click on any event to see full details
-4. **Book Tickets**: Select the number of seats and complete booking
-5. **Confirmation**: Receive email confirmation for successful bookings
+1. **Register/Login**: Create account or sign in with email/password or Google
+2. **Browse Events**: Explore available events on the home page
+3. **View Details**: Click events to see full information and artist details
+4. **Book Tickets**: Select seats and complete booking process
+5. **Manage Bookings**: View booking history in profile section
+6. **Receive Confirmations**: Get email confirmations for successful bookings
 
 ### For Administrators
-1. **Access Admin Panel**: Go to `/admin` and login with superuser credentials
-2. **Manage Events**: Add, edit, or remove events
-3. **Monitor Bookings**: View all bookings and manage them
-4. **User Management**: Manage user accounts through admin interface
+1. **Access Admin Panel**: Navigate to admin routes (protected)
+2. **Manage Events**: Create/edit/delete events with image uploads
+3. **User Management**: View and manage user accounts
+4. **Monitor Bookings**: Track all booking activities
+5. **View Analytics**: Access dashboard with revenue and user statistics
 
-##  Email Configuration
+## Email Configuration
 
-The application uses Gmail SMTP for email notifications. To set up email functionality:
-
-1. Enable 2-factor authentication on your Gmail account
-2. Generate an App Password
-3. Update the email settings in `backend/backend/settings.py`:
-   ```python
-   EMAIL_HOST_USER = 'your-email@gmail.com'
-   EMAIL_HOST_PASSWORD = 'your-app-password'
-   ```
-
-##  Configuration
-
-### Environment Variables (Backend)
-Create a `.env` file in the backend directory:
-```env
-SECRET_KEY=your-secret-key
-DEBUG=True
-DATABASE_NAME=eventbookingdb
-DATABASE_USER=root
-DATABASE_PASSWORD=your-password
-DATABASE_HOST=localhost
-DATABASE_PORT=3306
+Configure Gmail SMTP in `backend/backend/settings.py`:
+```python
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'your-email@gmail.com'
+EMAIL_HOST_PASSWORD = 'your-app-password'
 ```
 
-### CORS Configuration
-The application is configured to accept requests from `http://localhost:3000` by default. Update `CORS_ALLOWED_ORIGINS` in settings.py for different environments.
----
+## Deployment
 
-**Note**: This application is designed for educational and demonstration purposes. For production use, ensure proper security measures, error handling, and database optimization.
+### Backend (Railway)
+- Environment variables configured for Railway deployment
+- Static files served via WhiteNoise
+- CORS configured for frontend domain
+
+### Frontend (Vercel/Netlify)
+- Build command: `npm run build`
+- Publish directory: `build`
+- Configure API proxy to backend URL
+
+## Security Features
+
+- CSRF protection on forms
+- Session-based authentication
+- CORS configuration
+- Secure password hashing (SHA256)
+- Admin-only endpoints protection
+- Input validation and sanitization
+
+## Development Notes
+
+- Uses SQLite for local development (configurable to MySQL)
+- Hot reloading enabled for both frontend and backend
+- Comprehensive error handling and logging
+- Responsive design with Bootstrap
+- Mobile-friendly interface
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make changes and test thoroughly
+4. Submit a pull request with detailed description
+
+## License
+
+This project is for educational and demonstration purposes. Ensure proper security measures for production deployment.

@@ -39,7 +39,7 @@ export default function DashboardPage() {
   
   const stats = [
     { label: 'Total Users', value: '12,458', change: '↑ 12.5% vs last month', positive: true, icon: '👥', color: '#ff2c55' },
-    { label: 'Active Events', value: '342', change: '↑ 8.3% vs last month', positive: true, icon: '🎪', color: '#00d9ff' },
+    { label: 'Active Events', value: events.length, change: '↑ 8.3% vs last month', positive: true, icon: '🎪', color: '#00d9ff' },
     { label: 'Total Bookings', value: '8,924', change: '↑ 15.7% vs last month', positive: true, icon: '🎫', color: '#ff00ff' },
     { label: 'Revenue', value: '$842K', change: '↑ 22.1% vs last month', positive: true, icon: '💰', color: '#ffb800' }
   ];
