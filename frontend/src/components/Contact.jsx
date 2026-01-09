@@ -22,7 +22,7 @@ export default function Contact(){
                 setData(response.data);
             } catch (error) {
                 console.error('Error fetching contact data:', error);
-                setData({page: 'Error', content: 'Failed to load data'});
+                setData({page: 'Error', content: 'Failed to load Contact information.'});
             }
         };
         fetchdata();
