@@ -13,11 +13,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-load_dotenv()
-
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+load_dotenv(BASE_DIR / ".env")
 load_dotenv(BASE_DIR / ".env.production")
 
 
@@ -26,15 +25,15 @@ load_dotenv(BASE_DIR / ".env.production")
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv("DEBUG", "True").lower() in ("true", "1")
 
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    os.getenv("RAILWAY_PUBLIC_DOMAIN"),
     ".railway.app"
 ]
+if os.getenv("RAILWAY_PUBLIC_DOMAIN"):
+    ALLOWED_HOSTS.append(os.getenv("RAILWAY_PUBLIC_DOMAIN"))
 
 # Application definition
 
@@ -86,28 +85,36 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-default-dev-key-change-in-production")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DATABASENAME = 'railway'
-# DATABASEUSER = 'root'
-# DATABASEPASSWORD = os.getenv("DB_PASSWORD")
-# DATABASEHOST = 'mysql-production-0b7f.up.railway.app'
-# DATABASEPORT = '3306'
+db_name = os.getenv("DB_NAME") or os.getenv("MYSQLDATABASE")
+db_user = os.getenv("DB_USER") or os.getenv("MYSQLUSER") or "root"
+db_password = os.getenv("DB_PASSWORD") or os.getenv("MYSQLPASSWORD") or ""
+db_host = os.getenv("DB_HOST") or os.getenv("MYSQLHOST") or "localhost"
+db_port = os.getenv("DB_PORT") or os.getenv("MYSQLPORT") or "3306"
 
-DATABASES = {
-    'default': {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": os.getenv("MYSQLDATABASE"),
-        "USER": os.getenv("MYSQLUSER"),
-        "PASSWORD": os.getenv("MYSQLPASSWORD"),
-        "HOST": os.getenv("MYSQLHOST"),
-        "PORT": os.getenv("MYSQLPORT", "3306"),
+if db_name:
+    DATABASES = {
+        'default': {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": db_name,
+            "USER": db_user,
+            "PASSWORD": db_password,
+            "HOST": db_host,
+            "PORT": db_port,
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 
 # Password validation
@@ -162,7 +169,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "https://*.railway.app",
-    "https://eventify-event-management-system.vercel.app/"
+    "https://eventify-event-management-system.vercel.app"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -173,17 +180,15 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     "https://*.railway.app",
-    "https://eventify-event-management-system.vercel.app/"
-
+    "https://eventify-event-management-system.vercel.app"
 ]
 
 if railway_domain:
     CSRF_TRUSTED_ORIGINS.append(f"https://{railway_domain}")
 
 
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# MEDIA_URL = f"{os.getenv('MEDIA_BASE_URL', '')}/media/"
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 

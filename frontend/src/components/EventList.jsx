@@ -1,220 +1,487 @@
 import { useState, useEffect } from "react";
-import axios from 'axios';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import "../components/Styles/EventList.css";
+import axios from "axios";
 import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
-import PopupGfg from './Popup';
+import Skeleton from "@mui/material/Skeleton";
+import PopupGfg from "./Popup";
+import "../components/Styles/EventList.css";
 
 export default function EventList() {
-    const [event, setEvent] = useState(null);
-    const [Artists, setArtists] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [isPopupOpen, setPopupOpen] = useState(false);
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const location = useLocation();
+  const [event, setEvent] = useState(null);
+  const [artists, setArtists] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isPopupOpen, setPopupOpen] = useState(false);
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [readMore, setReadMore] = useState(false);
+  const [showFaq, setShowFaq] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
 
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const user = sessionStorage.getItem("username");
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/event-list/${id}`);
-                const eventData = response.data.events?.length > 0 ? response.data.events[0] : null;
-                const Artist=response.data.artists || [] ;
-                setEvent(eventData);
-                setArtists(Artist)
-                setLoading(false);
-            } catch (error) {
-                console.error("Error fetching event:", error);
-                setError(error.message);
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/api/event-list/${id}`
+        );
+        const eventData =
+          response.data.events?.length > 0 ? response.data.events[0] : null;
+        setEvent(eventData);
+        setArtists(response.data.artists || []);
 
-        if (id) {
-            fetchData();
+        // Load wishlist status
+        const savedWishlist = JSON.parse(
+          localStorage.getItem("eventify_wishlist") || "[]"
+        );
+        if (eventData && savedWishlist.includes(eventData.event_id)) {
+          setIsWishlisted(true);
         }
-    }, [id]);
-
-    const user = sessionStorage.getItem("username");
-
- const goToLogin = () => {
-        navigate("/Login", { state: { from: location } });
+      } catch (err) {
+        console.error("Error fetching event:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
-const handleBookTickets = () => {
-        if (!user) {
-            setPopupOpen(true);
-        } else {
-            navigate(`/BookingTickets/${event.event_id}`);
-        }
-    };
+    if (id) {
+      fetchData();
+    }
+  }, [id]);
 
-    if (loading) return <div className="text-center mt-5">Loading event details...</div>;
-    if (error) return <div className="text-center mt-5 text-danger">Error: {error}</div>;
-    if (!event) return <div className="text-center mt-5">No event found</div>;
+  const toggleWishlist = () => {
+    if (!event) return;
+    const savedWishlist = JSON.parse(
+      localStorage.getItem("eventify_wishlist") || "[]"
+    );
+    let updated;
+    if (savedWishlist.includes(event.event_id)) {
+      updated = savedWishlist.filter((eventId) => eventId !== event.event_id);
+      setIsWishlisted(false);
+    } else {
+      updated = [...savedWishlist, event.event_id];
+      setIsWishlisted(true);
+    }
+    localStorage.setItem("eventify_wishlist", JSON.stringify(updated));
+  };
 
+  const goToLogin = () => {
+    navigate(`/Login?next=${encodeURIComponent(location.pathname)}`, { state: { from: location } });
+  };
+
+  const handleBookTickets = () => {
+    if (!user) {
+      setPopupOpen(true);
+    } else {
+      navigate(`/events/${event.event_id}/buy-page`);
+    }
+  };
+
+  if (loading) {
     return (
-        <div className="event-list-container">
-            <div className="event-whole">
-            <div className="event-detail-container">
-                <div className="event-image">
-                    <img src={event.event_image} alt={event.event_title || "Event"} />
-                </div>
-            </div>
-                <div className="event-infotab rounded-2">
-                    <h1 className="event-title">{event.event_title}</h1>
-                    <div className="event-categories ">
-                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5v14.586c0 .89 1.077 1.337 1.707.707L12 14l6.293 6.293c.63.63 1.707.184 1.707-.707V5a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2Z"/>
-                    </svg> Music, Concerts
-                    </div>
-                    <div className="event-meta">
-                        <i className="bi bi-calendar-event"></i>
-                        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M19.5 4h-3V2.5a.5.5 0 0 0-1 0V4h-7V2.5a.5.5 0 0 0-1 0V4h-3A2.503 2.503 0 0 0 2 6.5v13A2.503 2.503 0 0 0 4.5 22h15a2.5 2.5 0 0 0 2.5-2.5v-13A2.5 2.5 0 0 0 19.5 4M21 19.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5V11h18zm0-9.5H3V6.5C3 5.672 3.67 5 4.5 5h3v1.5a.5.5 0 0 0 1 0V5h7v1.5a.5.5 0 0 0 1 0V5h3A1.5 1.5 0 0 1 21 6.5z"/>
-                        </svg>{event.event_scheduled_date ? new Date(event.event_scheduled_date).toLocaleString() : 'Date TBD'}
-                    </div>
-                    <div className="event-meta">
-                        <i className="bi bi-geo-alt"></i>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                            <path fill="none" stroke="currentColor" stroke-width="2" d="M12 22s-8-6-8-12c0-5 4-8 8-8s8 3 8 8c0 6-8 12-8 12Zm0-9a3 3 0 1 0 0-6a3 3 0 0 0 0 6Z"/>
-                        </svg>{event.location_name}
-                    </div>
-                    {/* <hr style={{ borderTop: "2px solid #ff2c55", margin: 0,opacity:"1" }} /> */}
+      <div className="district-page-wrapper">
+        <div className="district-container">
+          <Skeleton
+            variant="text"
+            width="50%"
+            height={50}
+            sx={{ bgcolor: "rgba(255, 255, 255, 0.1)", mb: 1 }}
+          />
+          <Skeleton
+            variant="text"
+            width="30%"
+            height={28}
+            sx={{ bgcolor: "rgba(255, 255, 255, 0.08)", mb: 4 }}
+          />
+          <Skeleton
+            variant="rounded"
+            width="100%"
+            height={380}
+            sx={{ bgcolor: "rgba(255, 255, 255, 0.08)", borderRadius: "16px", mb: 4 }}
+          />
+        </div>
+      </div>
+    );
+  }
 
-                    <div className="price-book-row">
-                        <div className="eventist-price">
-                            Starts from ₹{event.event_price || 'Free'}
-                        </div>
-                        {user ?(
-                        <a href={`/BookingTickets/${event.event_id}`} className="btn-book" style={{backgroundColor: "#000", color: "#fff",textTransform:"uppercase"}}>
-                            Book Tickets
-                        </a>
-                        ):(
-                         <>
-                                <button
-                                    className="btn-book"
-                                    style={{ backgroundColor: "#000", color: "#fff",textTransform:"uppercase" }}
-                                    onClick={handleBookTickets}  // 🔹 opens popup
-                                >
-                                    Book Tickets
-                                </button>
+  if (error || !event) {
+    return (
+      <div className="district-page-wrapper text-center py-5">
+        <div className="district-container py-5">
+          <h2 className="text-white mb-3">Event Not Found</h2>
+          <p className="text-secondary mb-4">
+            {error || "The requested event could not be found or has concluded."}
+          </p>
+          <Link to="/events" className="btn btn-danger rounded-pill px-4 py-2">
+            Explore All Events
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
-                                {/* 🔹 PopupGfg triggered here */}
-                                <PopupGfg isPopupOpen={isPopupOpen} onClose={() => setPopupOpen(false)} onGoLogin={goToLogin} />
-                            </>
-                        )}
-                    </div>
-                </div>
-            <div className="about-event">
-                <h2>About the Event</h2>
-                <p className="text-light">{event.event_description || 'No description available.'}</p>
-            </div>
-                {Artists?(            <div className="artist-section">
-                <h2>Performing Artists</h2>
-                <div className="artist-grid">
+  const isSoldOut =
+    event.is_sold_out ||
+    (event.event_available_seats !== undefined &&
+      event.event_available_seats <= 0);
+  const availableSeats = event.event_available_seats ?? 50;
+  const bookedPercent = Math.min(
+    100,
+    Math.max(15, Math.round(((100 - availableSeats) / 100) * 100))
+  );
 
-                    {Artists.map((artist)=>( 
-                      <Link key={artist.artistid} to={`/artists/${artist.artistname}`} style={{ textDecoration:"none", color:"inherit" }}>
-                      <div className="artist-item">
-                        <div className="artist-photo">
-                            <img src={artist.artist_image} alt={artist.artistname}/>
-                        </div>
-                        <div className="artist-info">
-                            <div className="artist-name">{artist.artistname}</div>
-                            <div className="artist-role">Lead Singer</div>
-                        </div>
-                     </div>
-                     </Link>
-                     ))}
-                   
-                </div>
+  const eventDate = new Date(event.event_scheduled_date);
+  const formattedDate = eventDate.toLocaleDateString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+  const formattedTime = eventDate.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  return (
+    <div className="district-page-wrapper">
+      <div className="district-container">
+        {/* Event Header: Title & Date (District Style - Above Banner) */}
+        <div className="district-header">
+          <h1 className="district-title">{event.event_title}</h1>
+          <p className="district-date-badge">
+            <i className="far fa-calendar-alt"></i>
+            <span>
+              {formattedDate}, {formattedTime}
+            </span>
+          </p>
+        </div>
+
+        {/* Hero Banner Showcase (District Style) */}
+        <div className="district-banner-wrapper">
+          <img
+            src={event.event_image}
+            alt={event.event_title}
+            className="district-banner-img"
+          />
+        </div>
+
+        {/* Main Split Layout */}
+        <div className="district-main-layout">
+          {/* Left Column Content */}
+          <div className="district-left-content">
+            {/* About Section */}
+            <div>
+              <h2 className="district-section-title">About</h2>
+              <p className="district-about-text">
+                {event.event_description
+                  ? readMore
+                    ? event.event_description
+                    : `${event.event_description.slice(0, 240)}...`
+                  : "Join us for an unforgettable live experience packed with world-class entertainment, stellar acoustic staging, and electric vibes. Book early to secure the best seats."}
+              </p>
+              {event.event_description &&
+                event.event_description.length > 240 && (
+                  <button
+                    type="button"
+                    className="btn btn-link text-danger p-0 mt-2 text-decoration-none fw-semibold"
+                    onClick={() => setReadMore(!readMore)}
+                  >
+                    {readMore ? "Read less ∧" : "Read more ∨"}
+                  </button>
+                )}
             </div>
-            ):(
-                <></>
+
+            {/* Highlights (District Style Cards) */}
+            <div>
+              <h2 className="district-section-title">Highlights</h2>
+              <div className="district-highlights-grid">
+                <div className="district-highlight-card">
+                  <div className="district-highlight-header">
+                    <span>👑</span>
+                    <span>Why this event stands out</span>
+                  </div>
+                  <p className="district-highlight-desc">
+                    Experience state-of-the-art concert sound staging, immersive visual lighting, and intimate artist interaction.
+                  </p>
+                </div>
+                <div className="district-highlight-card">
+                  <div className="district-highlight-header">
+                    <span>✨</span>
+                    <span>What you'll experience</span>
+                  </div>
+                  <p className="district-highlight-desc">
+                    Live chart-topping setlists, electrifying crowd energy, exclusive merchandise stalls, and food & drinks zone.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Performing Artists Lineup */}
+            {artists && artists.length > 0 && (
+              <div>
+                <h2 className="district-section-title">Performing Artists</h2>
+                <div className="district-artists-row">
+                  {artists.map((artist) => (
+                    <Link
+                      key={artist.artistid || artist.artistname}
+                      to={`/artists/${artist.artistname}`}
+                      className="district-artist-item"
+                    >
+                      <img
+                        src={artist.artist_image}
+                        alt={artist.artistname}
+                        className="district-artist-photo"
+                      />
+                      <span className="district-artist-name">
+                        {artist.artistname}
+                      </span>
+                      <span className="district-artist-role">Lead Artist</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
             )}
 
-            <div className="venue-section">
-                <h2>Venue Information</h2>
-                <div className="venue-content">
-                    <div className="venue-address">
-                       {event.location_name}
+            {/* Venue & Location */}
+            <div>
+              <h2 className="district-section-title">Venue Information</h2>
+              <div className="district-venue-card">
+                <div className="district-venue-info">
+                  <div className="district-venue-icon">
+                    <i className="fas fa-map-marker-alt"></i>
+                  </div>
+                  <div>
+                    <div className="district-venue-name">
+                      {event.location_name || event.event_location || "Central Arena"}
                     </div>
-                    <a href={`https://www.google.com/maps?q=${event.latitude},${event.longitude}` }
-                       target="_blank" 
-                       className="btn-book" 
-                       style={{margin: "0", whiteSpace: "nowrap", backgroundColor: "#000", color: "#fff" ,border:"2px solid"}}>
-                        Get Direction
-                    </a>
+                    <div className="district-venue-sub">
+                      Main Concert Complex • Gates open 1 hour prior
+                    </div>
+                  </div>
                 </div>
+
+                <a
+                  href={`https://www.google.com/maps?q=${
+                    event.latitude && event.longitude
+                      ? `${event.latitude},${event.longitude}`
+                      : encodeURIComponent(
+                          event.location_name || event.event_location || "Stadium Arena"
+                        )
+                  }`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="district-btn-directions"
+                >
+                  Get Direction
+                </a>
+              </div>
             </div>
 
-            <div className="terms-section">
-                <h2>Terms and Conditions</h2>
-                <div className="terms-content">
-                    <p>By booking tickets for this event, you agree to the following terms and conditions:</p>
-                    <ul>
-                        <li><strong>Booking Confirmation:</strong> All bookings are subject to availability and confirmation.</li>
-                        <li><strong>Payment:</strong> Full payment must be made at the time of booking.</li>
-                        <li><strong>Cancellation Policy:</strong> Please check the cancellation policy before booking.</li>
-                        <li><strong>Entry Requirements:</strong> Valid ID proof is required for entry.</li>
-                    </ul>
+            {/* Things to Know (District Bullet Points) */}
+            <div>
+              <h2 className="district-section-title">Things to know</h2>
+              <ul className="district-things-list">
+                <li>
+                  <span className="district-bullet-dot"></span>
+                  <span>Entry allowed for all ages</span>
+                </li>
+                <li>
+                  <span className="district-bullet-dot"></span>
+                  <span>Valid government photo ID required at the gate</span>
+                </li>
+                <li>
+                  <span className="district-bullet-dot"></span>
+                  <span>Tickets required for all attendees ages 3 and above</span>
+                </li>
+                <li>
+                  <span className="district-bullet-dot"></span>
+                  <span>Outdoor and indoor zones with seated and standing pit</span>
+                </li>
+                <li>
+                  <span className="district-bullet-dot"></span>
+                  <span>Professional recording gear and outside food/beverages are prohibited</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* More / Accordion (District Style) */}
+            <div>
+              <h2 className="district-section-title">More</h2>
+              <div
+                className="district-accordion-item"
+                onClick={() => setShowFaq(!showFaq)}
+              >
+                <div className="district-accordion-title">
+                  <i className="far fa-question-circle text-danger"></i>
+                  <span>Frequently asked questions</span>
                 </div>
+                <i className={`fas fa-chevron-${showFaq ? "up" : "right"} text-secondary`}></i>
+              </div>
+              {showFaq && (
+                <div className="p-3 text-secondary small bg-dark rounded-3 mb-2">
+                  <p><strong>When will gates open?</strong> Gates open 60 minutes before the scheduled start time.</p>
+                  <p><strong>Is re-entry allowed?</strong> Re-entry is strictly not permitted once wristbands are scanned.</p>
+                  <p className="mb-0"><strong>Is parking available?</strong> Venue parking is available on a first-come, first-served basis.</p>
+                </div>
+              )}
+
+              <div
+                className="district-accordion-item"
+                onClick={() => setShowTerms(!showTerms)}
+              >
+                <div className="district-accordion-title">
+                  <i className="far fa-file-alt text-danger"></i>
+                  <span>Terms and Conditions</span>
+                </div>
+                <i className={`fas fa-chevron-${showTerms ? "up" : "right"} text-secondary`}></i>
+              </div>
+              {showTerms && (
+                <div className="p-3 text-secondary small bg-dark rounded-3">
+                  <p>All bookings are final and non-refundable.</p>
+                  <p>Event schedule and artist lineup are subject to change due to weather or technical requirements.</p>
+                  <p className="mb-0">Organizers reserve the right to refuse admission for disorderly conduct.</p>
+                </div>
+              )}
             </div>
           </div>
-       
 
-                <div className="event-info rounded-2">
-                    <h1 className="event-title">{event.event_title}</h1>
-                    <div className="event-categories ">
-                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5v14.586c0 .89 1.077 1.337 1.707.707L12 14l6.293 6.293c.63.63 1.707.184 1.707-.707V5a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2Z"/>
-                    </svg> Music, Concerts
-                    </div>
-                    <div className="event-meta">
-                        <i className="bi bi-calendar-event"></i>
-                        <svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="M19.5 4h-3V2.5a.5.5 0 0 0-1 0V4h-7V2.5a.5.5 0 0 0-1 0V4h-3A2.503 2.503 0 0 0 2 6.5v13A2.503 2.503 0 0 0 4.5 22h15a2.5 2.5 0 0 0 2.5-2.5v-13A2.5 2.5 0 0 0 19.5 4M21 19.5a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19.5V11h18zm0-9.5H3V6.5C3 5.672 3.67 5 4.5 5h3v1.5a.5.5 0 0 0 1 0V5h7v1.5a.5.5 0 0 0 1 0V5h3A1.5 1.5 0 0 1 21 6.5z"/>
-                        </svg>{event.event_scheduled_date ? new Date(event.event_scheduled_date).toLocaleString() : 'Date TBD'}
-                    </div>
-                    <div className="event-meta">
-                        <i className="bi bi-geo-alt"></i>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                            <path fill="none" stroke="currentColor" stroke-width="2" d="M12 22s-8-6-8-12c0-5 4-8 8-8s8 3 8 8c0 6-8 12-8 12Zm0-9a3 3 0 1 0 0-6a3 3 0 0 0 0 6Z"/>
-                        </svg>{event.location_name}
-                    </div>
-                    <hr style={{ borderTop: "2px solid #ff2c55", margin: 0,opacity:"1" }} />
+          {/* Right Column: Sticky District Booking Card */}
+          <aside className="district-sticky-card">
+            {/* Top Row: Price + Book Tickets Button */}
+            <div className="district-card-top-row">
+              <div>
+                <h3 className="district-card-price-title">
+                  ₹{event.event_price || "Free"}
+                </h3>
+                <span className="district-card-price-sub">onwards</span>
+              </div>
 
-                    <div className="price-book-row">
-                        <div className="eventist-price">
-                            Starts from ₹{event.event_price || 'Free'}
-                        </div>
-                        {user ?(
-                        <a href={`/BookingTickets/${event.event_id}`} className="btn-book" style={{backgroundColor: "#000", color: "#fff",textTransform:"uppercase"}}>
-                            Book Tickets
-                        </a>
-                        ):(
-                         <>
-                                <button
-                                    className="btn-book"
-                                    style={{ backgroundColor: "#000", color: "#fff",textTransform:"uppercase" }}
-                                    onClick={handleBookTickets}  // 🔹 opens popup
-                                >
-                                    Book Tickets
-                                </button>
+              {isSoldOut ? (
+                <button className="district-book-btn disabled" disabled>
+                  Sold Out
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="district-book-btn"
+                  onClick={handleBookTickets}
+                >
+                  Book tickets
+                </button>
+              )}
+            </div>
 
-                                {/* 🔹 PopupGfg triggered here */}
-                                <PopupGfg isPopupOpen={isPopupOpen} onClose={() => setPopupOpen(false)} onGoLogin={goToLogin} />
-                            </>
-                        )}
-                    </div>
+            {/* Venue Row */}
+            <a
+              href={`https://www.google.com/maps?q=${
+                event.latitude && event.longitude
+                  ? `${event.latitude},${event.longitude}`
+                  : encodeURIComponent(
+                      event.location_name || event.event_location || "Stadium Arena"
+                    )
+              }`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="district-card-item-row"
+            >
+              <div className="district-card-item-left">
+                <div className="district-card-icon">
+                  <i className="fas fa-map-marker-alt"></i>
                 </div>
+                <div>
+                  <h4 className="district-card-item-title">
+                    {event.location_name || event.event_location || "Central Arena"}
+                  </h4>
+                  <p className="district-card-item-sub">City Center, Main Gate</p>
+                </div>
+              </div>
+              <i className="fas fa-chevron-right district-card-chevron"></i>
+            </a>
 
+            {/* Timing Row */}
+            <div className="district-card-item-row">
+              <div className="district-card-item-left">
+                <div className="district-card-icon">
+                  <i className="far fa-clock"></i>
+                </div>
+                <div>
+                  <h4 className="district-card-item-title">
+                    Gates open at {formattedTime}
+                  </h4>
+                  <p className="district-card-item-sub">
+                    View full schedule & timeline
+                  </p>
+                </div>
+              </div>
+              <i className="fas fa-chevron-right district-card-chevron"></i>
+            </div>
 
-
+            {/* Seat Availability Progress Bar */}
+            <div className="district-seats-meter-row">
+              <div className="district-seats-meter-header">
+                <span>
+                  {isSoldOut
+                    ? "Tickets completely booked"
+                    : `${availableSeats} seats remaining`}
+                </span>
+                <span className="fw-bold text-white">{bookedPercent}% booked</span>
+              </div>
+              <div className="district-meter-track">
+                <div
+                  className="district-meter-fill"
+                  style={{
+                    width: `${bookedPercent}%`,
+                    backgroundColor: isSoldOut ? "#ef4444" : "#ff2c55",
+                  }}
+                ></div>
+              </div>
+            </div>
+          </aside>
         </div>
-    );
+      </div>
+
+      {/* Floating Action Side Pill (District Style) */}
+      <div className="district-floating-actions">
+        <button
+          type="button"
+          className={`district-float-btn ${isWishlisted ? "active" : ""}`}
+          onClick={toggleWishlist}
+          title={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+          aria-label="Wishlist"
+        >
+          <i className={`${isWishlisted ? "fas" : "far"} fa-heart`}></i>
+        </button>
+        <button
+          type="button"
+          className="district-float-btn"
+          onClick={() => {
+            if (navigator.share) {
+              navigator.share({
+                title: event.event_title,
+                url: window.location.href,
+              });
+            } else {
+              navigator.clipboard.writeText(window.location.href);
+              alert("Event link copied to clipboard!");
+            }
+          }}
+          title="Share event"
+          aria-label="Share"
+        >
+          <i className="fas fa-share-alt"></i>
+        </button>
+      </div>
+
+      {/* Login Required Modal (Rendered in full screen center above the page) */}
+      <PopupGfg
+        isPopupOpen={isPopupOpen}
+        onClose={() => setPopupOpen(false)}
+        onGoLogin={goToLogin}
+      />
+    </div>
+  );
 }

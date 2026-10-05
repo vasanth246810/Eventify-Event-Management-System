@@ -1,0 +1,51 @@
+:root {
+  /* Application-Based Design Tokens (Eventify Theme) */
+  --color-7: #07080c; /* Application Background */
+  --color-8: #0e1017; /* Card, Header, Footer Background */
+  --color-5: #1c202d; /* Surface, Hover State */
+  --color-1: #ffffff; /* Primary Text */
+  --color-2: #f1f5f9; /* High-Contrast Text */
+  --color-3: #94a3b8; /* Secondary Muted Text */
+  --color-4: #64748b; /* Tertiary / Border / Placeholder Text */
+  --color-6: rgba(255, 255, 255, 0.1); /* Subtle Border */
+
+  /* Eventify Signature Brand Colors */
+  --color-brand: #ff2c55; /* Signature Neon Red/Pink */
+  --color-brand-hover: #e02449;
+  --color-brand-glow: rgba(255, 44, 85, 0.35);
+
+  /* Typography scale */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+
+  /* Font weights */
+  --weight-400: 400;
+  --weight-500: 500;
+  --weight-600: 600;
+
+  /* Font family */
+  --font-family: 'Be Vietnam Pro', 'BeVietnamPro', 'Muli', sans-serif;
+
+  /* Border radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 30px;
+  --radius-full: 9999px;
+
+  /* Spacing */
+  --space-1: 1px;
+  --space-2: 3px;
+  --space-3: 4px;
+  --space-4: 6px;
+  --space-5: 8px;
+  --space-6: 9px;
+  --space-7: 12px;
+  --space-8: 15px;
+  --space-9: 16px;
+  --space-10: 20px;
+  --space-11: 24px;
+  --space-12: 32px;
+  --space-13: 65px;
+}

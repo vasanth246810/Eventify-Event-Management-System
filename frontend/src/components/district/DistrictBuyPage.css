@@ -1,0 +1,577 @@
+@import './district-tokens.css';
+
+/* Container matching Eventify Application Theme */
+.district-page-root {
+  background-color: var(--color-7);
+  color: var(--color-1);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+  font-family: var(--font-family);
+  user-select: none;
+}
+
+/* =========================================
+   HEADER
+   ========================================= */
+.district-top-header {
+  background-color: #000000;
+  border-bottom: 1px solid var(--color-6);
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-11);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+/* Left Brand Group */
+.district-brand-link {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: var(--color-1);
+  line-height: 1;
+}
+
+.district-brand-title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-600);
+  letter-spacing: -0.04em;
+  margin: 0;
+  color: var(--color-1);
+  font-family: 'Metropolis', 'BeVietnamPro', sans-serif;
+  text-transform: lowercase;
+}
+
+.district-brand-sub {
+  font-size: 10px;
+  font-weight: var(--weight-600);
+  color: var(--color-brand);
+  letter-spacing: 0.14em;
+  margin-top: 3px;
+  text-transform: uppercase;
+}
+
+/* Center Event Metadata */
+.district-header-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  max-width: 520px;
+}
+
+.district-header-event-title {
+  font-size: var(--text-base);
+  font-weight: var(--weight-600);
+  color: var(--color-1);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 480px;
+  display: block;
+  transition: color 0.15s ease;
+}
+
+.district-header-event-title:hover {
+  color: var(--color-brand);
+}
+
+.district-header-event-title:focus-visible {
+  outline: var(--space-2) solid var(--color-brand);
+  outline-offset: var(--space-2);
+  border-radius: var(--radius-sm);
+}
+
+.district-header-event-subtitle {
+  font-size: var(--text-xs);
+  color: var(--color-3);
+  font-weight: var(--weight-400);
+  margin-top: var(--space-2);
+}
+
+/* Right User Icon */
+.district-header-right {
+  display: flex;
+  align-items: center;
+}
+
+.district-user-avatar {
+  width: var(--space-12);
+  height: var(--space-12);
+  border-radius: var(--radius-full);
+  background-color: var(--color-5);
+  border: 1px solid var(--color-6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-3);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.district-user-avatar:hover {
+  background-color: var(--color-brand);
+  color: #ffffff;
+  border-color: var(--color-brand);
+}
+
+.district-user-avatar:focus-visible {
+  outline: var(--space-2) solid var(--color-brand);
+  outline-offset: var(--space-2);
+}
+
+/* =========================================
+   SEATMAP MAIN VIEWPORT
+   ========================================= */
+.district-seatmap-viewport {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: var(--space-9) var(--space-9) 110px;
+  min-height: calc(100vh - 140px);
+}
+
+/* Container for SVG seat map */
+.district-seatmap-container {
+  width: 100%;
+  max-width: 680px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+  transform-origin: center center;
+}
+
+.district-seatmap-svg {
+  width: 100%;
+  height: auto;
+  max-height: 65vh;
+  display: block;
+}
+
+/* Styling SVG elements on Dark Theme */
+.district-seatmap-container svg .sect-0 {
+  fill: #141722 !important;
+  stroke: rgba(255, 255, 255, 0.25) !important;
+}
+
+.district-seatmap-container svg path.cls-17 {
+  fill: #f1f5f9 !important;
+}
+
+/* Hover and interactions on SVG sections */
+.district-seatmap-container svg .section-seatmap {
+  cursor: pointer;
+  transition: opacity 0.25s ease, filter 0.25s ease;
+}
+
+.district-seatmap-container svg .section-seatmap:hover {
+  filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.45));
+}
+
+.district-seatmap-container svg .section-seatmap.is-dimmed {
+  opacity: 0.2;
+}
+
+.district-seatmap-container svg .section-seatmap.is-highlighted {
+  filter: drop-shadow(0 0 16px var(--color-brand-glow)) drop-shadow(0 0 6px var(--color-brand));
+  stroke: #ffffff !important;
+  stroke-width: 3.5px !important;
+}
+
+/* Legend below seat map */
+.district-seatmap-legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-11);
+  margin-top: var(--space-9);
+  padding: var(--space-4) 0;
+}
+
+.district-legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  font-size: var(--text-xs);
+  color: var(--color-3);
+  font-weight: var(--weight-500);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.district-legend-icon {
+  width: var(--space-7);
+  height: var(--space-7);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =========================================
+   FLOATING ZOOM CONTROLS (Right Side)
+   ========================================= */
+.district-floating-controls {
+  position: fixed;
+  right: var(--space-11);
+  bottom: 95px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  z-index: 30;
+}
+
+.district-zoom-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-8);
+  border: 1px solid var(--color-6);
+  color: var(--color-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  transition: all 0.15s ease;
+}
+
+.district-zoom-btn:hover {
+  background-color: var(--color-5);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: var(--color-brand);
+}
+
+.district-zoom-btn:active {
+  background-color: #000000;
+}
+
+.district-zoom-btn:focus-visible {
+  outline: var(--space-2) solid var(--color-brand);
+  outline-offset: var(--space-2);
+}
+
+/* =========================================
+   BOTTOM STICKY FILTER BAR
+   ========================================= */
+.district-bottom-filter-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(14, 16, 23, 0.94);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid var(--color-6);
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--space-11);
+  z-index: 40;
+}
+
+.district-filter-bar-content {
+  display: flex;
+  align-items: center;
+  gap: var(--space-9);
+  max-width: 1040px;
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.district-filter-bar-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* Filter Label */
+.district-filter-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-600);
+  color: var(--color-1);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Price Filter Pills */
+.district-price-pills {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex-wrap: nowrap;
+}
+
+.district-price-pill {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  padding: 7px 14px;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-500);
+  color: var(--color-1);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.district-price-pill:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.district-price-pill.is-active {
+  background-color: var(--color-brand);
+  color: #ffffff;
+  border-color: var(--color-brand);
+  box-shadow: 0 0 14px var(--color-brand-glow);
+}
+
+.district-price-pill:focus-visible {
+  outline: var(--space-2) solid var(--color-brand);
+  outline-offset: var(--space-2);
+}
+
+/* =========================================
+   SELECTION DRAWER / MODAL
+   ========================================= */
+.district-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 50;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: districtFadeIn 0.2s ease;
+}
+
+@keyframes districtFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.district-drawer-panel {
+  background-color: var(--color-8);
+  border: 1px solid var(--color-6);
+  border-bottom: none;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  width: 100%;
+  max-width: 580px;
+  padding: var(--space-10) var(--space-11) var(--space-11);
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+  max-height: 85vh;
+  overflow-y: auto;
+  animation: districtSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes districtSlideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.district-drawer-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.district-drawer-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.district-drawer-title {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-600);
+  color: var(--color-1);
+  margin: 0;
+}
+
+.district-drawer-subtitle {
+  font-size: var(--text-xs);
+  color: var(--color-3);
+  margin: 0;
+}
+
+.district-drawer-close {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--color-6);
+  font-size: var(--text-sm);
+  color: var(--color-3);
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s ease;
+}
+
+.district-drawer-close:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: var(--color-1);
+}
+
+.district-drawer-close:focus-visible {
+  outline: var(--space-2) solid var(--color-brand);
+}
+
+/* Tier Item Card inside Drawer */
+.district-drawer-card {
+  border: 1px solid var(--color-6);
+  background-color: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-sm);
+  padding: var(--space-9);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-7);
+}
+
+.district-drawer-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.district-drawer-card-name {
+  font-size: var(--text-base);
+  font-weight: var(--weight-600);
+  color: var(--color-1);
+  margin: 0;
+}
+
+.district-drawer-card-desc {
+  font-size: var(--text-xs);
+  color: var(--color-3);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.district-drawer-card-price {
+  font-size: var(--text-base);
+  font-weight: var(--weight-600);
+  color: var(--color-brand);
+  margin-top: var(--space-2);
+}
+
+.district-drawer-qty-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-7);
+}
+
+.district-qty-btn {
+  width: var(--space-12);
+  height: var(--space-12);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-6);
+  background-color: var(--color-5);
+  color: var(--color-1);
+  font-size: var(--text-base);
+  font-weight: var(--weight-600);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.district-qty-btn:hover:not(:disabled) {
+  background-color: var(--color-brand);
+  border-color: var(--color-brand);
+  color: #ffffff;
+}
+
+.district-qty-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.district-qty-val {
+  font-size: var(--text-base);
+  font-weight: var(--weight-600);
+  min-width: var(--space-8);
+  text-align: center;
+}
+
+/* Drawer Bottom Actions */
+.district-drawer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-7);
+  border-top: 1px solid var(--color-6);
+}
+
+.district-drawer-total {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-600);
+  color: var(--color-1);
+}
+
+.district-drawer-checkout-btn {
+  background-color: var(--color-brand);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 12px 28px;
+  font-size: var(--text-base);
+  font-weight: var(--weight-600);
+  cursor: pointer;
+  box-shadow: 0 4px 16px var(--color-brand-glow);
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.district-drawer-checkout-btn:hover:not(:disabled) {
+  background-color: var(--color-brand-hover);
+  transform: translateY(-1px);
+}
+
+.district-drawer-checkout-btn:disabled {
+  background-color: var(--color-5);
+  color: var(--color-4);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .district-top-header {
+    padding: 0 var(--space-7);
+  }
+
+  .district-header-event-title {
+    max-width: 200px;
+    font-size: var(--text-sm);
+  }
+
+  .district-bottom-filter-bar {
+    padding: 0 var(--space-7);
+  }
+
+  .district-floating-controls {
+    right: var(--space-7);
+    bottom: 85px;
+  }
+}

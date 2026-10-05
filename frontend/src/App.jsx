@@ -22,6 +22,8 @@ import Events from './admin/pages/Events';
 import Bookings from './admin/pages/Booking';
 import { useEffect, useState } from 'react';
 import AdminRoute from "./routes/AdminRoute";
+import DistrictBuyPage from "./components/district/DistrictBuyPage";
+import DistrictSeatPicker from "./components/district/DistrictSeatPicker";
 
 
 function Layout() {
@@ -39,7 +41,8 @@ function Layout() {
     "/admin/bookings",
   ];
   const qrscan = searchParams.get('qrscan') === 'true';
-  const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname) || (location.pathname.startsWith('/BookedConfrimation/') && qrscan);
+  const isBuyPage = location.pathname.includes('/buy-page');
+  const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname) || (location.pathname.startsWith('/BookedConfrimation/') && qrscan) || isBuyPage;
   const [username, setUsername] = useState(sessionStorage.getItem('username') || '');
 
   useEffect(() => {
@@ -59,10 +62,18 @@ function Layout() {
           <Route path="/events" element={<Event />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/event-list/:id" element={<EventList />} />
+          <Route path="/events/:slug/buy-page/shows/:showId/:itemGroupName" element={<DistrictSeatPicker />} />
+          <Route path="/events/:slug/buy-page/shows/:showId" element={<DistrictBuyPage />} />
+          <Route path="/events/:slug/buy-page/:itemGroupName" element={<DistrictSeatPicker />} />
+          <Route path="/events/:slug/buy-page" element={<DistrictBuyPage />} />
+          <Route path="/buy-page/shows/:showId/:itemGroupName" element={<DistrictSeatPicker />} />
+          <Route path="/buy-page/shows/:showId" element={<DistrictBuyPage />} />
+          <Route path="/buy-page/:itemGroupName" element={<DistrictSeatPicker />} />
+          <Route path="/buy-page" element={<DistrictBuyPage />} />
           <Route path="/BookingTickets/:id" element={<BookingTickets />} />
           <Route path="/BookedConfrimation/:id" element={<BookingConfirmation />} />
           <Route path="/Login" element={<LoginPage setUsername={setUsername} />} />
-          <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/SignUp" element={<SignUp setUsername={setUsername} />} />
           <Route path="/logout" element={<Logout setUsername={setUsername} />} />
           <Route path="*" element={<Navigate to="/home" replace />} />
           <Route path="/popup" element={<PopupGfg />} />

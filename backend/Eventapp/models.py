@@ -8,7 +8,7 @@ class UserProfile(models.Model):
     username = models.CharField(max_length=150, unique=True)  
     created_on= models.DateTimeField(default=timezone.now, blank=True)
     email= models.EmailField(max_length=254, blank=True)
-    password = models.CharField(max_length=128) 
+    password = models.CharField(max_length=255) 
     is_admin = models.BooleanField(default=False)
     google_id = models.CharField(max_length=255, unique=True, null=True, blank=True)
     profile_image = models.URLField(blank=True, null=True)
@@ -42,7 +42,18 @@ class Events(models.Model):
     def image_url(self):
         if not self.event_image:
             return None
-        return f"{settings.BASE_URL}{settings.MEDIA_URL}{self.event_image}"
+        img_str = str(self.event_image)
+        if img_str.startswith("http://") or img_str.startswith("https://"):
+            return img_str
+        base = getattr(settings, 'BASE_URL', '').rstrip('/')
+        media_url = getattr(settings, 'MEDIA_URL', '/media/')
+        return f"{base}{media_url}{img_str.lstrip('/')}"
+
+    @property
+    def booked_seats(self):
+        return Bookingdetails.objects.filter(event_id=self.event_id).aggregate(
+            total=models.Sum('seats')
+        )['total'] or 0
 
 class Artists(models.Model):
     artistid = models.AutoField(db_column='ArtistId', primary_key=True)  # Field name made lowercase.
@@ -58,25 +69,21 @@ class Artists(models.Model):
     def image_url(self):
         if not self.artist_image:
             return None
-        
-        return f"{settings.BASE_URL}/static/{self.artist_image}"
-
-
-    @property
-    def booked_seats(self):
-        return Bookingdetails.objects.filter(event_id=self.event_id).aggregate(
-            total=models.Sum('seats')
-        )['total'] or 0
-    
-    
+        img_str = str(self.artist_image)
+        if img_str.startswith("http://") or img_str.startswith("https://"):
+            return img_str
+        base = getattr(settings, 'BASE_URL', '').rstrip('/')
+        media_url = getattr(settings, 'MEDIA_URL', '/media/')
+        return f"{base}{media_url}{img_str.lstrip('/')}"
         
 class Bookingdetails(models.Model):
-    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, db_column="User_id",primary_key=True)
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE, db_column="user_id", null=True, blank=True, related_name='bookings')
     username = models.CharField(db_column='UserName', max_length=100, blank=True, null=True)  # Field name made lowercase.
     email = models.CharField(db_column='Email', max_length=100, blank=True, null=True)  # Field name made lowercase.
     seats = models.IntegerField(db_column='Seats', blank=True, null=True)
     event_id = models.IntegerField(db_column='Event_id', blank=True, null=True)
-    booking_id = models.CharField(db_column='Booking_Id',max_length=100, blank=True)  # Field name made lowercase.
+    booking_id = models.CharField(db_column='Booking_Id', max_length=100, blank=True, unique=True)  # Field name made lowercase.
     price = models.IntegerField(blank=True, null=True)
     booking_date = models.CharField(max_length=50, blank=True, null=True)
 
