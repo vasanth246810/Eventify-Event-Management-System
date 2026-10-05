@@ -16,6 +16,8 @@ from geopy.geocoders import Nominatim
 from django.db.models import Count
 from django.db.models.functions import TruncMonth
 from dateutil.relativedelta import relativedelta
+from django.contrib.auth.hashers import make_password, check_password
+from django.db import transaction
 
 def get_csrf_token(request):
     token = get_token(request)
@@ -123,23 +125,46 @@ def BookingTickets(request, id):
             if not form.is_valid():
                 return JsonResponse({"error": "Invalid form data", "details": form.errors}, status=400)
             requested_seats = form.cleaned_data['seats']
-            if event.event_available_seats < requested_seats:
-                return JsonResponse({"error": "Not enough seats available"}, status=400)
-            total_price = requested_seats * event.event_price
-            booking = form.save(commit=False)
-            booking.user = UserProfile.objects.get(username=username)
-            booking.event_id = id
-            booking.booking_id = uuid.uuid4().hex[:12].upper()
-            booking.price = total_price
-            booking.booking_date=datetime.now().strftime("%a, %b %d, %Y, %#I:%M %p")
-            booking.save()
-            event.event_available_seats -= requested_seats
-            event.save(update_fields=['event_available_seats'])
+            if requested_seats <= 0:
+                return JsonResponse({"error": "Seats must be greater than zero"}, status=400)
+
+            # Atomic transaction with database row-level locking
+            try:
+                with transaction.atomic():
+                    locked_event = Events.objects.select_for_update().get(event_id=id)
+                    available_seats = locked_event.event_available_seats or 0
+                    if available_seats < requested_seats:
+                        return JsonResponse({"error": "Not enough seats available"}, status=400)
+
+                    total_price = requested_seats * (locked_event.event_price or 0)
+                    booking = form.save(commit=False)
+                    
+                    user_obj = UserProfile.objects.filter(Q(username=username) | Q(email=emailaddress)).first()
+                    if user_obj:
+                        booking.user = user_obj
+                    booking.event_id = id
+                    booking.booking_id = uuid.uuid4().hex[:12].upper()
+                    booking.price = total_price
+                    booking.booking_date = datetime.now().strftime("%a, %b %d, %Y, %I:%M %p")
+                    booking.save()
+
+                    locked_event.event_available_seats = available_seats - requested_seats
+                    if locked_event.event_available_seats == 0:
+                        locked_event.is_sold_out = True
+                    locked_event.save(update_fields=['event_available_seats', 'is_sold_out'])
+                    event = locked_event
+            except Events.DoesNotExist:
+                return JsonResponse({"error": "Event not found"}, status=404)
+
             booking_details = Bookingdetails.objects.filter(booking_id=booking.booking_id).values().first()
-            eventSerializer=EventSerializer(event)
+            eventSerializer = EventSerializer(event)
             Eventdata = eventSerializer.data 
             Eventdata["event_image"] = event.image_url
-            TicketEmail(booking, event)
+            try:
+                TicketEmail(booking, event)
+            except Exception as email_err:
+                print(f"TicketEmail notification error: {email_err}")
+
             response = {
                 "events": Eventdata,
                 "Addtocart": False,
@@ -154,7 +179,7 @@ def BookingTickets(request, id):
         else:
             return JsonResponse({"error": "Method not allowed"}, status=405)
     except Exception as e:
-        return JsonResponse({"error":{e}}, status=404)
+        return JsonResponse({"error": str(e)}, status=400)
 
 
 def BookedConfrimation(request, id):
@@ -174,6 +199,26 @@ def BookedConfrimation(request, id):
         return JsonResponse({"error": {e}}, status=404)
 
 
+def verify_and_update_password(user, raw_password):
+    """
+    Verifies user password using Django's check_password.
+    If it matches legacy unsalted SHA-256, automatically upgrades
+    the user's stored password to Django's salted PBKDF2 hash.
+    """
+    if not user or not user.password:
+        return False
+    # 1. Standard Django salted hash (PBKDF2/argon2/bcrypt)
+    if check_password(raw_password, user.password):
+        return True
+    # 2. Legacy unsalted SHA-256 fallback
+    import hashlib
+    legacy_hash = hashlib.sha256(raw_password.encode()).hexdigest()
+    if legacy_hash == user.password:
+        user.password = make_password(raw_password)
+        user.save(update_fields=['password'])
+        return True
+    return False
+
 def Login(request):
     if request.method == "POST":
         try:
@@ -182,7 +227,7 @@ def Login(request):
             password = data.get("password")
             next_url = data.get("next", "/")
             user = UserProfile.objects.filter(email=Email).first()
-            if user and user.password == Hashpassword(password):
+            if user and verify_and_update_password(user, password):
                 request.session['login_timestamp'] = timezone.now().strftime("%Y-%m-%d %H:%M")
                 request.session['username'] = user.username
                 request.session['email'] = Email
@@ -211,7 +256,7 @@ def SignUp(request):
             form = SignupForm(data)
             if form.is_valid():
                 UserForm = form.save(commit=False)
-                UserForm.password = Hashpassword(form.cleaned_data['password'])
+                UserForm.password = make_password(form.cleaned_data['password'])
                 UserForm.save()
                 request.session['user_id'] = UserForm.id
                 request.session['username'] = UserForm.username
@@ -235,9 +280,7 @@ def SignUp(request):
 
 
 def Hashpassword(password):
-    import hashlib
-    hashed_password = hashlib.sha256(password.encode()).hexdigest()
-    return hashed_password
+    return make_password(password)
 
 def Logout(request):
     if request.method == "POST":

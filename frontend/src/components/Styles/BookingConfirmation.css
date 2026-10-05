@@ -1,353 +1,541 @@
-/* =======================
-   BASE CONTAINER
-======================= */
-.bookconfirm-container {
-    max-width: 950px;
-    margin: 30px auto;
-    background: #000;
-    border: 2px solid #ff2c55;
-    min-height: 100vh;
-    padding: 30px;
-    box-sizing: border-box;
-    border-radius: 6px;
+/* ==========================================================================
+   DIGITAL VIP EVENT PASS & BOOKING CONFIRMATION
+   Theme: Minimalist Dark (#07080c) + Signature Red (#ff2c55) + White (#ffffff)
+   ========================================================================== */
+
+.vip-pass-page {
+  min-height: 100vh;
+  background-color: #07080c;
+  color: #ffffff;
+  padding: 40px 16px 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow-x: hidden;
 }
 
-/* =======================
-   HEADER
-======================= */
-.bookconfirm-header {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    padding-bottom: 10px;
-    margin-bottom: 30px;
+/* Background Ambient Glow */
+.vip-pass-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 44, 85, 0.12) 0%, rgba(7, 8, 12, 0) 70%);
+  pointer-events: none;
+  z-index: 0;
 }
 
-.bookconfirm-date,
-.bookconfirm-title,
-.bookconfirm-phone {
-    color: white;
-    font-size: 16px;
-    margin-bottom: 10px;
+/* Success Top Notification Pill */
+.vip-success-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #4ade80;
+  margin-bottom: 24px;
+  z-index: 1;
+  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.1);
 }
 
-.bookconfirm-title {
-    color: #ff2c55;
-    font-weight: 600;
+.vip-success-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #4ade80;
+  animation: pulseDot 2s infinite ease-in-out;
 }
 
-/* =======================
-   LOGO
-======================= */
-.bookconfirm-logo {
-    display: flex;
-    justify-content: center;
-    margin: 25px 0 40px;
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
 }
 
-.bookconfirm-logo svg {
-    width: 70px;
-    height: auto;
+/* Page Subtitle */
+.vip-page-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-align: center;
+  margin-bottom: 8px;
+  z-index: 1;
 }
 
-/* =======================
-   CONTENT
-======================= */
-.bookconfirm-content {
-    padding: 0 20px;
+.vip-page-desc {
+  font-size: 0.9rem;
+  color: #8e8f96;
+  text-align: center;
+  margin-bottom: 36px;
+  max-width: 440px;
+  z-index: 1;
 }
 
-/* THANK YOU */
-.bookconfirm-thankyou {
-    display: flex;
-    align-items: center;
-    margin-bottom: 25px;
+/* ==========================================================================
+   THE DIGITAL VIP TICKET CARD (APPLE WALLET / DICE ARCHITECTURE)
+   ========================================================================== */
+
+.vip-pass-card {
+  width: 100%;
+  max-width: 520px;
+  background: #121318;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 50px rgba(255, 44, 85, 0.07);
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transition: transform 0.3s ease;
 }
 
-.bookconfirm-check {
-    width: 26px;
-    height: 26px;
-    background: #4CAF50;
-    border-radius: 50%;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 12px;
-    font-weight: bold;
+/* Card Header */
+.vip-card-header {
+  padding: 24px 28px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.bookconfirm-thankyou-text {
-    color: #ff2c55;
-    font-size: 22px;
+.vip-brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* =======================
-   BOOKING CARD
-======================= */
-.bookconfirm-card {
-    background: #111;
-    padding: 25px;
-    border: 1px solid #333;
-    border-radius: 6px;
-    margin-bottom: 25px;
-    position: relative;
+.vip-brand-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #ff2c55;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(255, 44, 85, 0.3);
 }
 
-.bookconfirm-movie-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: white;
+.vip-tier-badge {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ff2c55;
+  background: rgba(255, 44, 85, 0.1);
+  border: 1px solid rgba(255, 44, 85, 0.25);
+  padding: 5px 12px;
+  border-radius: 9999px;
 }
 
-.bookconfirm-movie-details {
-    color: white;
-    font-size: 15px;
-    line-height: 1.4;
-    margin-top: 10px;
+/* Event Hero Details inside Card */
+.vip-card-body {
+  padding: 24px 28px;
 }
 
-/* QR CODE */
-.bookconfirm-qr {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    text-align: center;
+.vip-event-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #a1a1aa;
+  background: #1c1d24;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-bottom: 12px;
 }
 
-/* QR size controlled by .qr-img class below */
-
-/* ID */
-.bookconfirm-id-label {
-    font-size: 11px;
-    color: #aaa;
+.vip-event-title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-bottom: 20px;
 }
 
-.bookconfirm-id {
-    font-size: 14px;
-    font-weight: 600;
-    color: white;
+/* Two-Column Metadata Grid */
+.vip-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 20px;
+  background: #181920;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  padding: 18px 20px;
+  border-radius: 16px;
 }
 
-/* SEAT */
-.bookconfirm-quantity {
-    display: flex;
-    align-items: center;
-    margin-top: 15px;
+.vip-grid-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.bookconfirm-seat-icon {
-    width: 20px;
-    margin-right: 10px;
-    opacity: 0.8;
+.vip-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #71717a;
 }
 
-.bookconfirm-seat-info {
-    color: white;
-    font-size: 14px;
+.vip-value {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #f4f4f5;
+  line-height: 1.35;
+  word-break: break-word;
 }
 
-.bookconfirm-seat-type {
-    font-weight: 600;
+.vip-value.highlight {
+  color: #ff2c55;
+  font-weight: 700;
 }
 
-/* =======================
-   AMOUNT
-======================= */
-.bookconfirm-amount-section {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
+/* ==========================================================================
+   TICKET TEAR LINE WITH NOTCH PUNCH CUTOUTS
+   ========================================================================== */
+
+.vip-tear-wrapper {
+  position: relative;
+  width: 100%;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
 }
 
-.bookconfirm-amount-icon {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    border: 1px solid #ff2c55;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 8px;
+.vip-tear-line {
+  width: calc(100% - 44px);
+  border-top: 2px dashed rgba(255, 255, 255, 0.12);
 }
 
-.bookconfirm-amount-label {
-    color: white;
-    font-size: 13px;
-    margin-right: auto;
+.vip-notch-left,
+.vip-notch-right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: #07080c;
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.6);
+  z-index: 2;
 }
 
-.bookconfirm-amount {
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
+.vip-notch-left {
+  left: -11px;
 }
 
-/* =======================
-   ACTION BUTTONS
-======================= */
-.bookconfirm-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin: 25px 0;
+.vip-notch-right {
+  right: -11px;
 }
 
-.bookconfirm-btn {
-    padding: 12px;
-    border: 1px solid #ff2c55;
-    background: #000;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-    letter-spacing: 0.5px;
-    text-align: center;
-    transition: 0.2s;
+/* ==========================================================================
+   LOWER TICKET STUB (QR CODE & BOOKING ID)
+   ========================================================================== */
+
+.vip-card-stub {
+  padding: 20px 28px 28px;
+  background: #14151b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-.bookconfirm-btn:hover {
-    background: #ff2c55;
+/* High-Contrast QR Code Card */
+.vip-qr-box {
+  background: #ffffff;
+  padding: 14px;
+  border-radius: 18px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* =======================
-   DETAILS SECTION
-======================= */
-.bookconfirm-details {
-    margin-top: 25px;
-    border-top: 1px solid #333;
-    padding-top: 20px;
+.vip-booking-id-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1e2029;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  margin-bottom: 10px;
 }
 
-.bookconfirm-section-title {
-    color: #ff2c55;
-    text-transform: uppercase;
-    font-size: 13px;
-    margin-bottom: 8px;
+.vip-id-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #71717a;
 }
 
-.bookconfirm-section-content {
-    color: #ddd;
-    font-size: 14px;
-    margin-bottom: 15px;
+.vip-id-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.05em;
 }
 
-/* =======================
-   PROMO
-======================= */
-.bookconfirm-promo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: 30px;
-    color: white;
+.vip-copy-btn {
+  background: transparent;
+  border: none;
+  color: #a1a1aa;
+  cursor: pointer;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
 }
 
-.bookconfirm-promo-icon {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background: linear-gradient(45deg, #ff6b35, #f7931e);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    color: white;
+.vip-copy-btn:hover {
+  color: #ff2c55;
 }
 
-.bookconfirm-promo-highlight {
-    color: #ff6b35;
-    font-weight: bold;
+.vip-stub-notice {
+  font-size: 0.78rem;
+  color: #71717a;
+  max-width: 320px;
+  line-height: 1.4;
+  margin-bottom: 18px;
 }
 
-/* =======================
-   RESPONSIVE BREAKPOINTS
-======================= */
-
-/* TABLETS */
-@media (max-width: 1024px) {
-    .bookconfirm-container {
-        max-width: 90%;
-        padding: 20px;
-    }
-
-    .bookconfirm-qr {
-        position: static;
-        margin: 0 auto 20px;
-    }
-
-    .bookconfirm-card {
-        text-align: center;
-    }
+/* Amount Paid Bar */
+.vip-amount-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: #181a22;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 14px;
 }
 
-/* MOBILE */
-@media (max-width: 768px) {
-    .bookconfirm-container {
-        padding: 20px;
-    }
-
-    .bookconfirm-header {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .bookconfirm-title,
-    .bookconfirm-date,
-    .bookconfirm-phone {
-        font-size: 14px;
-        text-align: center;
-    }
-
-    .bookconfirm-movie-title {
-        font-size: 17px;
-    }
-
-    .bookconfirm-movie-details {
-        font-size: 13px;
-        text-align: center;
-    }
+.vip-amount-left {
+  text-align: left;
 }
 
-/* SMALL PHONES */
-@media (max-width: 480px) {
-    .bookconfirm-container {
-        padding: 15px;
-    }
-
-    .bookconfirm-thankyou-text {
-        font-size: 18px;
-    }
-
-    .bookconfirm-btn {
-        padding: 10px;
-        font-size: 13px;
-    }
-
-    .bookconfirm-movie-title {
-        font-size: 15px;
-    }
+.vip-amount-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #71717a;
 }
 
-/* =======================
-   RESPONSIVE SVG SIZING
-======================= */
-/* LOGO */
-@media (min-width: 1400px) { .bookconfirm-logo svg { width: 80px; } }
-@media (max-width: 1399px) and (min-width: 1025px) { .bookconfirm-logo svg { width: 65px; } }
-@media (max-width: 1024px) and (min-width: 768px) { .bookconfirm-logo svg { width: 50px; } }
-@media (max-width: 767px) { .bookconfirm-logo svg { width: 40px; } }
-@media (max-width: 480px) { .bookconfirm-logo svg { width: 30px; } }
+.vip-amount-val {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+}
 
-/* SEAT ICON */
-@media (min-width: 1400px) { .bookconfirm-seat-icon { width: 22px; } }
-@media (max-width: 1399px) and (min-width: 1025px) { .bookconfirm-seat-icon { width: 18px; } }
-@media (max-width: 1024px) and (min-width: 768px) { .bookconfirm-seat-icon { width: 16px; } }
-@media (max-width: 767px) { .bookconfirm-seat-icon { width: 14px; } }
-@media (max-width: 480px) { .bookconfirm-seat-icon { width: 12px; } }
+.vip-amount-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #4ade80;
+  background: rgba(34, 197, 94, 0.1);
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
 
-/* QR CODE */
-@media (min-width: 1400px) { .qr-img { width: 170px !important; height: 170px !important; } }
-@media (max-width: 1399px) and (min-width: 1025px) { .qr-img { width: 145px !important; height: 145px !important; } }
-@media (max-width: 1024px) and (min-width: 768px) { .qr-img { width: 120px !important; height: 120px !important; } }
-@media (max-width: 767px) { .qr-img { width: 100px !important; height: 100px !important; } }
-@media (max-width: 480px) { .qr-img { width: 80px !important; height: 80px !important; } }
+/* ==========================================================================
+   UTILITY ACTIONS & BUTTONS
+   ========================================================================== */
+
+.vip-actions-wrapper {
+  width: 100%;
+  max-width: 520px;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 1;
+}
+
+.vip-action-primary {
+  width: 100%;
+  padding: 14px 24px;
+  border-radius: 14px;
+  background: #ff2c55;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(255, 44, 85, 0.35);
+  transition: all 0.25s ease;
+}
+
+.vip-action-primary:hover {
+  background: #e02449;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(255, 44, 85, 0.45);
+}
+
+.vip-action-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.vip-action-secondary {
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: #181920;
+  color: #e4e4e7;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.vip-action-secondary:hover {
+  background: #20222b;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.vip-back-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #71717a;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 8px;
+  transition: color 0.2s ease;
+}
+
+.vip-back-link:hover {
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   PRINT / PDF MEDIA STYLES
+   ========================================================================== */
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* Hide background elements, navigation, action buttons */
+  .morph-nav-wrapper,
+  .footer-eventify,
+  .vip-actions-wrapper,
+  .vip-success-pill,
+  .vip-page-title,
+  .vip-page-desc,
+  .vip-back-link {
+    display: none !important;
+  }
+
+  .vip-pass-page {
+    padding: 0 !important;
+    background: transparent !important;
+    min-height: auto !important;
+  }
+
+  .vip-pass-page::before {
+    display: none !important;
+  }
+
+  .vip-pass-card {
+    border: 2px solid #000000 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    max-width: 100% !important;
+  }
+
+  .vip-event-title,
+  .vip-value {
+    color: #000000 !important;
+  }
+
+  .vip-grid,
+  .vip-card-stub,
+  .vip-amount-bar {
+    background: #f4f4f5 !important;
+    border-color: #e4e4e7 !important;
+  }
+
+  .vip-label,
+  .vip-amount-label,
+  .vip-stub-notice {
+    color: #52525b !important;
+  }
+
+  .vip-amount-val {
+    color: #000000 !important;
+  }
+
+  .vip-notch-left,
+  .vip-notch-right {
+    background: #ffffff !important;
+  }
+
+  .vip-booking-id-group {
+    background: #ffffff !important;
+    border-color: #000000 !important;
+  }
+
+  .vip-id-code {
+    color: #000000 !important;
+  }
+
+  @page {
+    size: auto;
+    margin: 15mm;
+  }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 540px) {
+  .vip-pass-card {
+    border-radius: 22px;
+  }
+  .vip-card-header,
+  .vip-card-body,
+  .vip-card-stub {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+  .vip-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .vip-action-row {
+    grid-template-columns: 1fr;
+  }
+}

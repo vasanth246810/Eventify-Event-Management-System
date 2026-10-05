@@ -1,162 +1,364 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { useParams, Link } from "react-router-dom";
+import { QRCodeSVG } from "qrcode.react";
+import {
+  Calendar,
+  MapPin,
+  User,
+  Ticket,
+  Printer,
+  Share2,
+  CalendarPlus,
+  Check,
+  Copy,
+  ArrowLeft
+} from "lucide-react";
 import "../components/Styles/BookingConfirmation.css";
-import { useParams } from "react-router-dom";
-import {QRCodeSVG }  from "qrcode.react";
 
-function BookingConfirmation(){
-const{id}=useParams();
-const[events_info,setEvents]=useState(null);
-const[loading, setLoading] = useState(true);
-const[error, setError] = useState(null);
-const [currentDate, setCurrentDate] = useState(getDate());
-console.log("Current Date:", currentDate);
-const[booking_details,setBookingDetails]=useState({
-    booking_id: '',
-    email: '',
-    seats: '',
-    price: '',
-    booking_date:''
-});
-function getDate(){
-  const today = new Date();
-  const month = today.getMonth() + 1;
-  const year = today.getFullYear();
-  const date = today.getDate();
-  return `${month}/${date}/${year}`;
-}
+export default function BookingConfirmation() {
+  const { id } = useParams();
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [copied, setCopied] = useState(false);
+  const [seatDetails, setSeatDetails] = useState(null);
 
-useEffect(()=>{
-    const fetchdata=async()=>{
-        try{
-        const response=await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/BookedConfrimation/${id}`);
-        setEvents(response.data);
-        setBookingDetails(response.data.booking_details);
-        setLoading(false);
-        }
-        catch(error){
-           console.error(error);
-           setError(error.message);
-           setLoading(false);
-        }
+  useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem("selectedSeatDetails");
+      if (stored) {
+        setSeatDetails(JSON.parse(stored));
+      }
+    } catch (e) {
+      console.error(e);
     }
-    fetchdata();
-},[id]);
+  }, []);
 
+  useEffect(() => {
+    const fetchBooking = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_BASE_URL}/api/BookedConfrimation/${id}`
+        );
+        setData(response.data);
+      } catch (err) {
+        console.error("Error loading booking confirmation:", err);
+        setError(err.response?.data?.error || err.message || "Failed to load booking.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchBooking();
+  }, [id]);
 
+  // Extract and normalize data
+  const event = data?.event || data || {};
+  const booking = data?.booking_details || {};
 
+  const bookingId = booking.booking_id || id || "EV-PENDING";
+  const eventTitle = event.event_title || "Live Performance & Festival";
+  const eventCategory = event.event_category || "Music & Concert";
+  const eventLocation = event.event_location || event.location_name || "Main Arena, Delhi NCR";
+  const attendeeName = booking.username || sessionStorage.getItem("username") || "Guest Attendee";
+  const seats = booking.seats || 1;
+  const price = booking.price || event.event_price || 0;
 
-const options = {
-  weekday: "short",   
-  day: "2-digit",     
-  month: "short",     
-  year: "numeric",    
-  hour: "numeric",   
-  minute: "2-digit",  
-  hour12: true        
-};
+  // Format Show Date
+  const rawDate = event.event_scheduled_date || booking.booking_date;
+  let formattedDate = "Coming Soon";
+  let formattedTime = "8:00 PM";
+  let calendarStartDate = "";
+  let calendarEndDate = "";
 
-const formattedDate = new Date().toLocaleString("en-US", options) || "";
+  if (rawDate) {
+    const d = new Date(rawDate);
+    if (!isNaN(d.getTime())) {
+      formattedDate = d.toLocaleDateString("en-US", {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+      });
+      formattedTime = d.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true
+      });
 
-const bookingurl=`${window.location.origin}/BookedConfrimation/${booking_details.booking_id}?qrscan=true`;
+      // Google Calendar ISO format: YYYYMMDDTHHmmssZ
+      const pad = (n) => String(n).padStart(2, "0");
+      const startIso = `${d.getUTCFullYear()}${pad(d.getUTCMonth() + 1)}${pad(d.getUTCDate())}T${pad(d.getUTCHours())}${pad(d.getUTCMinutes())}00Z`;
+      const endD = new Date(d.getTime() + 3 * 60 * 60 * 1000); // +3 hours
+      const endIso = `${endD.getUTCFullYear()}${pad(endD.getUTCMonth() + 1)}${pad(endD.getUTCDate())}T${pad(endD.getUTCHours())}${pad(endD.getUTCMinutes())}00Z`;
+      calendarStartDate = startIso;
+      calendarEndDate = endIso;
+    }
+  }
 
-if (loading) return <div>Loading...</div>;
-if (error) return <div>Error: {error}</div>;
-if (!events_info) return <div>No data available</div>;
+  // QR Code Payload (Verifiable URL for door scanning)
+  const qrUrl = `${window.location.origin}/BookedConfrimation/${bookingId}?qrscan=true`;
 
-return(
-    <div className="bookconfirm-container">
-      <div className="bookconfirm-header">
-        <div className="bookconfirm-date text-light">{currentDate}</div>
-        <div className="bookconfirm-title text-light">Booking Confirmation</div>
-        <div className="bookconfirm-phone text-light">022 6144 5050</div>
-      </div>
+  // Copy Booking ID
+  const handleCopyId = () => {
+    navigator.clipboard.writeText(bookingId);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
-      <div className="bookconfirm-logo">
-        <svg viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="5" y="8" width="12" height="20" fill="#e31e24" rx="2" />
-          <rect x="20" y="5" width="8" height="26" fill="#e31e24" rx="2" />
-          <rect x="20" y="14" width="15" height="8" fill="#e31e24" />
-          <rect x="38" y="8" width="12" height="20" fill="#e31e24" rx="2" />
-          <path d="M43 8 L55 28" stroke="white" strokeWidth="2" />
-        </svg>
-      </div>
+  // Google Calendar Link
+  const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+    eventTitle + " (Eventify Pass)"
+  )}&dates=${calendarStartDate || "20261024T180000Z"}/${calendarEndDate || "20261024T210000Z"}&details=${encodeURIComponent(
+    `Eventify Digital Pass\nBooking ID: ${bookingId}\nSeats: ${seats}\nVenue: ${eventLocation}`
+  )}&location=${encodeURIComponent(eventLocation)}`;
 
-      <div className="bookconfirm-content">
-        <div className="bookconfirm-thankyou">
-          <div className="bookconfirm-check"></div>
-          <div className="bookconfirm-thankyou-text">Thank you for your purchase!</div>
+  // Share Ticket
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `My Eventify Ticket: ${eventTitle}`,
+          text: `I'm attending ${eventTitle}! Booking ID: ${bookingId}`,
+          url: window.location.href
+        });
+      } catch (err) {
+        console.log("Share cancelled or failed:", err);
+      }
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert("Ticket link copied to clipboard!");
+    }
+  };
+
+  // Print Ticket
+  const handlePrint = () => {
+    window.print();
+  };
+
+  if (loading) {
+    return (
+      <div className="vip-pass-page d-flex items-center justify-content-center">
+        <div className="text-center py-5">
+          <div
+            className="spinner-border text-danger mb-3"
+            role="status"
+            style={{ width: "3rem", height: "3rem" }}
+          >
+            <span className="visually-hidden">Loading Ticket...</span>
+          </div>
+          <p className="text-neutral-400 font-mono text-sm">Generating Digital VIP Pass...</p>
         </div>
+      </div>
+    );
+  }
 
-        <div className="bookconfirm-card">
-          <div className="bookconfirm-qr">
-            <QRCodeSVG value={bookingurl} size={150} className="qr-img"  style={{marginBottom:"5px"}}/>
-            <div className="bookconfirm-id-label text-light">BOOKING ID</div>
-            <div className="bookconfirm-id">{booking_details.booking_id}</div>
-          </div>
+  if (error || !data) {
+    return (
+      <div className="vip-pass-page d-flex items-center justify-content-center">
+        <div className="vip-pass-card text-center p-5">
+          <h2 className="text-white font-bold mb-2">Booking Not Found</h2>
+          <p className="text-neutral-400 text-sm mb-4">
+            {error || "Unable to retrieve details for this booking pass."}
+          </p>
+          <Link to="/events" className="vip-action-primary text-decoration-none">
+            Browse All Events
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
-          <div className="bookconfirm-movie-title">{events_info.event_title} (3D) (U/A)</div>
+  return (
+    <div className="vip-pass-page">
+      {/* Top Success Notification Pill */}
+      <div className="vip-success-pill">
+        <span className="vip-success-dot"></span>
+        <span>Payment Verified • Booking Confirmed</span>
+      </div>
 
-          <div className="bookconfirm-movie-details">
-            <div className="text-light">
-              <strong className="text-light">PVR:</strong> Sangam, Delhi (AUDI 1), National
+      <h1 className="vip-page-title">You're Going to the Show!</h1>
+      <p className="vip-page-desc">
+        Your digital admission pass is ready. Present this pass or QR code at the venue gate for instant check-in.
+      </p>
+
+      {/* ====================================================================
+          THE DIGITAL VIP PASS (APPLE WALLET / FESTIVAL ENTRY CARD)
+          ==================================================================== */}
+      <div className="vip-pass-card" id="digital-ticket-pass">
+        {/* Pass Header */}
+        <div className="vip-card-header">
+          <div className="vip-brand-lockup">
+            <div className="vip-brand-badge">
+              <svg viewBox="0 0 32 32" fill="none" width="20" height="20">
+                <circle cx="16" cy="18" r="10" stroke="#ffffff" strokeWidth="2.2" />
+                <path d="M 8 16 C 8 8, 24 8, 24 16" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" />
+                <path d="M 12 7 C 10 3.5, 18 3.5, 20 6" stroke="#ffffff" strokeWidth="2.2" strokeLinecap="round" />
+                <circle cx="13" cy="18" r="1.3" fill="#ffffff" />
+                <circle cx="19" cy="18" r="1.3" fill="#ffffff" />
+              </svg>
             </div>
-            <div className="text-light">Capital Region (NCR), Delhi</div>
-            <div className="text-light">7:40pm | Tue, 12 Apr, 2016</div>
-            <div className="text-light">
-              <strong className="text-light">Quantity:</strong> {booking_details.seats} Tickets
-            </div>
-          </div>
-
-          <div className="bookconfirm-quantity">
-            <svg className="bookconfirm-seat-icon text-light" viewBox="0 0 20 16" fill="currentColor">
-              <path d="M2 4h16v8H2V4zm0 0V2a1 1 0 011-1h14a1 1 0 011 1v2M4 12v2h12v-2" />
+            <svg viewBox="0 0 172 26" fill="none" height="16" style={{ width: "auto" }}>
+              <path d="M 2 3 H 20 L 11 13 L 20 23 H 2 L 8 13 Z" fill="#ff2c55" />
+              <path d="M 24 3 L 34 23 H 42 L 32 3 Z" fill="#ffffff" />
+              <rect x="46" y="3" width="18" height="5" rx="1" fill="#ffffff" />
+              <rect x="46" y="10.5" width="18" height="5" rx="1" fill="#ffffff" />
+              <rect x="46" y="18" width="18" height="5" rx="1" fill="#ffffff" />
+              <path d="M 68 23 V 3 H 74 L 84 17 V 3 H 89 V 23 H 83 L 73 9 V 23 Z" fill="#ffffff" />
+              <path d="M 93 3 H 111 V 8 H 105 V 23 H 99 V 8 H 93 Z" fill="#ffffff" />
+              <rect x="115" y="3" width="6" height="20" rx="1" fill="#ffffff" />
+              <path d="M 125 3 H 141 V 8 H 131 V 11 H 139 V 16 H 131 V 23 H 125 Z" fill="#ffffff" />
+              <path d="M 145 3 L 153 13 V 23 H 159 V 13 L 167 3 H 160 L 156 9 L 152 3 Z" fill="#ffffff" />
             </svg>
-            <div className="bookconfirm-seat-info">
-              <span className="bookconfirm-seat-type">NORMAL-J2,J3</span>
-              <br />
-              <span className="text-light" style={{ color: 'white' }}>AUDI 1</span>
+          </div>
+
+          <span className="vip-tier-badge">VIP Admission</span>
+        </div>
+
+        {/* Pass Body (Event Details) */}
+        <div className="vip-card-body">
+          <div className="vip-event-tag">{eventCategory}</div>
+          <h2 className="vip-event-title">{eventTitle}</h2>
+
+          {/* 2-Column Metadata Grid */}
+          <div className="vip-grid">
+            {/* Date & Time */}
+            <div className="vip-grid-item">
+              <span className="vip-label d-flex items-center gap-1">
+                <Calendar size={12} className="text-danger" /> Date & Time
+              </span>
+              <span className="vip-value">{formattedDate}</span>
+              <span className="text-xs text-neutral-400">{formattedTime}</span>
+            </div>
+
+            {/* Venue Location */}
+            <div className="vip-grid-item">
+              <span className="vip-label d-flex items-center gap-1">
+                <MapPin size={12} className="text-danger" /> Venue Location
+              </span>
+              <span className="vip-value">{eventLocation}</span>
+            </div>
+
+            {/* Attendee */}
+            <div className="vip-grid-item">
+              <span className="vip-label d-flex items-center gap-1">
+                <User size={12} className="text-danger" /> Attendee
+              </span>
+              <span className="vip-value">{attendeeName}</span>
+            </div>
+
+            {/* Quantity / Passes */}
+            <div className="vip-grid-item">
+              <span className="vip-label d-flex items-center gap-1">
+                <Ticket size={12} className="text-danger" /> Admission Passes
+              </span>
+              <span className="vip-value highlight">
+                {seats} {seats === 1 ? "Ticket" : "Tickets"}
+                {seatDetails?.tier ? ` • ${seatDetails.tier}` : ""}
+              </span>
+            </div>
+
+            {/* Assigned Seat Details if chosen from Seat Matrix */}
+            {seatDetails?.row && (
+              <div className="vip-grid-item">
+                <span className="vip-label d-flex items-center gap-1">
+                  <Ticket size={12} className="text-danger" /> Assigned Seat
+                </span>
+                <span className="vip-value highlight">
+                  Row {seatDetails.row}, Seat {seatDetails.seat}
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Perforated Tear Line with Authentic Ticket Cutouts */}
+        <div className="vip-tear-wrapper" aria-hidden="true">
+          <div className="vip-notch-left"></div>
+          <div className="vip-tear-line"></div>
+          <div className="vip-notch-right"></div>
+        </div>
+
+        {/* Lower Ticket Stub (QR Code & Gate Scan) */}
+        <div className="vip-card-stub">
+          {/* High-Contrast QR Code Card */}
+          <div className="vip-qr-box">
+            <QRCodeSVG
+              value={qrUrl}
+              size={144}
+              level="H"
+              includeMargin={false}
+            />
+          </div>
+
+          {/* Booking ID with Copy Button */}
+          <div className="vip-booking-id-group">
+            <span className="vip-id-label">Booking ID:</span>
+            <span className="vip-id-code">{bookingId}</span>
+            <button
+              onClick={handleCopyId}
+              className="vip-copy-btn"
+              title="Copy Booking ID"
+              aria-label="Copy Booking ID"
+            >
+              {copied ? <Check size={14} className="text-success" /> : <Copy size={14} />}
+            </button>
+          </div>
+
+          <p className="vip-stub-notice">
+            Scan this QR code at the turnstile entrance for priority gate check-in.
+          </p>
+
+          {/* Amount Paid Bar */}
+          <div className="vip-amount-bar">
+            <div className="vip-amount-left">
+              <div className="vip-amount-label">Total Amount Paid</div>
+              <div className="vip-amount-val">₹{price}</div>
+            </div>
+            <div className="vip-amount-status">
+              <Check size={13} />
+              <span>Paid & Confirmed</span>
             </div>
           </div>
+        </div>
+      </div>
 
-          <div className="bookconfirm-amount-section">
-            <div className="bookconfirm-amount-icon">₹</div>
-            <div className="bookconfirm-amount-label text-light">AMOUNT PAID</div>
-            <div className="bookconfirm-amount">Rs.{booking_details.price}</div>
-          </div>
+      {/* ====================================================================
+          UTILITY ACTION CONTROLS
+          ==================================================================== */}
+      <div className="vip-actions-wrapper">
+        {/* Primary: Print / Save PDF */}
+        <button onClick={handlePrint} className="vip-action-primary">
+          <Printer size={18} />
+          <span>Print / Save Ticket as PDF</span>
+        </button>
+
+        {/* Secondary Actions: Calendar & Share */}
+        <div className="vip-action-row">
+          <a
+            href={googleCalendarUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="vip-action-secondary"
+          >
+            <CalendarPlus size={16} />
+            <span>Add to Calendar</span>
+          </a>
+
+          <button onClick={handleShare} className="vip-action-secondary">
+            <Share2 size={16} />
+            <span>Share Pass</span>
+          </button>
         </div>
 
-        <div className="bookconfirm-buttons">
-          <button className="bookconfirm-btn">INVITE FRIENDS</button>
-          <button className="bookconfirm-btn" onClick={()=>window.print()}>PRINT BOOKING INFO</button>
-          <button className="bookconfirm-btn">DOWNLOAD E-TICKET</button>
-        </div>
-
-        <div className="bookconfirm-details">
-          <div className="bookconfirm-section-title">BOOKING DATE & TIME</div>
-          <div className="bookconfirm-section-content">{booking_details.booking_date}</div>
-
-          <div className="bookconfirm-section-title">PAYMENT METHOD</div>
-          <div className="bookconfirm-section-content">Credit Card/Debit Card</div>
-        </div>
-
-        <div className="bookconfirm-promo">
-          <div className="bookconfirm-promo-icon">b</div>
-          <div className="bookconfirm-promo-text">
-            Get 2 Free Movie Tickets every month with{' '}
-            <span className="bookconfirm-promo-highlight">BookMyShow RBL Bank Fun+ Credit Card</span>
-            <br />
-            <strong>Now!</strong>
-            <span className="bookconfirm-instant-approval">INSTANT APPROVAL</span>
-          </div>
-        </div>
+        {/* Return to Explore */}
+        <Link to="/events" className="vip-back-link">
+          <ArrowLeft size={15} />
+          <span>Browse More Events</span>
+        </Link>
       </div>
     </div>
-
-);
+  );
 }
-
-
-
-
-export default BookingConfirmation;

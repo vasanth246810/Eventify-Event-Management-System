@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Anton|Monoton|Muli:400,400i,500,500i,600&display=swap");
+
 /* =========================================
    GLOBAL SECTION SPACING
 ========================================= */
@@ -7,9 +9,6 @@
     padding: 0 2rem;
     box-sizing: border-box;
 }
-
-/* Cleaned demo.css - Only styles used in the JSX component */
-@import url("https://fonts.googleapis.com/css?family=Anton|Monoton|Muli:400,400i,500,500i,600&display=swap");
 
 /* Base */
 body { 

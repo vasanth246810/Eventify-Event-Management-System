@@ -1,324 +1,491 @@
-  .event-detail-container {
-    max-width: 1200px;
-    /* margin: 40px auto; */
-    /* padding: 20px; */
-    display: flex;
-    gap: 40px;
-    font-family: 'Arial', sans-serif;
-  }
-  .event-image {
-    flex: 1;
-    max-width: 806px;
-    max-height: 453px;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-  }
-  .event-image img {
-    width: 100%;
-    height: 453px;
-    object-fit: cover;
-  }
-  .event-info {
-    flex: 1;
-    width: clamp(300px, 30%, 500px);
-    height: 290px;
-    border-radius: 16px;
-    padding: 20px;
-    background-color: #000000;
-    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    border: 2px solid #ff2c55;
-  }
-  .event-title {
-    font-size: 21px;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #ff2c55; /* important heading color */
-  }
-  .event-categories {
-    font-size: 14px;
-    color: white;
-    margin-bottom: 20px;
-    margin-left: 10px;
-    display: flex;
-    gap:10px
-  }
-  .event-meta {
-    font-size: 16px;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: white;
-  }
-  .event-meta i {
-    font-size: 18px;
-    color: #3498db;
-  }
-  .eventist-price {
-    font-size: 19px;
-    font-weight: 700;
-    color: #ff2c55; /* important heading color */
-  }
-  .price-book-row {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-top: 10px;
-  }
-  .btn-book {
-    border: 2px solid #ff2c55;
-    padding: 14px 20px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 15px;
-    cursor: pointer;
-    width: fit-content;
-    text-decoration: none;
-    text-align: center;
-    transition: background-color 0.3s ease;
-  }
-  .btn-book:hover {
-    background-color: #ff2c55 !important;
-    color: #fff;
-  }
-  @media (max-width: 600px) {
-    .price-book-row {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 15px;
-    }
-  }
-  .about-event {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-    font-size: 16px;
-    line-height: 1.6;
-    color: #222;
-  }
-  .about-event h2 {
-    font-size: 28px;
-    margin-bottom: 15px;
-    color: #ff2c55;
-  }
-  .artist-section {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-  }
-  .artist-section h2 {
-    font-size: 28px;
-    margin-bottom: 15px;
-    color: #ff2c55;
-  }
-  .artist-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    justify-content: flex-start;
-  }
-  .artist-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-  .artist-photo {
-    width: 150px;
-    height: 150px;
-    border-radius: 10%;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
-  .artist-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .artist-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .artist-name {
-    font-size: 16px;
-    font-weight: 600;
-    color: white;
-  }
-  .artist-role {
-    font-size: 14px;
-    color: white;
-  }
-  .venue-section {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-  }
-  .venue-section h2 {
-    font-size: 28px;
-    margin-bottom: 15px;
-    color: #ff2c55;
-  }
-.venue-content {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 15px;
-    max-width: 800px;
+/* ==========================================================================
+   DISTRICT-INSPIRED EVENT DETAILS DESIGN SYSTEM
+   ========================================================================== */
+
+.district-page-wrapper {
+  background-color: #07080c;
+  min-height: 100vh;
+  color: #ffffff;
+  padding: 32px 0 80px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 
-.venue-address {
-    flex: 1;
-    margin: 0;
+.district-container {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
-/* Override btn-book styles for Get Direction button in venue section */
-.venue-section .btn-book {
-    margin: 0;
-    white-space: nowrap;
-    background-color: #000 !important;
-    color: #fff !important;
-    border: 2px solid #ff2c55 !important;
+/* Event Header (Title & Date ABOVE Images - District Style) */
+.district-header {
+  margin-bottom: 24px;
 }
 
-/* Responsive adjustments */
-
-/* Tablets and below */
-@media (max-width: 900px) {
-    .event-detail-container {
-        flex-direction: column;
-        margin: 20px;
-    }
-    .event-image, .event-info {
-        max-width: 100%;
-    }
-    .venue-content {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-    .venue-section .btn-book {
-        width: 100%;
-        white-space: normal;
-    }
-    .event-info{
-      display: none;
-    }
-    .event-infotab{
-      display: block !important;
-      border: none !important;
-    }
-    .event-whole{
-      margin: 30px 60px;
-    }
+.district-title {
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  margin: 0 0 8px;
+  line-height: 1.2;
 }
 
-/* Laptops */
-@media (min-width: 901px) and (max-width: 1199px) {
-    .event-detail-container {
-        max-width: 900px;
-        flex-direction: column;
-        margin: 20px auto;
-        gap: 20px;
-    }
-    .event-image,
-    .event-info {
-        max-width: 100%;
-    }
-    .venue-content {
-        justify-content: space-between;
-    }
-}
-
-/* Desktops and up */
-@media (min-width: 1200px) {
-    .event-detail-container {
-        max-width: 1200px;
-        flex-direction: row;
-        /* margin: 40px auto; */
-        gap: 40px;
-    }
-    .event-image {
-        max-width: 806px;
-        height: auto;
-    }
-    .event-info {
-        max-width: 384px;
-    }
-    .venue-content {
-        flex-wrap: nowrap;
-        align-items: center;
-        gap: 30px;
-    }
-}
-
-  .terms-section {
-    max-width: 1200px;
-    margin: 40px auto;
-    padding: 0 20px;
-  }
-  .terms-section h2 {
-    font-size: 28px;
-    margin-bottom: 15px;
-    color: #ff2c55;
-  }
-  .terms-content {
-    font-size: 16px;
-    line-height: 1.6;
-    color: white;
-  }
-  .terms-content ul {
-    margin: 15px 0;
-    padding-left: 20px;
-  }
-  .terms-content li {
-    margin-bottom: 10px;
-  }
-  @media (max-width: 900px) {
-    .event-detail-container {
-      flex-direction: column;
-      margin: 20px;
-    }
-    .event-image, .event-info {
-      max-width: 100%;
-    }
-    .venue-content {
-      flex-direction: column;
-    }
-  }
-
-    .event-infotab {
-    height: 290px;
-    border-radius: 16px;
-    padding: 20px;
-    background-color: #000000;
-    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    border: 2px solid #ff2c55;
-  }
-
-.event-list-container {
-  margin: 40px auto;
-  width: clamp(900px, 90vw, 1500px);  /* auto scales to near 1512px */
+.district-date-badge {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #ff2c55;
+  margin: 0;
   display: flex;
-  gap: 20px;  }
-
-
-  .event-whole {
-  flex: 2; /* takes more width automatically */
-  width: clamp(600px, 60%, 1000px);
+  align-items: center;
+  gap: 8px;
 }
 
-.event-infotab{
-      display: none;
-    }
+/* Hero Image Banner (District Style) */
+.district-banner-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  min-height: 340px;
+  max-height: 480px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+  background-color: #12141c;
+}
+
+.district-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Split-Screen Main Content */
+.district-main-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 40px;
+  align-items: start;
+}
+
+/* Left Column Content */
+.district-left-content {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.district-section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 16px;
+  letter-spacing: -0.02em;
+}
+
+/* About Section */
+.district-about-text {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* Highlights Cards (District Style) */
+.district-highlights-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.district-highlight-card {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.district-highlight-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.district-highlight-desc {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Performing Artists Section */
+.district-artists-row {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: thin;
+}
+
+.district-artist-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none !important;
+  color: inherit !important;
+  min-width: 110px;
+  text-align: center;
+}
+
+.district-artist-photo {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  margin-bottom: 8px;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.district-artist-item:hover .district-artist-photo {
+  transform: scale(1.06);
+  border-color: #ff2c55;
+}
+
+.district-artist-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.district-artist-role {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+/* Venue Section */
+.district-venue-card {
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.district-venue-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.district-venue-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: rgba(255, 44, 85, 0.12);
+  color: #ff2c55;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.district-venue-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.district-venue-sub {
+  font-size: 0.85rem;
+  color: #94a3b8;
+}
+
+.district-btn-directions {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff !important;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.district-btn-directions:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #ff2c55;
+}
+
+/* Things to Know (District Bullet Points) */
+.district-things-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.district-things-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+}
+
+.district-bullet-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff2c55;
+}
+
+/* Terms / FAQs Clean Accordion Style */
+.district-accordion-item {
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.district-accordion-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.district-accordion-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ==========================================================================
+   RIGHT COLUMN - DISTRICT STICKY BOOKING WIDGET (EXACT MATCH)
+   ========================================================================== */
+
+.district-sticky-card {
+  position: sticky;
+  top: 84px;
+  background: rgba(18, 20, 28, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow: hidden;
+}
+
+/* Top Row: Price + Book Tickets Button */
+.district-card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.district-card-price-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+}
+
+.district-card-price-sub {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin: 0;
+  font-weight: 400;
+}
+
+.district-book-btn {
+  background: #ff2c55;
+  color: #ffffff !important;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none !important;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.district-book-btn:hover {
+  background: #e02449;
+  transform: translateY(-1px);
+}
+
+.district-book-btn.disabled {
+  background: #334155;
+  color: #94a3b8 !important;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Venue Row */
+.district-card-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background 0.2s ease;
+  color: inherit;
+  text-decoration: none !important;
+}
+
+.district-card-item-row:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.district-card-item-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.district-card-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 0.95rem;
+}
+
+.district-card-item-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+.district-card-item-sub {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.district-card-chevron {
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+/* Seat Availability Meter Row */
+.district-seats-meter-row {
+  padding: 14px 20px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.district-seats-meter-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin-bottom: 6px;
+}
+
+.district-meter-track {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.district-meter-fill {
+  height: 100%;
+  background: #ff2c55;
+  border-radius: 9999px;
+}
+
+/* Floating Action Icons on Right Edge (District Style) */
+.district-floating-actions {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 100;
+}
+
+.district-float-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(18, 20, 28, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+  backdrop-filter: blur(12px);
+}
+
+.district-float-btn:hover {
+  background: rgba(255, 44, 85, 0.2);
+  border-color: #ff2c55;
+  color: #ff2c55;
+  transform: scale(1.08);
+}
+
+.district-float-btn.active {
+  color: #ff2c55;
+  background: rgba(255, 44, 85, 0.2);
+  border-color: #ff2c55;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .district-main-layout {
+    grid-template-columns: 1fr;
+  }
+  .district-sticky-card {
+    position: static;
+    margin-top: 24px;
+  }
+  .district-highlights-grid {
+    grid-template-columns: 1fr;
+  }
+  .district-banner-wrapper {
+    aspect-ratio: 16 / 9;
+  }
+  .district-floating-actions {
+    display: none;
+  }
+}

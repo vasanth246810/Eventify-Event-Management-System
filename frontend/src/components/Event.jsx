@@ -9,6 +9,8 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { EventSkeletonGrid, ArtistCircleSkeleton } from './common/EventSkeleton';
+import QuickPreviewModal from './common/QuickPreviewModal';
 
 export default function Event(){
     const[events,setEvents]=useState([]);
@@ -18,34 +20,45 @@ export default function Event(){
     const [filterOpen, setFilterOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     const [sortBy, setSortBy] = useState('');
+    const [loadingEvents, setLoadingEvents] = useState(true);
+    const [loadingArtists, setLoadingArtists] = useState(true);
+    const [previewEvent, setPreviewEvent] = useState(null);
     const dropdownRef = useRef(null); 
 
 
 useEffect(() => {
 
   const fetchEvents = async () => {
-    axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/events/`)
-      .then(response => {
-        setEvents(response.data);
-      })
-      .catch(error => console.error(error));
+    setLoadingEvents(true);
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/events/`);
+      setEvents(response.data);
+    } catch (error) {
+      console.error(error);
+    }
 
-       try {
-    const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/events/filter/`, {
-      filters:[] ,
-    });
-    setFilterEvents(response.data);
-  } catch (error) {
-    console.log(error);
-  }
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/events/filter/`, {
+        filters: [],
+      });
+      setFilterEvents(response.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoadingEvents(false);
+    }
   };
 
   const fetchArtists = async () => {
-    axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/artists/`)
-      .then(response => {
-        setArtists(response.data);
-      })
-      .catch(error => console.error(error));
+    setLoadingArtists(true);
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/artists/`);
+      setArtists(response.data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoadingArtists(false);
+    }
   };
 
   fetchEvents();
@@ -144,7 +157,11 @@ const applyFilters = async (filters, sortValue) => {
         </div>
       </div>
       {/* Events Carousel */}
-      {events.length > 0 ? (
+      {loadingEvents ? (
+        <div className="container py-5">
+          <EventSkeletonGrid count={isMobile ? 1 : 3} />
+        </div>
+      ) : events.length > 0 ? (
         <>
           {/* DESKTOP VIEW (≥ 840px) */}
     {!isMobile && (
@@ -221,7 +238,7 @@ const applyFilters = async (filters, sortValue) => {
           <SwiperSlide key={event.event_id}>
             <div className="card shadow-sm" style={{borderRadius:"16px", width:"100%",borderColor:"#ff2c55"}}>
               <Link to={`/event-list/${event.event_id}`}>
-                <img src={event.event_image} className="card-img-top rounded" style={{height:"260px", objectFit:"cover"}}/>
+                <img src={event.event_image} className="card-img-top rounded" style={{height:"260px", objectFit:"cover"}} alt={event.event_title}/>
               </Link>
               <div className="card-body">
                 <p className="text-light">{new Date(event.event_scheduled_date).toLocaleString()}</p>
@@ -248,8 +265,11 @@ const applyFilters = async (filters, sortValue) => {
     <div className="events-container">
     <div className="artists-section mb-5">
         <h2 className="text-center mb-4">Featured Artists</h2>
-        <div className="d-flex justify-content-center">
-            {Artists.map((artists)=>(
+        <div className="d-flex justify-content-center flex-wrap">
+            {loadingArtists ? (
+              Array.from({ length: 4 }).map((_, i) => <ArtistCircleSkeleton key={i} />)
+            ) : (
+              Artists.map((artists)=>(
                <div className="col-auto" key={artists.artistid}>
                 <Link to={`/artists/${artists.artistname}`} style={{textDecoration:"none",color:"inherit"}}>
                   <div className="artist-circle me-4">
@@ -258,7 +278,8 @@ const applyFilters = async (filters, sortValue) => {
                   </div>
                 </Link>
             </div>
-            ))}
+            ))
+            )}
         </div>
     </div>
     <div className="events-header">
@@ -335,7 +356,11 @@ const applyFilters = async (filters, sortValue) => {
             ))}
           </div>
 
-{events.length > 0 ? (
+{loadingEvents ? (
+  <div className="container py-4">
+    <EventSkeletonGrid count={8} />
+  </div>
+) : events.length > 0 ? (
  <div className="container py-4">
   <div className="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
     {filterevents.map((event, index) => (
@@ -349,6 +374,13 @@ const applyFilters = async (filters, sortValue) => {
             <p className="card-text text-light fs-6 fw-medium">{new Date(event.event_scheduled_date).toLocaleString()}</p>
             <h5 className="fw-bolder fs-6 overflow-hidden text-wrap lh-sm my-0 text-light">{event.event_title}</h5>
             <p className="fs-6 fw-semibold overflow-hidden text-wrap my-0 text-light">₹{event.event_price}</p>
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-danger mt-2 rounded-pill w-100"
+              onClick={() => setPreviewEvent(event)}
+            >
+              <i className="far fa-eye me-1"></i> Quick Preview
+            </button>
           </div>
         </div>
       </div>
@@ -365,6 +397,12 @@ const applyFilters = async (filters, sortValue) => {
       )}
 </div>
 
+      {/* Interactive Quick Preview Modal */}
+      <QuickPreviewModal
+        isOpen={Boolean(previewEvent)}
+        onClose={() => setPreviewEvent(null)}
+        event={previewEvent}
+      />
     </div>
     );
 }

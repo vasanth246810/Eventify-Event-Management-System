@@ -3,15 +3,31 @@ import "../components/Styles/Login.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import axios from "axios";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+
+const loginSchema = z.object({
+  email: z.string().min(1, "Email is required").email("Please enter a valid email address"),
+  password: z.string().min(1, "Password is required"),
+});
 
 export default function LoginPage({ setUsername }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState({ email: "", password: "" });
   const [googleLoaded, setGoogleLoaded] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+
+  const {
+    register,
+    handleSubmit,
+    setError: setFormError,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: zodResolver(loginSchema),
+    defaultValues: { email: "", password: "" },
+    mode: "onTouched",
+  });
 
   useEffect(() => {
     const loadGoogleScript = () => {
@@ -84,7 +100,7 @@ export default function LoginPage({ setUsername }) {
     try {
       const csrfResponse = await axios.get(
         `${process.env.REACT_APP_API_BASE_URL}/api/get-csrf-token/`, 
-        { withCredentials: 'include' }
+        { withCredentials: true }
       );
       const csrfToken = csrfResponse.data.csrfToken;
       const lastVisited = sessionStorage.getItem("lastVisited") || "/";
@@ -97,7 +113,7 @@ export default function LoginPage({ setUsername }) {
             'X-CSRFToken': csrfToken,
             'Content-Type': 'application/json',
           },
-          withCredentials: 'include',
+          withCredentials: true,
         }
       );
       
@@ -108,7 +124,6 @@ export default function LoginPage({ setUsername }) {
         sessionStorage.setItem('username', username);
         sessionStorage.setItem('profile', res.data.user.profile);
 
-        
         const nextParam = searchParams.get('next');
         const redirectTo = nextParam || location.state?.from?.pathname || "/";
         navigate(redirectTo, { replace: true });
@@ -125,73 +140,54 @@ export default function LoginPage({ setUsername }) {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    let valid = true;
-    const newErrors = { email: "", password: "" };
-
-    if (!email.trim()) {
-      newErrors.email = "Email is required";
-      valid = false;
-    }
-
-    if (!password.trim()) {
-      newErrors.password = "Password is required";
-      valid = false;
-    }
-
-    setErrors(newErrors);
-
-    if (valid) {
-      try {
-        const csrfResponse = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}/api/get-csrf-token/`, 
-          { withCredentials: 'include' }
-        );
-        const csrfToken = csrfResponse.data.csrfToken;
-        const lastVisited = sessionStorage.getItem("lastVisited") || "/";
-        
-        const response = await axios.post(
-            `${process.env.REACT_APP_API_BASE_URL}/api/Login/`,
-          { email, password, next: lastVisited },
-          {
-            headers: {
-              'X-CSRFToken': csrfToken,
-              'Content-Type': 'application/json',
-            },
-            withCredentials: 'include',
-          }
-        );
-        
-        if (response.data.success) {
-          const username = response.data.user.username;
-          setUsername(username);
-          sessionStorage.setItem('emailaddress', email);
-          sessionStorage.setItem('username', username);
-          
-          const nextParam = searchParams.get('next');
-          const redirectTo = nextParam || location.state?.from?.pathname || "/";
-          navigate(redirectTo, { replace: true });
+  const onSubmit = async (data) => {
+    try {
+      const csrfResponse = await axios.get(
+        `${process.env.REACT_APP_API_BASE_URL}/api/get-csrf-token/`, 
+        { withCredentials: true }
+      );
+      const csrfToken = csrfResponse.data.csrfToken;
+      const lastVisited = sessionStorage.getItem("lastVisited") || "/";
+      
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_BASE_URL}/api/Login/`,
+        { email: data.email, password: data.password, next: lastVisited },
+        {
+          headers: {
+            'X-CSRFToken': csrfToken,
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
         }
-      } catch (error) {
-        if (error.response) {
-          console.error('Response error:', error.response.data);
-          alert('Error: ' + (error.response.data.error || 'Something went wrong'));
-        } else if (error.request) {
-          console.error('Network error:', error.request);
-          alert('Network error: Please check if the backend server is running on localhost:8000');
-        } else {
-          console.error('Request setup error:', error.message);
-          alert('Request error: ' + error.message);
-        }
+      );
+      
+      if (response.data.success) {
+        const username = response.data.user.username;
+        setUsername(username);
+        sessionStorage.setItem('emailaddress', data.email);
+        sessionStorage.setItem('username', username);
+        
+        const nextParam = searchParams.get('next');
+        const redirectTo = nextParam || location.state?.from?.pathname || "/";
+        navigate(redirectTo, { replace: true });
+      }
+    } catch (error) {
+      if (error.response) {
+        console.error('Response error:', error.response.data);
+        setFormError("root", { message: error.response.data.error || 'Invalid email or password' });
+      } else if (error.request) {
+        setFormError("root", { message: 'Network error: Please check if backend is running on localhost:8000' });
+      } else {
+        setFormError("root", { message: error.message });
       }
     }
   };
 
   const togglePassword = () => {
     const input = document.getElementById("password");
-    input.type = input.type === "password" ? "text" : "password";
+    if (input) {
+      input.type = input.type === "password" ? "text" : "password";
+    }
   };
 
   return (
@@ -203,23 +199,27 @@ export default function LoginPage({ setUsername }) {
             <p className="form-subtitle">Sign in to your Eventify account</p>
           </div>
 
-          <form className="signin-form" onSubmit={handleSubmit} noValidate>
+          <form className="signin-form" onSubmit={handleSubmit(onSubmit)} noValidate>
+            {errors.root && (
+              <div className="alert alert-danger py-2 small mb-3 text-center" style={{ borderRadius: '8px' }}>
+                {errors.root.message}
+              </div>
+            )}
+
             <div className="form-group">
-              <label htmlFor="Email" className="form-label">
+              <label htmlFor="email" className="form-label">
                 Email
               </label>
               <input
                 type="email"
                 id="email"
-                name="email"
                 className={`form-input ${errors.email ? "error" : ""}`}
                 placeholder="Enter your Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                {...register("email")}
                 autoComplete="email"
               />
               {errors.email && (
-                <div className="form-error">{errors.email}</div>
+                <div className="form-error">{errors.email.message}</div>
               )}
             </div>
 
@@ -233,8 +233,7 @@ export default function LoginPage({ setUsername }) {
                   id="password"
                   className={`form-input ${errors.password ? "error" : ""}`}
                   placeholder="Enter your password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  {...register("password")}
                   autoComplete="current-password"
                 />
                 <button
@@ -247,7 +246,7 @@ export default function LoginPage({ setUsername }) {
                 </button>
               </div>
               {errors.password && (
-                <div className="form-error">{errors.password}</div>
+                <div className="form-error">{errors.password.message}</div>
               )}
             </div>
 
@@ -257,8 +256,8 @@ export default function LoginPage({ setUsername }) {
               </a>
             </div>
 
-            <button type="submit" className="login-button">
-              Login
+            <button type="submit" className="login-button" disabled={isSubmitting}>
+              {isSubmitting ? "Signing in..." : "Login"}
             </button>
           </form>
 
