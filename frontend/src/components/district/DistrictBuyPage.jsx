@@ -87,6 +87,16 @@ export default function DistrictBuyPage() {
   const [bookingLoading, setBookingLoading] = useState(false);
   const mapContainerRef = useRef(null);
 
+  // Read movie booking state if routed from Movies Listing or Movie Detail
+  useEffect(() => {
+    if (location.state?.movieTitle) {
+      setEventTitle(location.state.movieTitle);
+      if (location.state.cinema && location.state.time) {
+        setEventSubtitle(`${location.state.time} • ${location.state.cinema}`);
+      }
+    }
+  }, [location.state]);
+
   // Fetch dynamic event info if slug is numeric
   useEffect(() => {
     if (isNumericId) {

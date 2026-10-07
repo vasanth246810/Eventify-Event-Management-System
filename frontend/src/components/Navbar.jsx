@@ -143,6 +143,18 @@ export default function Navbar({ username }) {
               Events
             </NavLink>
           </li>
+          <li>
+            <NavLink
+              to="/movies"
+              className={({ isActive }) =>
+                isActive || location.pathname.startsWith("/movies")
+                  ? "morph-nav-link active"
+                  : "morph-nav-link"
+              }
+            >
+              Movies
+            </NavLink>
+          </li>
           {/* <li>
             <NavLink
               to="/events/a-r-rahman-wonderment-tour-live-in-concert-delhi-2026/buy-page/shows/6a9daea2f46f18fdd7f7edf6"
