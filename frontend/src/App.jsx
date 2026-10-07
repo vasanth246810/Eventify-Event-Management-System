@@ -19,11 +19,16 @@ import AdminLayout from './admin/AdminLayout';
 import Dashboard from './admin/pages/Dashboard';
 import Users from './admin/pages/Users';
 import Events from './admin/pages/Events';
+import EventStudio from './admin/pages/EventStudio';
 import Bookings from './admin/pages/Booking';
 import { useEffect, useState } from 'react';
 import AdminRoute from "./routes/AdminRoute";
 import DistrictBuyPage from "./components/district/DistrictBuyPage";
 import DistrictSeatPicker from "./components/district/DistrictSeatPicker";
+import DistrictMoviesListing from "./components/district/DistrictMoviesListing";
+import DistrictMovieDetail from "./components/district/DistrictMovieDetail";
+import DistrictMoviesBookingPage from "./components/district/DistrictMoviesBookingPage";
+import DistrictMovieTicketBookingPage from "./components/district/DistrictMovieTicketBookingPage";
 
 
 function Layout() {
@@ -42,7 +47,8 @@ function Layout() {
   ];
   const qrscan = searchParams.get('qrscan') === 'true';
   const isBuyPage = location.pathname.includes('/buy-page');
-  const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname) || (location.pathname.startsWith('/BookedConfrimation/') && qrscan) || isBuyPage;
+  const isMoviesPage = location.pathname.startsWith('/movies');
+  const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname) || (location.pathname.startsWith('/BookedConfrimation/') && qrscan) || isBuyPage || isMoviesPage;
   const [username, setUsername] = useState(sessionStorage.getItem('username') || '');
 
   useEffect(() => {
@@ -60,6 +66,16 @@ function Layout() {
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/events" element={<Event />} />
+          <Route path="/movies" element={<DistrictMoviesListing />} />
+          <Route path="/movies/anbil-avan-movie-tickets-MV231011" element={<DistrictMovieDetail />} />
+          <Route path="/movies/anbil-avan-movie-tickets-in-coimbatore-MV231011" element={<DistrictMoviesBookingPage />} />
+          <Route path="/movies/seat-layout/:sessionId" element={<DistrictMovieTicketBookingPage />} />
+          <Route path="/movies/seat-layout" element={<DistrictMovieTicketBookingPage />} />
+          <Route path="/movies/ticket-booking" element={<DistrictMovieTicketBookingPage />} />
+          <Route path="/movies/booking/:id" element={<DistrictMoviesBookingPage />} />
+          <Route path="/movies/booking" element={<DistrictMoviesBookingPage />} />
+          <Route path="/movies/detail/:id" element={<DistrictMovieDetail />} />
+          <Route path="/movies/:city" element={<DistrictMoviesListing />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/event-list/:id" element={<EventList />} />
           <Route path="/events/:slug/buy-page/shows/:showId/:itemGroupName" element={<DistrictSeatPicker />} />
@@ -84,6 +100,8 @@ function Layout() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="users" element={<Users />} />
             <Route path="events" element={<Events />} />
+            <Route path="events/create" element={<EventStudio />} />
+            <Route path="events/configure/:id" element={<EventStudio />} />
             <Route path="bookings" element={<Bookings />} />
           </Route>        
         </Routes>

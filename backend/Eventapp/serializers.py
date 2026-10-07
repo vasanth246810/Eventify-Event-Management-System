@@ -3,9 +3,12 @@ from .models import Events,Artists,Bookingdetails,UserProfile
 
 
 class EventSerializer(serializers.ModelSerializer):
+    booked_seats = serializers.ReadOnlyField()
+
     class Meta:
-        model=  Events
-        fields=["event_id",
+        model = Events
+        fields = [
+            "event_id",
             "event_title",
             "event_scheduled_date",
             "event_description",
@@ -18,7 +21,9 @@ class EventSerializer(serializers.ModelSerializer):
             "location_name",
             "latitude",
             "longitude",
-            "event_category"]
+            "event_category",
+            "booked_seats",
+        ]
         
 
 class ArtistSerializer(serializers.ModelSerializer):

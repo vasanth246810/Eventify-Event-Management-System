@@ -1,0 +1,880 @@
+/* ========================================================
+   DISTRICT MOVIES BOOKING PAGE CSS
+   Adheres strictly to the extracted District by Zomato tokens
+   ======================================================== */
+
+.district-booking-app {
+  /* Design Tokens */
+  --color-13: #E2F1FE;     /* Background soft blue */
+  --color-14: #F1F1F2;     /* Background canvas gray */
+  --color-16: #FFFFFF;     /* Background pure white */
+  --color-11: #D1D5DB;     /* Surface neutral */
+  --color-1: #131316;      /* Text Primary */
+  --color-2: #4B5563;      /* Text Primary mid */
+  --color-3: #545459;      /* Text Primary gray */
+  --color-6: #77777E;      /* Text Secondary */
+  --color-7: #8B8B93;      /* Text Secondary muted */
+  --color-4: #6444E4;      /* Signature Accent Purple */
+  --color-5: #0B70D5;      /* Accent Blue */
+  --color-8: #E96F49;      /* Accent Almost Full / Red-Orange */
+  --color-9: #B8A91E;      /* Accent Olive Gold */
+  --color-10: #E4D33A;     /* Accent Filling Fast Yellow */
+  --color-12: #EAEAEB;     /* Border Light */
+  --color-15: #F7F7F7;     /* Card surface light */
+
+  --font-family: 'Be Vietnam Pro', 'Movies-mWeb', Metropolis, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --text-xs: 9px;
+  --text-sm: 11px;
+  --text-base: 13px;
+  --text-lg: 16px;
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 14px;
+  --radius-full: 16px;
+  --radius-pill: 9999px;
+
+  --duration-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-base: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  --shadow-sm: 0px 0px 0px 0px rgba(0, 0, 0, 0);
+  --shadow-md: 0px 1px 4px 0px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0px 1px 3px 0px rgba(0, 0, 0, 0.04), 0px 4px 12px 0px rgba(0, 0, 0, 0.04);
+  --shadow-5: 0px 2px 6px 0px rgba(0, 0, 0, 0.04);
+
+  font-family: var(--font-family);
+  background-color: var(--color-16);
+  color: var(--color-1);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+  line-height: 1.4;
+}
+
+.district-booking-app * {
+  box-sizing: border-box;
+}
+
+.booking-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+}
+
+/* ========================================================
+   1. TOP NAVIGATION HEADER
+   ======================================================== */
+.booking-top-header {
+  background-color: var(--color-16);
+  border-bottom: 1px solid var(--color-12);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  gap: 20px;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.brand-logo-unit {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.brand-title-bold {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--color-1);
+  text-transform: lowercase;
+}
+
+.brand-subtitle-mini {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  color: var(--color-1);
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+
+.location-tag-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  padding: 6px 10px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color var(--duration-base);
+  text-align: left;
+}
+
+.location-tag-btn:hover {
+  background-color: var(--color-15);
+}
+
+.loc-pin {
+  width: 20px;
+  height: 20px;
+  color: var(--color-4);
+  flex-shrink: 0;
+}
+
+.loc-label-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.city-title {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--color-1);
+  line-height: 16px;
+}
+
+.state-subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-7);
+  line-height: 14px;
+}
+
+.header-nav-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.h-nav-link {
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--color-3);
+  text-decoration: none;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  transition: all var(--duration-base);
+}
+
+.h-nav-link:hover {
+  color: var(--color-1);
+}
+
+.h-nav-link.active {
+  background-color: var(--color-13);
+  color: var(--color-5);
+  font-weight: 600;
+}
+
+.header-search-and-user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  max-width: 440px;
+  justify-content: flex-end;
+}
+
+.header-search-capsule {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--color-12);
+  border-radius: var(--radius-pill);
+  padding: 8px 18px;
+  width: 100%;
+  max-width: 380px;
+  background-color: var(--color-16);
+}
+
+.header-search-capsule:focus-within {
+  border-color: var(--color-4);
+}
+
+.header-search-capsule svg {
+  width: 18px;
+  height: 18px;
+  color: var(--color-4);
+  flex-shrink: 0;
+}
+
+.header-search-capsule input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: var(--text-base);
+  color: var(--color-1);
+  outline: none;
+}
+
+.header-search-capsule input::placeholder {
+  color: var(--color-7);
+}
+
+.user-profile-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: var(--color-12);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-3);
+  cursor: pointer;
+}
+
+/* ========================================================
+   FLOATING SIDEBAR (RIGHT DOCK)
+   ======================================================== */
+.booking-floating-sidebar {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 95;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 12px;
+}
+
+.float-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--duration-base);
+}
+
+.float-circle:hover {
+  transform: scale(1.1);
+}
+
+.float-circle.dark {
+  background-color: #1a1e3a;
+  color: var(--color-16);
+}
+
+.float-circle.purple {
+  background-color: var(--color-4);
+  color: var(--color-16);
+}
+
+/* ========================================================
+   2. MOVIE SUMMARY STRIP (SCREENSHOT 1)
+   ======================================================== */
+.movie-summary-strip {
+  padding: 28px 0 20px 0;
+  background-color: var(--color-16);
+}
+
+.summary-flex {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.movie-thumb-box {
+  width: 68px;
+  height: 98px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  flex-shrink: 0;
+  background-color: var(--color-11);
+}
+
+.movie-thumb-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.movie-info-col {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.movie-heading-h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-1);
+  letter-spacing: -0.2px;
+}
+
+.year-paren {
+  font-size: var(--text-lg);
+  font-weight: 400;
+  color: var(--color-7);
+}
+
+.movie-specs-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-sm);
+  color: var(--color-6);
+  font-weight: 500;
+}
+
+.spec-dot {
+  font-size: 8px;
+  color: var(--color-11);
+}
+
+.movie-lang-line {
+  font-size: var(--text-sm);
+  color: var(--color-6);
+}
+
+.movie-genres-line {
+  font-size: var(--text-sm);
+  color: var(--color-7);
+}
+
+/* ========================================================
+   3. DATE SELECTOR STRIP (SCREENSHOT 1)
+   ======================================================== */
+.date-picker-strip {
+  padding: 10px 0 16px 0;
+  background-color: var(--color-16);
+}
+
+.date-picker-flex {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.month-vertical-tag {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--color-1);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 52px;
+  user-select: none;
+}
+
+.date-chips-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+}
+
+.date-chip-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 54px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-16);
+  border: 1px solid var(--color-12);
+  color: var(--color-1);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.date-chip-pill:hover {
+  border-color: var(--color-11);
+  background-color: var(--color-15);
+}
+
+.date-chip-pill.active {
+  background-color: var(--color-1);
+  color: var(--color-16);
+  border-color: var(--color-1);
+}
+
+.chip-day-num {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.chip-day-name {
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 14px;
+  text-transform: capitalize;
+}
+
+.date-chip-pill.active .chip-day-name {
+  color: var(--color-12);
+}
+
+/* ========================================================
+   4. FILTERS ROW (SCREENSHOT 1)
+   ======================================================== */
+.booking-filters-strip {
+  padding: 6px 0 14px 0;
+  background-color: var(--color-16);
+}
+
+.filters-flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-pill-trigger,
+.filter-btn-chip {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-1);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-12);
+  background-color: var(--color-16);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+}
+
+.filter-pill-trigger svg {
+  width: 14px;
+  height: 14px;
+}
+
+.filter-pill-trigger:hover,
+.filter-btn-chip:hover {
+  background-color: var(--color-15);
+  border-color: var(--color-11);
+}
+
+.filter-btn-chip.active {
+  background-color: var(--color-1);
+  color: var(--color-16);
+  border-color: var(--color-1);
+}
+
+.clear-filter-btn {
+  font-size: 11px;
+  color: var(--color-4);
+  font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+/* ========================================================
+   5. STATUS LEGENDS STRIP (SCREENSHOT 1)
+   ======================================================== */
+.status-legends-strip {
+  padding: 8px 0 16px 0;
+  background-color: var(--color-16);
+}
+
+.legends-flex {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 11px;
+  color: var(--color-6);
+  flex-wrap: wrap;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.sub-box-icon {
+  font-size: 10px;
+}
+
+.dot-icon.available {
+  color: #10B981;
+}
+
+.dot-icon.filling-fast {
+  color: var(--color-10);
+}
+
+.dot-icon.almost-full {
+  color: var(--color-8);
+}
+
+/* ========================================================
+   6. CINEMA SHOWTIMES CARDS LIST (SCREENSHOTS 1 & 2)
+   ======================================================== */
+.cinemas-list-section {
+  padding: 8px 0 36px 0;
+  background-color: var(--color-16);
+}
+
+.cinema-cards-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cinema-card-entry {
+  background-color: var(--color-16);
+  border: 1px solid var(--color-12);
+  border-radius: var(--radius-lg);
+  padding: 20px 24px;
+  box-shadow: var(--shadow-5);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+  transition: border-color var(--duration-fast);
+}
+
+.cinema-card-entry:hover {
+  border-color: var(--color-11);
+}
+
+.cinema-meta-pane {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex: 1;
+  gap: 16px;
+}
+
+.cinema-logo-cluster {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+/* Cinema Circular Logo Badges */
+.cinema-round-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cinema-round-badge.pvr {
+  background-color: #000000;
+  color: #FFD700;
+  border: 2px solid #FFD700;
+}
+
+.cinema-round-badge.cinepolis {
+  background-color: #FFFFFF;
+  color: #0B70D5;
+  border: 1px solid var(--color-12);
+  font-size: 8px;
+}
+
+.cinema-round-badge.inox {
+  background-color: #FFFFFF;
+  color: #0B70D5;
+  border: 1px solid var(--color-12);
+  font-weight: 800;
+}
+
+.cinema-round-badge.miraj {
+  background-color: #000000;
+  color: #FFFFFF;
+  font-size: 8px;
+}
+
+.cinema-naming-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cinema-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cinema-title-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-1);
+  line-height: 20px;
+}
+
+.info-circle-icon {
+  font-size: 13px;
+  color: var(--color-7);
+  cursor: pointer;
+}
+
+.cinema-sub-badges-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-sm);
+  color: var(--color-7);
+}
+
+.diamond-sep {
+  font-size: 8px;
+  color: var(--color-11);
+}
+
+.cancellation-label.allowed {
+  color: var(--color-6);
+}
+
+.cancellation-label.not-allowed {
+  color: var(--color-7);
+}
+
+.favorite-heart-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--color-7);
+  padding: 4px;
+  transition: transform var(--duration-fast);
+}
+
+.favorite-heart-btn:hover {
+  transform: scale(1.15);
+}
+
+.favorite-heart-btn.active {
+  color: var(--color-8);
+}
+
+/* Showtimes Slots Pane */
+.showtimes-chips-pane {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  min-width: 260px;
+}
+
+.show-slot-card {
+  min-width: 104px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-12);
+  background-color: var(--color-16);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  text-align: center;
+}
+
+.show-slot-card:hover {
+  border-color: var(--color-4);
+  background-color: var(--color-13);
+}
+
+.slot-time-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-1);
+}
+
+.show-slot-card.filling-fast .slot-time-text {
+  color: #D97706;
+}
+
+.show-slot-card.almost-full .slot-time-text {
+  color: var(--color-8);
+}
+
+.slot-format-text {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--color-7);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.slot-sub-icon {
+  font-size: 9px;
+  color: var(--color-7);
+  margin-top: 2px;
+}
+
+.no-cinemas-box {
+  padding: 48px;
+  text-align: center;
+  background-color: var(--color-15);
+  border-radius: var(--radius-lg);
+  color: var(--color-7);
+}
+
+.reset-filter-btn {
+  margin-top: 12px;
+  background-color: var(--color-1);
+  color: var(--color-16);
+  border: none;
+  padding: 8px 20px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+/* ========================================================
+   7. FAQ ACCORDIONS (SCREENSHOT 3)
+   ======================================================== */
+.booking-faqs-section {
+  padding: 24px 0 68px 0;
+  background-color: var(--color-16);
+}
+
+.faq-accordions-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-accordion-card {
+  background-color: var(--color-16);
+  border: 1px solid var(--color-12);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: border-color var(--duration-fast);
+}
+
+.faq-accordion-card:hover {
+  border-color: var(--color-11);
+}
+
+.faq-accordion-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-1);
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.faq-arrow-chevron {
+  width: 18px;
+  height: 18px;
+  color: var(--color-1);
+  transition: transform var(--duration-fast);
+  flex-shrink: 0;
+}
+
+.faq-accordion-card.open .faq-arrow-chevron {
+  transform: rotate(180deg);
+}
+
+.faq-accordion-body {
+  padding: 0 24px 20px 24px;
+  font-size: 13px;
+  line-height: 22px;
+  color: var(--color-2);
+}
+
+/* ========================================================
+   TOAST & FOOTER
+   ======================================================== */
+.booking-toast-pill {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: var(--color-1);
+  color: var(--color-16);
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 300;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.booking-footer-bar {
+  background-color: var(--color-15);
+  border-top: 1px solid var(--color-12);
+  padding: 32px 0;
+  font-size: 12px;
+  color: var(--color-7);
+  margin-top: auto;
+}
+
+.footer-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer-brand-side {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ========================================================
+   RESPONSIVE LAYOUT
+   ======================================================== */
+@media (max-width: 900px) {
+  .cinema-card-entry {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  .showtimes-chips-pane {
+    justify-content: flex-start;
+  }
+  .header-nav-pills {
+    display: none;
+  }
+  .header-search-and-user {
+    max-width: 220px;
+  }
+  .booking-floating-sidebar {
+    display: none;
+  }
+}

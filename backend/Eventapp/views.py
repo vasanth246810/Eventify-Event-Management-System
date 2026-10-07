@@ -485,30 +485,104 @@ def long_lat(event_location):
     return value    
         
 
-def CreateEvent(request,event_id=None):
+def CreateEvent(request, event_id=None):
     try:
-        if not event_id:
-            form = EventForm(request.POST, request.FILES)
-        elif event_id:
-            events=Events.objects.get(event_id=event_id)
-            if not events:
+        if request.method == "GET":
+            if not event_id:
+                return JsonResponse({"error": "Event ID required for GET"}, status=400)
+            try:
+                event = Events.objects.get(event_id=event_id)
+            except Events.DoesNotExist:
                 return JsonResponse({"error": "Event not found"}, status=404)
-            form = EventForm(request.POST, request.FILES,instance=events)
+            serializer = EventSerializer(event)
+            event_data = serializer.data
+            event_data["event_image"] = event.image_url
+            artists_ids = list(Eventartist.objects.filter(event_id=event_id).values_list('artistid', flat=True))
+            event_data["artists"] = artists_ids
+            return JsonResponse(event_data, safe=False)
+
+        elif request.method == "POST":
+            existing_event = None
+            if event_id:
+                try:
+                    existing_event = Events.objects.get(event_id=event_id)
+                except Events.DoesNotExist:
+                    return JsonResponse({"error": "Event not found"}, status=404)
+                form = EventForm(request.POST, request.FILES, instance=existing_event)
+            else:
+                form = EventForm(request.POST, request.FILES)
+
+            if form.is_valid():
+                event = form.save(commit=False)
+                event_location = form.cleaned_data.get("event_location", "")
+                if event_location:
+                    event.location_name = event_location
+
+                # Inventory handling
+                total_seats = form.cleaned_data.get('event_total_seats') or 100
+                avail_seats = form.cleaned_data.get('event_available_seats')
+
+                if not event_id:
+                    # New event: default available seats to total seats if not specified
+                    event.event_available_seats = avail_seats if avail_seats is not None else total_seats
+                else:
+                    # Existing event: preserve or update available seats
+                    if avail_seats is not None:
+                        event.event_available_seats = avail_seats
+                    elif existing_event and existing_event.event_available_seats is not None:
+                        event.event_available_seats = existing_event.event_available_seats
+                    else:
+                        event.event_available_seats = total_seats
+
+                # Sold out status
+                if form.cleaned_data.get('is_sold_out') is not None:
+                    event.is_sold_out = form.cleaned_data['is_sold_out']
+                elif event.event_available_seats is not None and event.event_available_seats <= 0:
+                    event.is_sold_out = True
+
+                # Geocoding
+                if not event.latitude or not event.longitude:
+                    try:
+                        lat_lon = long_lat(event_location)
+                        if lat_lon:
+                            event.latitude = lat_lon[0]
+                            event.longitude = lat_lon[1]
+                    except Exception:
+                        pass
+
+                event.save()
+
+                # Sync Artists
+                artists_input = (
+                    request.POST.getlist('artists') or
+                    request.POST.getlist('artists[]') or
+                    request.POST.get('artists')
+                )
+                if artists_input:
+                    if isinstance(artists_input, str):
+                        artist_ids = [x.strip() for x in artists_input.split(',') if x.strip()]
+                    else:
+                        artist_ids = artists_input
+
+                    # Replace artist associations
+                    Eventartist.objects.filter(event_id=event.event_id).delete()
+                    for aid in artist_ids:
+                        try:
+                            artist_obj = Artists.objects.get(artistid=int(aid))
+                            Eventartist.objects.create(event_id=event.event_id, artistid=artist_obj)
+                        except (ValueError, Artists.DoesNotExist):
+                            continue
+
+                message = "Event updated successfully" if event_id else "Event created successfully"
+                return JsonResponse({
+                    "message": message,
+                    "event_id": event.event_id,
+                    "success": True
+                })
+
+            return JsonResponse({"errors": form.errors}, status=400)
         else:
             return JsonResponse({"error": "Invalid request method"}, status=405)
-        if form.is_valid():
-            event=form.save(commit=False)
-            event_location = form.cleaned_data.get("event_location", "")
-            event.location_name = event_location
-            event.event_available_seats = form.cleaned_data['event_total_seats']
-            lat_lon = long_lat(event_location)
-            if lat_lon:
-                event.latitude = lat_lon[0]
-                event.longitude = lat_lon[1]
-            event.save()
-            message = "Event updated successfully" if event_id else "Event created successfully"
-            return JsonResponse({"message": message})        
-        return JsonResponse({"errors": form.errors}, status=400)
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
     

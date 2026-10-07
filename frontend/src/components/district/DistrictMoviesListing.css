@@ -1,0 +1,900 @@
+/* ========================================================
+   DISTRICT MOVIES LISTING COMPONENT CSS
+   Design tokens adhering strictly to District by Zomato
+   ======================================================== */
+
+.district-movies-app {
+  --color-9: #E2F1FE;      /* Soft sky blue */
+  --color-10: #F1F1F2;     /* Canvas light background */
+  --color-12: #FFFFFF;     /* Pure white */
+  --color-7: #D1D5DB;      /* Surface divider neutral */
+  --color-1: #131316;      /* Text Primary (Near Black) */
+  --color-2: #545459;      /* Text Secondary */
+  --color-5: #8B8B93;      /* Muted text */
+  --color-3: #6444E4;      /* Signature District Violet */
+  --color-4: #0B70D5;      /* Accent Blue */
+  --color-6: #D5CCFF;      /* Light Violet Border */
+  --color-8: #E5E7EB;      /* Light border */
+  --color-11: #F7F7F7;     /* Light Surface */
+
+  --font-family: 'Be Vietnam Pro', Metropolis, ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 14px 28px rgba(0, 0, 0, 0.12);
+
+  font-family: var(--font-family);
+  background-color: var(--color-12);
+  color: var(--color-1);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+  line-height: 1.5;
+}
+
+.district-movies-app * {
+  box-sizing: border-box;
+}
+
+.district-container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+}
+
+/* ========================================================
+   1. TOP NAVIGATION HEADER
+   ======================================================== */
+.district-header {
+  background-color: var(--color-12);
+  border-bottom: 1px solid var(--color-8);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  gap: 20px;
+}
+
+.brand-location-cluster {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.brand-logo-group {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.brand-logo-name {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--color-1);
+  text-transform: lowercase;
+}
+
+.brand-logo-sub {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  color: var(--color-1);
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+
+/* Location Selector */
+.location-pill-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  text-align: left;
+}
+
+.location-pill-btn:hover {
+  background-color: var(--color-11);
+}
+
+.loc-pin-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--color-3);
+  flex-shrink: 0;
+}
+
+.loc-text-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.loc-city {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-1);
+  line-height: 16px;
+}
+
+.loc-state {
+  font-size: 12px;
+  color: var(--color-5);
+  line-height: 14px;
+}
+
+/* Vertical Nav Links */
+.vertical-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.v-nav-item {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-2);
+  text-decoration: none;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  transition: all var(--transition-fast);
+}
+
+.v-nav-item:hover {
+  color: var(--color-1);
+}
+
+.v-nav-item.active {
+  background-color: var(--color-9);
+  color: var(--color-4);
+  font-weight: 600;
+}
+
+/* Search & Profile */
+.header-search-profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  max-width: 440px;
+  justify-content: flex-end;
+}
+
+.search-pill-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--color-8);
+  border-radius: 9999px;
+  padding: 8px 18px;
+  width: 100%;
+  max-width: 380px;
+  background-color: var(--color-12);
+  transition: all var(--transition-fast);
+}
+
+.search-pill-wrapper:focus-within {
+  border-color: var(--color-3);
+  box-shadow: 0 0 0 3px var(--color-6);
+}
+
+.search-lens-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--color-3);
+  flex-shrink: 0;
+}
+
+.search-pill-wrapper input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  font-size: 13px;
+  color: var(--color-1);
+  outline: none;
+}
+
+.search-pill-wrapper input::placeholder {
+  color: var(--color-5);
+}
+
+.user-profile-circle-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: var(--color-8);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-2);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color var(--transition-fast);
+}
+
+.user-profile-circle-btn:hover {
+  background-color: var(--color-7);
+}
+
+/* ========================================================
+   2. FLOATING RIGHT ACTION COLUMN
+   ======================================================== */
+.floating-action-column {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 95;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 12px;
+}
+
+.float-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.14);
+  transition: transform var(--transition-fast);
+}
+
+.float-btn:hover {
+  transform: scale(1.12);
+}
+
+.float-btn.dark {
+  background-color: #1a1e3a;
+  color: var(--color-12);
+}
+
+.float-btn.purple {
+  background-color: var(--color-3);
+  color: var(--color-12);
+}
+
+/* ========================================================
+   3. HERO SPOTLIGHT CAROUSEL
+   ======================================================== */
+.hero-spotlight-carousel {
+  position: relative;
+  background-color: var(--color-12);
+  border-bottom: 1px solid var(--color-8);
+  padding: 44px 0 36px 0;
+  overflow: hidden;
+}
+
+.hero-ambient-backdrop {
+  position: absolute;
+  inset: -60px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(55px);
+  opacity: 0.16;
+  pointer-events: none;
+  transition: background-image 0.6s ease;
+  z-index: 1;
+}
+
+.hero-position-container {
+  position: relative;
+  z-index: 2;
+}
+
+.carousel-chevron-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--color-1);
+  cursor: pointer;
+  z-index: 10;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-chevron-btn:hover {
+  color: var(--color-3);
+  transform: translateY(-50%) scale(1.2);
+}
+
+.carousel-chevron-btn.prev {
+  left: 0;
+}
+
+.carousel-chevron-btn.next {
+  right: 0;
+}
+
+.hero-content-split {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+  padding: 0 40px;
+}
+
+.hero-details-pane {
+  flex: 1;
+  max-width: 580px;
+}
+
+.hero-feature-title {
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 52px;
+  color: var(--color-1);
+  margin-bottom: 10px;
+  letter-spacing: -0.6px;
+}
+
+.hero-meta-strip {
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--color-1);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero-meta-strip .meta-sep {
+  color: var(--color-7);
+  font-weight: 400;
+}
+
+.hero-synopsis-copy {
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--color-2);
+  margin-bottom: 32px;
+  max-width: 520px;
+}
+
+.btn-book-now-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-1);
+  color: var(--color-12);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 13px 36px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-book-now-pill:hover {
+  background-color: #2b2b30;
+  transform: translateY(-1px);
+}
+
+/* Poster Frame */
+.hero-poster-pane {
+  flex-shrink: 0;
+}
+
+.hero-poster-frame {
+  width: 320px;
+  height: 440px;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
+  position: relative;
+  background-color: var(--color-7);
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.hero-poster-frame:hover {
+  transform: scale(1.02);
+}
+
+.hero-poster-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.poster-ps-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  width: 26px;
+  height: 26px;
+  background-color: #0b1a38;
+  color: #38bdf8;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Carousel Indicators */
+.carousel-dot-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 28px;
+}
+
+.carousel-dot-item {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #d1d1d6;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.carousel-dot-item.active {
+  width: 24px;
+  border-radius: 9999px;
+  background-color: var(--color-1);
+}
+
+/* ========================================================
+   4. THIS WEEK'S RELEASES
+   ======================================================== */
+.this-weeks-releases-section {
+  padding: 40px 0;
+}
+
+.section-title-bold {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-1);
+  margin-bottom: 22px;
+  letter-spacing: -0.3px;
+}
+
+.releases-horizontal-scroll {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.weekly-release-card {
+  width: 200px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.weekly-poster-wrapper {
+  width: 100%;
+  height: 290px;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  background-color: var(--color-7);
+}
+
+.weekly-poster-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+  display: block;
+}
+
+.weekly-release-card:hover .weekly-poster-image {
+  transform: scale(1.05);
+}
+
+.weekly-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-1);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.weekly-card-meta {
+  font-size: 13px;
+  color: var(--color-5);
+}
+
+/* ========================================================
+   5. ONLY IN THEATRES: 6-COLUMN GRID
+   ======================================================== */
+.only-in-theatres-section {
+  padding: 24px 0 60px 0;
+}
+
+.theatres-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.filter-pill-action,
+.filter-pill-tag {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-1);
+  padding: 7px 16px;
+  border-radius: 9999px;
+  border: 1px solid var(--color-8);
+  background-color: var(--color-12);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filter-pill-action svg {
+  width: 14px;
+  height: 14px;
+}
+
+.filter-pill-action:hover,
+.filter-pill-tag:hover {
+  background-color: var(--color-11);
+  border-color: var(--color-7);
+}
+
+.filter-pill-tag.active {
+  background-color: var(--color-1);
+  color: var(--color-12);
+  border-color: var(--color-1);
+}
+
+/* 6-Column Grid */
+.six-column-theatres-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+}
+
+.theatre-movie-item {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.theatre-poster-holder {
+  width: 100%;
+  aspect-ratio: 1 / 1.48;
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  background-color: var(--color-7);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.theatre-poster-pic {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.theatre-movie-item:hover .theatre-poster-pic {
+  transform: scale(1.05);
+}
+
+.theatre-item-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-1);
+  line-height: 20px;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.theatre-item-meta {
+  font-size: 13px;
+  color: var(--color-5);
+  line-height: 18px;
+}
+
+.no-movies-match-box {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px;
+  background-color: var(--color-11);
+  border-radius: 16px;
+  color: var(--color-5);
+}
+
+.btn-clear-filters {
+  margin-top: 12px;
+  background-color: var(--color-3);
+  color: var(--color-12);
+  border: none;
+  padding: 8px 20px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ========================================================
+   6. SEO & FAQ ACCORDION SHELF
+   ======================================================== */
+.faq-accordions-section {
+  padding: 24px 0 68px 0;
+}
+
+.accordions-vertical-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-card-unit {
+  border: 1px solid var(--color-8);
+  border-radius: 12px;
+  background-color: var(--color-12);
+  overflow: hidden;
+  transition: border-color var(--transition-fast);
+}
+
+.faq-card-unit:hover {
+  border-color: var(--color-7);
+}
+
+.faq-card-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-1);
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.faq-chevron-arrow {
+  width: 18px;
+  height: 18px;
+  color: var(--color-1);
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.faq-card-unit.open .faq-chevron-arrow {
+  transform: rotate(180deg);
+}
+
+.faq-card-body {
+  padding: 0 24px 20px 24px;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--color-2);
+}
+
+/* ========================================================
+   7. SHOWTIMES MODAL
+   ======================================================== */
+.showtimes-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(19, 19, 22, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.showtimes-modal-card {
+  background-color: var(--color-12);
+  border-radius: 18px;
+  width: 92%;
+  max-width: 620px;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+}
+
+.modal-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-8);
+}
+
+.modal-feature-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-1);
+}
+
+.modal-feature-subtitle {
+  font-size: 13px;
+  color: var(--color-5);
+}
+
+.modal-dismiss-btn {
+  font-size: 24px;
+  background: none;
+  border: none;
+  color: var(--color-5);
+  cursor: pointer;
+}
+
+.modal-dismiss-btn:hover {
+  color: var(--color-1);
+}
+
+.modal-shows-body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cinema-timing-block {
+  border: 1px solid var(--color-8);
+  border-radius: 12px;
+  padding: 16px;
+  background-color: #fafafa;
+}
+
+.cinema-name-tag {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-1);
+  margin-bottom: 4px;
+}
+
+.cinema-features-tag {
+  font-size: 12px;
+  color: var(--color-5);
+  margin-bottom: 12px;
+}
+
+.slots-chip-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.slot-time-btn {
+  border: 1px solid var(--color-8);
+  background-color: var(--color-12);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-1);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.slot-time-btn:hover {
+  border-color: var(--color-3);
+  color: var(--color-3);
+}
+
+.slot-time-btn.fast-filling {
+  border-color: #f59e0b;
+  color: #d97706;
+}
+
+/* Toast */
+.district-toast-notice {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: var(--color-1);
+  color: var(--color-12);
+  padding: 12px 24px;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 300;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================================
+   8. FOOTER
+   ======================================================== */
+.district-footer-bar {
+  background-color: #fafafa;
+  border-top: 1px solid var(--color-8);
+  padding: 32px 0;
+  font-size: 13px;
+  color: var(--color-5);
+  margin-top: auto;
+}
+
+.footer-inner-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-left-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ========================================================
+   RESPONSIVE BREAKPOINTS
+   ======================================================== */
+@media (max-width: 1100px) {
+  .six-column-theatres-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .hero-content-split {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .six-column-theatres-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hero-content-split {
+    flex-direction: column;
+    text-align: center;
+    padding: 0;
+  }
+  .hero-details-pane {
+    max-width: 100%;
+  }
+  .hero-meta-strip {
+    justify-content: center;
+  }
+  .hero-synopsis-copy {
+    margin: 0 auto 24px auto;
+  }
+  .vertical-nav-links {
+    display: none;
+  }
+  .header-search-profile {
+    max-width: 220px;
+  }
+  .floating-action-column {
+    display: none;
+  }
+}

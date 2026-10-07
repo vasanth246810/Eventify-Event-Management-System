@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Movie Tickets Online in Madurai | District by Zomato</title>
+  
+  <!-- Font Stack: Be Vietnam Pro / Metropolis / ui-sans-serif -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========================================================
+       DISTRICT BY ZOMATO DESIGN TOKENS
+       Extracted token mappings
+       ======================================================== */
+    :root {
+      /* Colors */
+      --color-9: #E2F1FE;      /* Soft sky blue (active pill background) */
+      --color-10: #F1F1F2;     /* Canvas light background */
+      --color-12: #FFFFFF;     /* White card & header surface */
+      --color-7: #D1D5DB;      /* Surface border neutral */
+      --color-1: #131316;      /* Text Primary (Dark near-black) */
+      --color-2: #545459;      /* Text Secondary / Neutral Dark */
+      --color-5: #8B8B93;      /* Text Secondary (Muted gray) */
+      --color-3: #6444E4;      /* Signature District Violet/Purple */
+      --color-4: #0B70D5;      /* Accent Blue */
+      --color-6: #D5CCFF;      /* Light Violet Border Accent */
+      --color-8: #E5E7EB;      /* Clean Light Border */
+      --color-11: #F7F7F7;     /* Input & Pill Surface Light */
+
+      /* Typography */
+      --font-family: 'Be Vietnam Pro', Metropolis, ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --text-xs: 12px;
+      --text-sm: 14px;
+      --text-base: 16px;
+      --text-lg: 18px;
+      --text-xl: 24px;
+      --text-2xl: 40px;
+
+      --fw-normal: 400;
+      --fw-medium: 500;
+      --fw-semibold: 600;
+      --fw-bold: 700;
+      --fw-extrabold: 800;
+
+      /* Spacing Scale (4px Base Grid) */
+      --space-1: 1px;
+      --space-2: 2px;
+      --space-3: 4px;
+      --space-4: 8px;
+      --space-5: 12px;
+      --space-6: 14px;
+      --space-7: 15px;
+      --space-8: 16px;
+      --space-9: 18px;
+      --space-10: 20px;
+      --space-11: 24px;
+      --space-12: 32px;
+      --space-13: 40px;
+      --space-14: 52px;
+      --space-15: 64px;
+      --space-16: 68px;
+      --space-17: 77px;
+      --space-18: 80px;
+
+      /* Border Radii */
+      --radius-sm: 0px 20px 20px 0px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+      --radius-xl: 12px;
+      --radius-6: 16px;
+      --radius-7: 18px;
+      --radius-8: 20px;
+      --radius-9: 24px;
+      --radius-circle: 50%;
+      --radius-pill: 9999px;
+
+      /* Elevation & Shadows */
+      --shadow-sm: 0px 0px 0px 0px rgba(0, 0, 0, 0);
+      --shadow-md: 0px 10px 15px -3px rgba(0, 0, 0, 0.08), 0px 4px 6px -4px rgba(0, 0, 0, 0.04);
+      --shadow-float: 0 4px 20px rgba(0, 0, 0, 0.12);
+
+      /* Motion */
+      --duration-base: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--color-12);
+      color: var(--color-1);
+      font-size: var(--text-base);
+      line-height: 24px;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    button {
+      font-family: inherit;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    input {
+      font-family: inherit;
+      outline: none;
+      border: none;
+    }
+
+    /* Page Layout Container */
+    .app-container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding-left: var(--space-8);
+      padding-right: var(--space-8);
+    }
+
+    /* ========================================================
+       TOP HEADER (DISTRICT BY ZOMATO EXACT REPLICA)
+       ======================================================== */
+    .top-header {
+      background-color: var(--color-12);
+      border-bottom: var(--space-1) solid var(--color-8);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      gap: var(--space-6);
+    }
+
+    /* Brand Logo */
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+      flex-shrink: 0;
+    }
+
+    .district-logo-wrap {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+
+    .district-logo-title {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: var(--color-1);
+      text-transform: lowercase;
+    }
+
+    .district-logo-sub {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: var(--color-1);
+      text-transform: uppercase;
+      margin-top: 1px;
+    }
+
+    /* Location Picker */
+    .location-selector {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      cursor: pointer;
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-md);
+      transition: background-color var(--duration-base);
+    }
+
+    .location-selector:hover {
+      background-color: var(--color-11);
+    }
+
+    .location-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--color-3);
+      flex-shrink: 0;
+    }
+
+    .location-text-group {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .location-city {
+      font-size: var(--text-sm);
+      font-weight: var(--fw-bold);
+      color: var(--color-1);
+      line-height: 16px;
+    }
+
+    .location-state {
+      font-size: var(--text-xs);
+      color: var(--color-5);
+      line-height: 14px;
+    }
+
+    /* Top Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-left: var(--space-4);
+    }
+
+    .nav-tab-item {
+      font-size: var(--text-sm);
+      font-weight: var(--fw-medium);
+      color: var(--color-2);
+      padding: var(--space-2) var(--space-5);
+      border-radius: var(--radius-pill);
+      transition: all var(--duration-base);
+      cursor: pointer;
+    }
+
+    .nav-tab-item:hover {
+      color: var(--color-1);
+    }
+
+    .nav-tab-item.active {
+      background-color: var(--color-9);
+      color: var(--color-4);
+      font-weight: var(--fw-semibold);
+    }
+
+    /* Header Search & Profile */
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-5);
+      flex: 1;
+      max-width: 440px;
+      justify-content: flex-end;
+    }
+
+    .search-input-pill {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      background-color: var(--color-12);
+      border: var(--space-1) solid var(--color-8);
+      border-radius: var(--radius-pill);
+      padding: 9px var(--space-5);
+      width: 100%;
+      max-width: 380px;
+      transition: border-color var(--duration-base), box-shadow var(--duration-base);
+    }
+
+    .search-input-pill:focus-within {
+      border-color: var(--color-3);
+      box-shadow: 0 0 0 3px var(--color-6);
+    }
+
+    .search-input-pill svg {
+      width: 18px;
+      height: 18px;
+      color: var(--color-3);
+      flex-shrink: 0;
+    }
+
+    .search-input-pill input {
+      width: 100%;
+      font-size: 13px;
+      color: var(--color-1);
+    }
+
+    .search-input-pill input::placeholder {
+      color: var(--color-5);
+    }
+
+    .profile-avatar-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-circle);
+      background-color: var(--color-8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-2);
+      flex-shrink: 0;
+      transition: background-color var(--duration-base);
+    }
+
+    .profile-avatar-btn:hover {
+      background-color: var(--color-7);
+    }
+
+    /* ========================================================
+       FLOATING RIGHT SIDEBAR CONTROLS
+       (Matching screenshot right-docked icon stack)
+       ======================================================== */
+    .floating-sidebar {
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 95;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      padding-right: var(--space-3);
+    }
+
+    .sidebar-icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-circle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow-float);
+      transition: transform var(--duration-base);
+    }
+
+    .sidebar-icon-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .sidebar-icon-btn.dark {
+      background-color: #1a1e3a;
+      color: var(--color-12);
+    }
+
+    .sidebar-icon-btn.purple {
+      background-color: var(--color-3);
+      color: var(--color-12);
+    }
+
+    /* ========================================================
+       HERO CAROUSEL SECTION (SIGMA SCREENSHOT REPLICA)
+       ======================================================== */
+    .hero-carousel-section {
+      position: relative;
+      background-color: var(--color-12);
+      border-bottom: var(--space-1) solid var(--color-8);
+      overflow: hidden;
+      padding: var(--space-12) 0 var(--space-10) 0;
+    }
+
+    /* Blurred background dynamic backdrop */
+    .hero-backdrop-blur {
+      position: absolute;
+      inset: -50px;
+      background-image: url('https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=1400&q=80');
+      background-size: cover;
+      background-position: center;
+      filter: blur(55px);
+      opacity: 0.18;
+      z-index: 1;
+      pointer-events: none;
+      transition: background-image 0.5s ease;
+    }
+
+    .hero-container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-12);
+    }
+
+    /* Carousel Nav Arrows */
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-1);
+      cursor: pointer;
+      z-index: 10;
+      font-size: 26px;
+      font-weight: 300;
+      transition: color var(--duration-base), transform var(--duration-base);
+    }
+
+    .carousel-arrow:hover {
+      transform: translateY(-50%) scale(1.15);
+      color: var(--color-3);
+    }
+
+    .carousel-arrow.prev {
+      left: 12px;
+    }
+
+    .carousel-arrow.next {
+      right: 12px;
+    }
+
+    /* Hero Left Information */
+    .hero-info-column {
+      flex: 1;
+      max-width: 580px;
+      padding-left: var(--space-11);
+    }
+
+    .hero-movie-title {
+      font-size: 44px;
+      line-height: 52px;
+      font-weight: var(--fw-bold);
+      color: var(--color-1);
+      margin-bottom: var(--space-3);
+      letter-spacing: -0.6px;
+    }
+
+    .hero-movie-meta {
+      font-size: 19px;
+      font-weight: var(--fw-bold);
+      color: var(--color-1);
+      margin-bottom: var(--space-5);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .hero-movie-meta .meta-divider {
+      color: var(--color-7);
+      font-weight: var(--fw-normal);
+    }
+
+    .hero-movie-desc {
+      font-size: 15px;
+      line-height: 24px;
+      color: var(--color-2);
+      margin-bottom: var(--space-9);
+      max-width: 520px;
+    }
+
+    .btn-hero-book {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--color-1);
+      color: var(--color-12);
+      font-size: 15px;
+      font-weight: var(--fw-semibold);
+      padding: 13px 36px;
+      border-radius: var(--radius-pill);
+      transition: background-color var(--duration-base), transform var(--duration-base);
+    }
+
+    .btn-hero-book:hover {
+      background-color: #2b2b30;
+      transform: translateY(-1px);
+    }
+
+    .btn-hero-book:active {
+      transform: translateY(0);
+    }
+
+    /* Hero Right Poster Card */
+    .hero-poster-column {
+      flex-shrink: 0;
+      padding-right: var(--space-11);
+      position: relative;
+    }
+
+    .hero-poster-card {
+      width: 320px;
+      height: 440px;
+      border-radius: var(--radius-7);
+      overflow: hidden;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
+      position: relative;
+      background-color: var(--color-7);
+      transition: transform var(--duration-base);
+    }
+
+    .hero-poster-card:hover {
+      transform: scale(1.02);
+    }
+
+    .hero-poster-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-poster-ps-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      width: 26px;
+      height: 26px;
+      background-color: #0b1a38;
+      color: #38bdf8;
+      font-size: 12px;
+      font-weight: var(--fw-bold);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    /* Hero Carousel Pagination Dots */
+    .carousel-indicators {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin-top: var(--space-8);
+      position: relative;
+      z-index: 5;
+    }
+
+    .carousel-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: var(--radius-circle);
+      background-color: #d1d1d6;
+      cursor: pointer;
+      transition: all var(--duration-base);
+    }
+
+    .carousel-dot.active {
+      width: 24px;
+      border-radius: var(--radius-pill);
+      background-color: var(--color-1);
+    }
+
+    /* ========================================================
+       SECTION 1: THIS WEEK'S RELEASES
+       (Exact replica of Screenshot 2)
+       ======================================================== */
+    .releases-section {
+      padding: var(--space-11) 0 var(--space-12) 0;
+    }
+
+    .section-headline {
+      font-size: 22px;
+      font-weight: var(--fw-bold);
+      color: var(--color-1);
+      margin-bottom: var(--space-6);
+      letter-spacing: -0.3px;
+    }
+
+    .releases-row {
+      display: flex;
+      gap: var(--space-6);
+      overflow-x: auto;
+      padding-bottom: var(--space-3);
+    }
+
+    .release-card-item {
+      width: 200px;
+      flex-shrink: 0;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .release-poster-wrap {
+      width: 100%;
+      height: 290px;
+      border-radius: var(--radius-6);
+      overflow: hidden;
+      margin-bottom: var(--space-3);
+      background-color: var(--color-7);
+      position: relative;
+    }
+
+    .release-poster-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .release-card-item:hover .release-poster-img {
+      transform: scale(1.04);
+    }
+
+    .release-card-title {
+      font-size: 15px;
+      font-weight: var(--fw-bold);
+      color: var(--color-1);
+      margin-bottom: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .release-card-meta {
+      font-size: 13px;
+      color: var(--color-5);
+    }
+
+    /* ========================================================
+       SECTION 2: ONLY IN THEATRES + FILTERS
+       (Exact replica of Screenshot 2 & 3)
+       ======================================================== */
+    .theatres-section {
+      padding: var(--space-8) 0 var(--space-16) 0;
+    }
+
+    .filter-pills-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-8);
+      flex-wrap: wrap;
+    }
+
+    .filter-btn-pill {
+      font-size: 13px;
+      font-weight: var(--fw-medium);
+      color: var(--color-1);
+      padding: 7px 16px;
+      border-radius: var(--radius-pill);
+      border: var(--space-1) solid var(--color-8);
+      background-color: var(--color-12);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all var(--duration-base);
+      cursor: pointer;
+    }
+
+    .filter-btn-pill:hover {
+      border-color: var(--color-7);
+      background-color: var(--color-11);
+    }
+
+    .filter-btn-pill.active {
+      background-color: var(--color-1);
+      color: var(--color-12);
+      border-color: var(--color-1);
+    }
+
+    .filter-btn-pill svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* 6-Column Grid */
+    .theatres-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 20px;
+    }
+
+    .theatre-card {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform var(--duration-base);
+    }
+
+    .theatre-poster-box {
+      width: 100%;
+      aspect-ratio: 1 / 1.48;
+      border-radius: var(--radius-7);
+      overflow: hidden;
+      margin-bottom: 10px;
+      background-color: var(--color-7);
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .theatre-poster-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+      display: block;
+    }
+
+    .theatre-card:hover .theatre-poster-img {
+      transform: scale(1.05);
+    }
+
+    .theatre-movie-title {
+      font-size: 15px;
+      font-weight: var(--fw-bold);
+      color: var(--color-1);
+      line-height: 20px;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .theatre-movie-sub {
+      font-size: 13px;
+      color: var(--color-5);
+      line-height: 18px;
+    }
+
+    /* ========================================================
+       SECTION 3: ACCORDION / FAQ CARDS
+       (Exact replica of Screenshot 4)
+       ======================================================== */
+    .accordion-section {
+      padding: var(--space-8) 0 var(--space-18) 0;
+    }
+
+    .accordion-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .accordion-item {
+      border: var(--space-1) solid var(--color-8);
+      border-radius: var(--radius-xl);
+      background-color: var(--color-12);
+      overflow: hidden;
+      transition: border-color var(--duration-base), box-shadow var(--duration-base);
+    }
+
+    .accordion-item:hover {
+      border-color: var(--color-7);
+    }
+
+    .accordion-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      font-size: 15px;
+      font-weight: var(--fw-medium);
+      color: var(--color-1);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .accordion-header svg {
+      width: 18px;
+      height: 18px;
+      color: var(--color-1);
+      transition: transform var(--duration-base);
+      flex-shrink: 0;
+    }
+
+    .accordion-item.open .accordion-header svg {
+      transform: rotate(180deg);
+    }
+
+    .accordion-body {
+      padding: 0 24px 20px 24px;
+      font-size: 14px;
+      line-height: 22px;
+      color: var(--color-2);
+      display: none;
+    }
+
+    .accordion-item.open .accordion-body {
+      display: block;
+    }
+
+    /* ========================================================
+       QUICK BOOKING MODAL
+       ======================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: rgba(19, 19, 22, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-panel {
+      background-color: var(--color-12);
+      border-radius: var(--radius-8);
+      width: 92%;
+      max-width: 620px;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      animation: modalFadeIn 0.2s ease;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--color-8);
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: var(--fw-bold);
+      color: var(--color-1);
+    }
+
+    .modal-sub {
+      font-size: 13px;
+      color: var(--color-5);
+    }
+
+    .modal-close-icon {
+      font-size: 24px;
+      color: var(--color-5);
+      cursor: pointer;
+    }
+
+    .modal-close-icon:hover {
+      color: var(--color-1);
+    }
+
+    .modal-content-inner {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .cinema-show-card {
+      border: 1px solid var(--color-8);
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      background-color: #FAFAFA;
+    }
+
+    .cinema-title {
+      font-size: 15px;
+      font-weight: var(--fw-bold);
+      color: var(--color-1);
+      margin-bottom: 4px;
+    }
+
+    .cinema-sub-info {
+      font-size: 12px;
+      color: var(--color-5);
+      margin-bottom: 12px;
+    }
+
+    .show-slot-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .slot-pill {
+      border: 1px solid var(--color-8);
+      background-color: var(--color-12);
+      border-radius: var(--radius-lg);
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: var(--fw-semibold);
+      color: var(--color-1);
+      cursor: pointer;
+      transition: all var(--duration-base);
+    }
+
+    .slot-pill:hover {
+      border-color: var(--color-3);
+      color: var(--color-3);
+    }
+
+    /* Toast */
+    .toast-box {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background-color: var(--color-1);
+      color: var(--color-12);
+      padding: 12px 24px;
+      border-radius: var(--radius-pill);
+      font-size: 14px;
+      font-weight: var(--fw-medium);
+      z-index: 300;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      display: none;
+    }
+
+    .toast-box.show {
+      display: block;
+    }
+
+    /* ========================================================
+       FOOTER
+       ======================================================== */
+    .app-footer {
+      background-color: #FAFAFA;
+      border-top: var(--space-1) solid var(--color-8);
+      padding: var(--space-12) 0;
+      font-size: 13px;
+      color: var(--color-5);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 1100px) {
+      .theatres-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .hero-container {
+        gap: var(--space-6);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .theatres-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .hero-container {
+        flex-direction: column;
+        text-align: center;
+      }
+      .hero-info-column {
+        padding-left: 0;
+        max-width: 100%;
+      }
+      .hero-movie-meta {
+        justify-content: center;
+      }
+      .hero-movie-desc {
+        margin: 0 auto var(--space-6) auto;
+      }
+      .hero-poster-column {
+        padding-right: 0;
+      }
+      .nav-tabs {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================
+       DISTRICT BY ZOMATO HEADER (SCREENSHOT 1)
+       ======================================================== -->
+  <header class="top-header" role="banner">
+    <div class="app-container header-content">
+      
+      <!-- Brand & Location -->
+      <div class="brand-group">
+        <a href="#" class="district-logo-wrap" aria-label="District by Zomato">
+          <span class="district-logo-title">district</span>
+          <span class="district-logo-sub">BY ZOMATO</span>
+        </a>
+
+        <!-- Location Dropdown Pill -->
+        <div class="location-selector" id="locationBtn" title="Change Location">
+          <svg class="location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          <div class="location-text-group">
+            <span class="location-city" id="currentCityLabel">Madurai</span>
+            <span class="location-state" id="currentStateLabel">Tamil Nadu</span>
+          </div>
+        </div>
+
+        <!-- Section Navigation Tabs -->
+        <nav class="nav-tabs" aria-label="District Verticals">
+          <span class="nav-tab-item">For you</span>
+          <span class="nav-tab-item">Dining</span>
+          <span class="nav-tab-item active">Movies</span>
+          <span class="nav-tab-item">Events</span>
+        </nav>
+      </div>
+
+      <!-- Search & Profile -->
+      <div class="header-right">
+        <div class="search-input-pill" role="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="headerSearchInput" placeholder="Search for events, movies and restaurants" aria-label="Search movies">
+        </div>
+
+        <button class="profile-avatar-btn" aria-label="User Profile">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================================
+       FLOATING RIGHT SIDEBAR CONTROLS (SCREENSHOTS 1, 2, 4)
+       ======================================================== -->
+  <aside class="floating-sidebar" aria-label="Quick Actions">
+    <button class="sidebar-icon-btn dark" title="Notifications">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+      </svg>
+    </button>
+    <button class="sidebar-icon-btn dark" title="Wishlist / Favourites">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+      </svg>
+    </button>
+    <button class="sidebar-icon-btn purple" title="District Bag">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <path d="M16 10a4 4 0 0 1-8 0"></path>
+      </svg>
+    </button>
+  </aside>
+
+  <!-- ========================================================
+       HERO CAROUSEL: "SIGMA" (SCREENSHOT 1)
+       ======================================================== */ -->
+  <section class="hero-carousel-section" aria-label="Featured Movie">
+    <div class="hero-backdrop-blur" id="heroBackdrop"></div>
+
+    <div class="app-container" style="position: relative;">
+      <!-- Carousel Arrow Left -->
+      <button class="carousel-arrow prev" onclick="prevSlide()" aria-label="Previous Movie">&lt;</button>
+
+      <div class="hero-container">
+        <!-- Left Text Info -->
+        <div class="hero-info-column">
+          <h1 class="hero-movie-title" id="heroTitle">Sigma</h1>
+          <div class="hero-movie-meta" id="heroMeta">
+            <span id="heroCert">UA16+</span>
+            <span class="meta-divider">|</span>
+            <span id="heroGenres">Action, Drama</span>
+          </div>
+          <p class="hero-movie-desc" id="heroDesc">
+            Sigma follows a fearless maverick defying all norms to chase grand dreams. This high-octane blend of treasure hunts and heist tension delivers an adventurous mix of action and sharp humor.
+          </p>
+          <button class="btn-hero-book" id="heroBookBtn" onclick="openShowtimesModal('Sigma', 'UA16+ • Action, Drama')">Book now</button>
+        </div>
+
+        <!-- Right Poster Card -->
+        <div class="hero-poster-column">
+          <div class="hero-poster-card">
+            <div class="hero-poster-ps-badge">Ps</div>
+            <img class="hero-poster-img" id="heroPosterImg" src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=640&q=80" alt="Sigma Poster">
+          </div>
+        </div>
+      </div>
+
+      <!-- Carousel Arrow Right -->
+      <button class="carousel-arrow next" onclick="nextSlide()" aria-label="Next Movie">&gt;</button>
+
+      <!-- Dots Indicators -->
+      <div class="carousel-indicators" id="carouselIndicators">
+        <span class="carousel-dot active" onclick="goToSlide(0)"></span>
+        <span class="carousel-dot" onclick="goToSlide(1)"></span>
+        <span class="carousel-dot" onclick="goToSlide(2)"></span>
+        <span class="carousel-dot" onclick="goToSlide(3)"></span>
+        <span class="carousel-dot" onclick="goToSlide(4)"></span>
+        <span class="carousel-dot" onclick="goToSlide(5)"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION: THIS WEEK'S RELEASES (SCREENSHOT 2)
+       ======================================================== -->
+  <section class="releases-section">
+    <div class="app-container">
+      <h2 class="section-headline">This Week's Releases</h2>
+
+      <div class="releases-row">
+        <!-- Card 1: Other Mommy -->
+        <div class="release-card-item" onclick="openShowtimesModal('Other Mommy', 'A • English')">
+          <div class="release-poster-wrap">
+            <img class="release-poster-img" src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=480&q=80" alt="Other Mommy Poster">
+          </div>
+          <h3 class="release-card-title">Other Mommy</h3>
+          <p class="release-card-meta">A | English</p>
+        </div>
+
+        <!-- Card 2: The Social Reckoning -->
+        <div class="release-card-item" onclick="openShowtimesModal('The Social Reckoning', 'A • English')">
+          <div class="release-poster-wrap">
+            <img class="release-poster-img" src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=480&q=80" alt="The Social Reckoning Poster">
+          </div>
+          <h3 class="release-card-title">The Social Reckoning</h3>
+          <p class="release-card-meta">A | English</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION: ONLY IN THEATRES (SCREENSHOT 2 & 3)
+       ======================================================== -->
+  <section class="theatres-section">
+    <div class="app-container">
+      <h2 class="section-headline">Only in Theatres</h2>
+
+      <!-- Filter Pills Row -->
+      <div class="filter-pills-bar" role="group" aria-label="Movie filters">
+        <button class="filter-btn-pill" id="filterDropdownBtn" onclick="toggleAllFilters()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="4" y1="21" x2="4" y2="14"></line>
+            <line x1="4" y1="10" x2="4" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12" y2="3"></line>
+            <line x1="20" y1="21" x2="20" y2="16"></line>
+            <line x1="20" y1="12" x2="20" y2="3"></line>
+            <line x1="1" y1="14" x2="7" y2="14"></line>
+            <line x1="9" y1="8" x2="15" y2="8"></line>
+            <line x1="17" y1="16" x2="23" y2="16"></line>
+          </svg>
+          Filters
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </button>
+
+        <button class="filter-btn-pill" data-filter="Tamil" onclick="filterByTag('Tamil', this)">Tamil</button>
+        <button class="filter-btn-pill" data-filter="English" onclick="filterByTag('English', this)">English</button>
+        <button class="filter-btn-pill" data-filter="New Releases" onclick="filterByTag('New Releases', this)">New Releases</button>
+        <button class="filter-btn-pill" data-filter="Re-Releases" onclick="filterByTag('Re-Releases', this)">Re-Releases</button>
+        <button class="filter-btn-pill" data-filter="3D" onclick="filterByTag('3D', this)">3D</button>
+      </div>
+
+      <!-- 6-Column Movies Grid (Exact Match to Screenshot 3) -->
+      <div class="theatres-grid" id="theatresGrid">
+
+        <!-- 1. Meesaya Murukku 2 -->
+        <div class="theatre-card" data-title="Meesaya Murukku 2" data-lang="Tamil" data-tag="Tamil New Releases" onclick="openShowtimesModal('Meesaya Murukku 2', 'UA13+ • Tamil')">
+          <div class="theatre-poster-box">
+            <img class="theatre-poster-img" src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=480&q=80" alt="Meesaya Murukku 2">
+          </div>
+          <h3 class="theatre-movie-title">Meesaya Murukku 2</h3>
+          <p class="theatre-movie-sub">UA13+ | Tamil</p>
+        </div>
+
+        <!-- 2. Anbil Avan -->
+        <div class="theatre-card" data-title="Anbil Avan" data-lang="Tamil" data-tag="Tamil" onclick="openShowtimesModal('Anbil Avan', 'UA16+ • Tamil')">
+          <div class="theatre-poster-box">
+            <img class="theatre-poster-img" src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=480&q=80" alt="Anbil Avan">
+          </div>
+          <h3 class="theatre-movie-title">Anbil Avan</h3>
+          <p class="theatre-movie-sub">UA16+ | Tamil</p>
+        </div>
+
+        <!-- 3. Doraemon the Movie -->
+        <div class="theatre-card" data-title="Doraemon the Movie" data-lang="Tamil" data-tag="Tamil 3D" onclick="openShowtimesModal('Doraemon the Movie: New Nobita and the...', 'U • Tamil • 3D')">
+          <div class="theatre-poster-box">
+            <img class="theatre-poster-img" src="https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=480&q=80" alt="Doraemon the Movie">
+          </div>
+          <h3 class="theatre-movie-title">Doraemon the Movie: New Nobita and the...</h3>
+          <p class="theatre-movie-sub">U | Tamil</p>
+        </div>
+
+        <!-- 4. Hanuman Ansh -->
+        <div class="theatre-card" data-title="Hanuman Ansh" data-lang="Telugu" data-tag="Telugu 3D" onclick="openShowtimesModal('Hanuman Ansh', 'U • Telugu')">
+          <div class="theatre-poster-box">
+            <img class="theatre-poster-img" src="https://images.unsplash.com/photo-1542204165-65bf26472b9b?auto=format&fit=crop&w=480&q=80" alt="Hanuman Ansh">
+          </div>
+          <h3 class="theatre-movie-title">Hanuman Ansh</h3>
+          <p class="theatre-movie-sub">U | Telugu</p>
+        </div>
+
+        <!-- 5. Mandaadi -->
+        <div class="theatre-card" data-title="Mandaadi" data-lang="Tamil" data-tag="Tamil New Releases" onclick="openShowtimesModal('Mandaadi', 'UA16+ • Tamil')">
+          <div class="theatre-poster-box">
+            <img class="theatre-poster-img" src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=480&q=80" alt="Mandaadi">
+          </div>
+          <h3 class="theatre-movie-title">Mandaadi</h3>
+          <p class="theatre-movie-sub">UA16+ | Tamil</p>
+        </div>
+
+        <!-- 6. Other Mommy -->
+        <div class="theatre-card" data-title="Other Mommy" data-lang="English" data-tag="English" onclick="openShowtimesModal('Other Mommy', 'A • English')">
+          <div class="theatre-poster-box">
+            <img class="theatre-poster-img" src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=480&q=80" alt="Other Mommy">
+          </div>
+          <h3 class="theatre-movie-title">Other Mommy</h3>
+          <p class="theatre-movie-sub">A | English</p>
+        </div>
+
+        <!-- Row 2 -->
+        <!-- 7. Drishyam The Conclusion -->
+        <div class="theatre-card" data-title="Drishyam: The Conclusion" data-lang="Tamil" data-tag="Tamil Re-Releases" onclick="openShowtimesModal('Drishyam: The Conclusion', 'UA16+ • Tamil')">
+          <div class="theatre-poster-box">
+            <img class="theatre-poster-img" src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=480&q=80" alt="Drishyam The Conclusion">
+          </div>
+          <h3 class="theatre-movie-title">Drishyam: The Conclusion</h3>
+          <p class="theatre-movie-sub">UA16+ | Tamil</p>
+        </div>
+
+        <!-- 8. Sigma -->
+        <div class="theatre-card" data-title="Sigma" data-lang="Tamil" data-tag="Tamil New Releases" onclick="openShowtimesModal('Sigma', 'UA16+ • Action, Drama')">
+          <div class="theatre-poster-box">
+            <img class="theatre-poster-img" src="https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=480&q=80" alt="Sigma">
+          </div>
+          <h3 class="theatre-movie-title">Sigma</h3>
+          <p class="theatre-movie-sub">UA16+ | Tamil</p>
+        </div>
+
+        <!-- 9. The Social Reckoning -->
+        <div class="theatre-card" data-title="The Social Reckoning" data-lang="English" data-tag="English" onclick="openShowtimesModal('The Social Reckoning', 'A • English')">
+          <div class="theatre-poster-box">
+            <img class="theatre-poster-img" src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=480&q=80" alt="The Social Reckoning">
+          </div>
+          <h3 class="theatre-movie-title">The Social Reckoning</h3>
+          <p class="theatre-movie-sub">A | English</p>
+        </div>
+
+        <!-- 10. GOAT: The Greatest Of All Time -->
+        <div class="theatre-card" data-title="The Greatest Of All Time" data-lang="Tamil" data-tag="Tamil 3D" onclick="openShowtimesModal('GOAT: The Greatest Of All Time', 'UA16+ • Tamil')">
+          <div class="theatre-poster-box">
+            <img class="theatre-poster-img" src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=480&q=80" alt="GOAT">
+          </div>
+          <h3 class="theatre-movie-title">The Greatest Of All Time</h3>
+          <p class="theatre-movie-sub">UA16+ | Tamil</p>
+        </div>
+
+        <!-- 11. Alien: Romulus -->
+        <div class="theatre-card" data-title="Alien: Romulus" data-lang="English" data-tag="English 3D" onclick="openShowtimesModal('Alien: Romulus', 'A • English • IMAX 3D')">
+          <div class="theatre-poster-box">
+            <img class="theatre-poster-img" src="https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=480&q=80" alt="Alien Romulus">
+          </div>
+          <h3 class="theatre-movie-title">Alien: Romulus</h3>
+          <p class="theatre-movie-sub">A | English</p>
+        </div>
+
+        <!-- 12. Thug Life -->
+        <div class="theatre-card" data-title="Thug Life" data-lang="Tamil" data-tag="Tamil New Releases" onclick="openShowtimesModal('Thug Life', 'UA16+ • Tamil')">
+          <div class="theatre-poster-box">
+            <img class="theatre-poster-img" src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=480&q=80" alt="Thug Life">
+          </div>
+          <h3 class="theatre-movie-title">Thug Life</h3>
+          <p class="theatre-movie-sub">UA16+ | Tamil</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       SECTION: ACCORDION / FAQS (SCREENSHOT 4)
+       ======================================================== -->
+  <section class="accordion-section" aria-label="Frequently Asked Questions and Guides">
+    <div class="app-container">
+      <div class="accordion-list">
+
+        <!-- 1 -->
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Catch the Trending Blockbusters: Get Your Movie Tickets Now!</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="accordion-body">
+            Book the hottest Tamil, Telugu, Hindi, and Hollywood movie tickets in Madurai and across India on District by Zomato with zero hidden convenience fees and instant m-tickets directly on WhatsApp.
+          </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Discover Trending Films in Popular Cities & Grab Tickets for the Hottest Releases!</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="accordion-body">
+            Explore screenings across major hubs like Madurai, Chennai, Bengaluru, Mumbai, Hyderabad, and Delhi NCR. Enjoy premium formats including IMAX 3D, 4DX, Dolby Atmos, and Laser Projection.
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Explore the Best Movies Currently Showing in Popular Cities!</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="accordion-body">
+            Whether you are catching morning shows, matinees, or late-night screenings, get live seat availability with fast filling alerts to ensure you never miss your favorite corner recliners.
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Top Movie Genres You'll Love – Action, Comedy, Romance & More!</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="accordion-body">
+            From pulse-pounding heist thrillers like Sigma and horror sensations like Other Mommy to family adventures with Doraemon, District curates top-rated experiences by audience reviews.
+          </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Explore & Book Tickets for Your Favorite Movie Genres in Popular Cities!</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="accordion-body">
+            Filter movies instantly by genre, certificate (U, UA, A), language, and experiential cinema technologies. Pre-order gourmet popcorn and snacks at special online discount bundles.
+          </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Dive into Your Favorite Movie Genres in More Amazing Cities!</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="accordion-body">
+            Traveling to another district? Switch your city seamlessly in the top navigation to browse neighborhood cinemas, heritage single screens, and luxury multiplexes anywhere in India.
+          </div>
+        </div>
+
+        <!-- 7 -->
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Explore Movies in Your Language Across More Amazing Cities!</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="accordion-body">
+            Enjoy regional cinema in Tamil, Malayalam, Telugu, Kannada, Hindi, Marathi, and Bengali subtitles. Book tickets for cultural re-releases and anniversary screenings.
+          </div>
+        </div>
+
+        <!-- 8 -->
+        <div class="accordion-item">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Find the Best Cinemas in Popular Cities and cue to popcorn!</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <div class="accordion-body">
+            Locate top cinemas like INOX Vishaal De Mall, Cinepolis, PVR, and Priya Complex. Check show timings, parking facilities, accessibility ramps, and cancellation insurance.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       QUICK BOOKING SHOWTIMES MODAL
+       ======================================================== -->
+  <div class="modal-backdrop" id="bookingModal" onclick="closeOnBackdrop(event)">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <div>
+          <h3 class="modal-title" id="modalMovieName">Sigma</h3>
+          <p class="modal-sub" id="modalMovieMeta">UA16+ • Action, Drama • Tamil</p>
+        </div>
+        <button class="modal-close-icon" onclick="closeModal()">&times;</button>
+      </div>
+
+      <div class="modal-content-inner">
+        <!-- Cinema 1 -->
+        <div class="cinema-show-card">
+          <h4 class="cinema-title">INOX: Vishaal De Mall, Gokhale Road, Madurai</h4>
+          <p class="cinema-sub-info">Dolby 7.1 • Laser Projection • Food Pre-order Available</p>
+          <div class="show-slot-row">
+            <button class="slot-pill" onclick="bookSlot('INOX Vishaal De Mall', '10:45 AM')">10:45 AM</button>
+            <button class="slot-pill" style="border-color: #F59E0B; color: #D97706;" onclick="bookSlot('INOX Vishaal De Mall', '02:15 PM')">02:15 PM (Fast Filling)</button>
+            <button class="slot-pill" onclick="bookSlot('INOX Vishaal De Mall', '06:30 PM')">06:30 PM</button>
+            <button class="slot-pill" onclick="bookSlot('INOX Vishaal De Mall', '10:00 PM')">10:00 PM</button>
+          </div>
+        </div>
+
+        <!-- Cinema 2 -->
+        <div class="cinema-show-card">
+          <h4 class="cinema-title">Cinepolis: Milan'em Mall, Madurai</h4>
+          <p class="cinema-sub-info">Dolby Atmos • VIP Recliners • M-Ticket Enabled</p>
+          <div class="show-slot-row">
+            <button class="slot-pill" onclick="bookSlot('Cinepolis Milan\'em', '11:30 AM')">11:30 AM</button>
+            <button class="slot-pill" onclick="bookSlot('Cinepolis Milan\'em', '03:45 PM')">03:45 PM</button>
+            <button class="slot-pill" onclick="bookSlot('Cinepolis Milan\'em', '07:15 PM')">07:15 PM</button>
+            <button class="slot-pill" onclick="bookSlot('Cinepolis Milan\'em', '10:45 PM')">10:45 PM</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-box" id="toastNotice"></div>
+
+  <!-- ========================================================
+       FOOTER
+       ======================================================== -->
+  <footer class="app-footer" role="contentinfo">
+    <div class="app-container footer-inner">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="font-weight: 800; color: var(--color-1);">district</span>
+        <span>&copy; 2026 District by Zomato. All rights reserved.</span>
+      </div>
+      <div>Designed with Book Movie Tickets Online in India Design System</div>
+    </div>
+  </footer>
+
+  <!-- ========================================================
+       SCRIPTS: CAROUSEL, FILTERS, SEARCH, ACCORDIONS
+       ======================================================== -->
+  <script>
+    // Featured Carousel Data
+    const slides = [
+      {
+        title: "Sigma",
+        cert: "UA16+",
+        genres: "Action, Drama",
+        desc: "Sigma follows a fearless maverick defying all norms to chase grand dreams. This high-octane blend of treasure hunts and heist tension delivers an adventurous mix of action and sharp humor.",
+        poster: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=640&q=80"
+      },
+      {
+        title: "Meesaya Murukku 2",
+        cert: "UA13+",
+        genres: "Comedy, Drama, Musical",
+        desc: "The youth anthem returns with electric beats, college dreams, and heartfelt romances as young dreamers pursue their ultimate musical passions.",
+        poster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=640&q=80"
+      },
+      {
+        title: "Drishyam: The Conclusion",
+        cert: "UA16+",
+        genres: "Crime, Mystery, Thriller",
+        desc: "Georgekutty returns to protect his family in a masterful game of cat-and-mouse with law enforcement where every alibi is tested to its absolute limit.",
+        poster: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=640&q=80"
+      },
+      {
+        title: "Other Mommy",
+        cert: "A",
+        genres: "Horror, Mystery",
+        desc: "A chilling psychological horror that tests maternal instincts against unnatural demonic forces lurking right inside the nursery room.",
+        poster: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=640&q=80"
+      },
+      {
+        title: "Hanuman Ansh",
+        cert: "U",
+        genres: "Mythological, Fantasy, Adventure",
+        desc: "An epic mythological spectacle traversing ancient Indian lore, sacred relics, and celestial destinies with ground-breaking visual effects.",
+        poster: "https://images.unsplash.com/photo-1542204165-65bf26472b9b?auto=format&fit=crop&w=640&q=80"
+      },
+      {
+        title: "The Social Reckoning",
+        cert: "A",
+        genres: "Drama, Tech Thriller",
+        desc: "An electrifying boardroom drama unpacking billionaire Silicon Valley founders as secret algorithms threaten public democracy.",
+        poster: "https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=640&q=80"
+      }
+    ];
+
+    let currentSlide = 0;
+
+    function renderSlide(index) {
+      currentSlide = (index + slides.length) % slides.length;
+      const s = slides[currentSlide];
+
+      document.getElementById('heroTitle').textContent = s.title;
+      document.getElementById('heroCert').textContent = s.cert;
+      document.getElementById('heroGenres').textContent = s.genres;
+      document.getElementById('heroDesc').textContent = s.desc;
+      document.getElementById('heroPosterImg').src = s.poster;
+      document.getElementById('heroBackdrop').style.backgroundImage = `url('${s.poster}')`;
+
+      // Update dots
+      const dots = document.querySelectorAll('.carousel-dot');
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === currentSlide);
+      });
+    }
+
+    function nextSlide() {
+      renderSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      renderSlide(currentSlide - 1);
+    }
+
+    function goToSlide(idx) {
+      renderSlide(idx);
+    }
+
+    // Auto rotate hero carousel every 6s
+    let autoTimer = setInterval(nextSlide, 6000);
+    document.querySelector('.hero-carousel-section').addEventListener('mouseenter', () => clearInterval(autoTimer));
+    document.querySelector('.hero-carousel-section').addEventListener('mouseleave', () => autoTimer = setInterval(nextSlide, 6000));
+
+    // Filter Logic
+    let activeTag = null;
+
+    function filterByTag(tag, el) {
+      const pills = document.querySelectorAll('.filter-btn-pill');
+      if (activeTag === tag) {
+        activeTag = null;
+        el.classList.remove('active');
+      } else {
+        pills.forEach(p => p.classList.remove('active'));
+        el.classList.add('active');
+        activeTag = tag;
+      }
+
+      applyFilters();
+    }
+
+    function toggleAllFilters() {
+      activeTag = null;
+      document.querySelectorAll('.filter-btn-pill').forEach(p => p.classList.remove('active'));
+      document.getElementById('headerSearchInput').value = '';
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const query = document.getElementById('headerSearchInput').value.trim().toLowerCase();
+      const cards = document.querySelectorAll('.theatre-card');
+
+      cards.forEach(card => {
+        const title = card.getAttribute('data-title').toLowerCase();
+        const lang = card.getAttribute('data-lang');
+        const tag = card.getAttribute('data-tag') || '';
+
+        const matchTag = !activeTag || tag.includes(activeTag) || lang === activeTag;
+        const matchSearch = !query || title.includes(query) || lang.toLowerCase().includes(query);
+
+        if (matchTag && matchSearch) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Search input
+    document.getElementById('headerSearchInput').addEventListener('input', applyFilters);
+
+    // Accordion toggle
+    function toggleAccordion(btn) {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+
+      // Close all other accordions for sleek native feel
+      document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+
+      if (!isOpen) {
+        item.classList.add('open');
+      }
+    }
+
+    // Modal
+    const modal = document.getElementById('bookingModal');
+    function openShowtimesModal(title, meta) {
+      document.getElementById('modalMovieName').textContent = title;
+      document.getElementById('modalMovieMeta').textContent = meta;
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function closeOnBackdrop(e) {
+      if (e.target === modal) closeModal();
+    }
+
+    function bookSlot(cinema, time) {
+      closeModal();
+      showToast(`Selected ${time} at ${cinema}! Opening seat matrix...`);
+    }
+
+    function showToast(text) {
+      const t = document.getElementById('toastNotice');
+      t.textContent = text;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // City switcher
+    document.getElementById('locationBtn').addEventListener('click', () => {
+      const cities = [
+        { city: 'Madurai', state: 'Tamil Nadu' },
+        { city: 'Chennai', state: 'Tamil Nadu' },
+        { city: 'Coimbatore', state: 'Tamil Nadu' },
+        { city: 'Bengaluru', state: 'Karnataka' },
+        { city: 'Mumbai', state: 'Maharashtra' }
+      ];
+      const cur = document.getElementById('currentCityLabel').textContent;
+      const idx = (cities.findIndex(c => c.city === cur) + 1) % cities.length;
+      document.getElementById('currentCityLabel').textContent = cities[idx].city;
+      document.getElementById('currentStateLabel').textContent = cities[idx].state;
+      showToast(`Location set to ${cities[idx].city}, ${cities[idx].state}`);
+    });
+  </script>
+</body>
+</html>

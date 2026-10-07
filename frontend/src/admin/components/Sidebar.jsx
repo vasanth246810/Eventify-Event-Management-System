@@ -5,8 +5,9 @@ export default function Sidebar() {
   
   const navItems = [
     { id: 'dashboard', icon: '◈', label: 'Dashboard', path: '/admin/dashboard' },
+    { id: 'events', icon: '◆', label: 'Events List', path: '/admin/events' },
+    { id: 'create-event', icon: '✦', label: 'Event Studio', path: '/admin/events/create' },
     { id: 'users', icon: '◉', label: 'Users', path: '/admin/users' },
-    { id: 'events', icon: '◆', label: 'Events', path: '/admin/events' },
     { id: 'bookings', icon: '◐', label: 'Bookings', path: '/admin/bookings' },
   ];
 
