@@ -19,6 +19,7 @@ import AdminLayout from './admin/AdminLayout';
 import Dashboard from './admin/pages/Dashboard';
 import Users from './admin/pages/Users';
 import Events from './admin/pages/Events';
+import EventStudio from './admin/pages/EventStudio';
 import Bookings from './admin/pages/Booking';
 import { useEffect, useState } from 'react';
 import AdminRoute from "./routes/AdminRoute";
@@ -84,6 +85,8 @@ function Layout() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="users" element={<Users />} />
             <Route path="events" element={<Events />} />
+            <Route path="events/create" element={<EventStudio />} />
+            <Route path="events/configure/:id" element={<EventStudio />} />
             <Route path="bookings" element={<Bookings />} />
           </Route>        
         </Routes>

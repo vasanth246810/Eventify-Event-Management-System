@@ -72,6 +72,9 @@ export default function EventManagementAdmin() {
 
   // Get page title from current route
   const getPageTitle = () => {
+    if (location.pathname.includes('/events/create') || location.pathname.includes('/events/configure')) {
+      return 'Event Studio';
+    }
     const path = location.pathname.split('/').pop();
     const titles = {
       'dashboard': 'Dashboard',
